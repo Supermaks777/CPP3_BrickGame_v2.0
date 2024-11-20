@@ -15,52 +15,65 @@ enum class GameState {
 
 class SnakeModel {
 public:
-//конструктор принимает размеры поля, инициализирует размеры поля и состояние "игра", добавляет сегмент в вектор змеи (по центру поля), добавляет еду
     SnakeModel(int width, int height) : width(width), height(height), state(GameState::Playing) {
         snake.push_back({width / 2, height / 2});
         placeFood();
     }
 
-//принимает новое состояние; если новое состояние не противоположно текущему, то текущее состояние равно новому
-    void changeDirection(Direction newDirection) {
-        if ((newDirection == Direction::Up && direction != Direction::Down) ||
-            (newDirection == Direction::Down && direction != Direction::Up) ||
-            (newDirection == Direction::Left && direction != Direction::Right) ||
-            (newDirection == Direction::Right && direction != Direction::Left)) {
-            direction = newDirection;
-        }
+    void setDirection(Direction newDirection){
+        direction = static_cast<int>(direction) % 2 == static_cast<int>(newDirection) % 2 ? direction : newDirection;
     }
 
-    void update() {
-        if (state != GameState::Playing) return;
-
-        auto head = snake.front();
-        auto newHead = head;
-
+    auto getNewHead(){
+        auto newHead = snake.front();
         switch (direction) {
             case Direction::Up:    newHead.second--; break;
             case Direction::Down:  newHead.second++; break;
             case Direction::Left:  newHead.first--;  break;
             case Direction::Right: newHead.first++;  break;
-        }
+        }    
+        return newHead;    
+    }
 
-        if (newHead.first < 0 || newHead.first >= width || newHead.second < 0 || newHead.second >= height ||
-            std::find(snake.begin(), snake.end(), newHead) != snake.end()) {
-            state = GameState::GameOver;
-            return;
-        }
+    bool checkIsCollapse(auto newHead){
+        return (newHead.first < 0 || newHead.first >= width || newHead.second < 0 || newHead.second >= height ||
+            std::find(snake.begin(), snake.end(), newHead) != snake.end()) 
+    }
 
+    void moveSnake(auto newHead){
         snake.insert(snake.begin(), newHead);
+        if (newHead == food) placeFood();
+        else snake.pop_back();
+    }
 
-        if (newHead == food) {
-            placeFood();
-        } else {
-            snake.pop_back();
+    void processing(UserAction userAction) {
+        if (state == GameState::GameOver) state = GameState::GameOver;
+        else if (state == GameState::Paused){
+            if (userAction == UserAction::Pause) state = GameState::Playing;
+            if (userAction == UserAction::Terminate) state = GameState::GameOver;
+        } else if (state == GameState::Playing){
+            if (userAction == UserAction::Pause) state = GameState::Paused;
+            if (userAction == UserAction::Terminate) state = GameState::GameOver;
+            if (userAction == UserAction::Up) updateSnake(Direction::Up);
+            if (userAction == UserAction::Right) updateSnake(Direction::Right);
+            if (userAction == UserAction::Down) updateSnake(Direction::Down);
+            if (userAction == UserAction::Left) updateSnake(Direction::Left);
         }
+    }
+
+    void updateSnake(Direction newDirection){
+        setDirection(newDirection);
+        auto newHead = getNewHead();
+        if (checkIsCollapse(newHead)) state = GameState::GameOver;
+        else moveSnake(newHead);
     }
 
     GameState getState() const {
         return state;
+    }
+
+    Direction getDirection() const {
+        return direction;
     }
 
     const std::vector<std::pair<int, int>>& getSnake() const {

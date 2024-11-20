@@ -13,23 +13,14 @@ public:
     SnakeController(SnakeModel& model, SnakeView& view) : model(model), view(view) {}
 
     void run() {
-        Direction currentDirection = Direction::Right;
-        bool directionChanged = false;
+        // Direction currentDirection = Direction::Right;
+        // bool directionChanged = false;
 
-        while (model.getState() == GameState::Playing) {
-            view.display(model.getSnake(), model.getFood());
-            Direction newDirection = view.getInput(currentDirection);
 
-            // Проверяем, что новое направление не противоположно текущему
-            if ((newDirection == Direction::Up && currentDirection != Direction::Down) ||
-                (newDirection == Direction::Down && currentDirection != Direction::Up) ||
-                (newDirection == Direction::Left && currentDirection != Direction::Right) ||
-                (newDirection == Direction::Right && currentDirection != Direction::Left)) {
-                currentDirection = newDirection;
-            }
-
-            model.changeDirection(currentDirection);
-            model.update();
+        while (model.getState() != GameState::GameOver) {
+            view.display(model.getSnake(), model.getFood(), model.getState() == GameState::Paused);
+            UserAction userAction = view.getInput();
+            model.processing(userAction);
             std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         }
         std::cout << "Game Over!" << std::endl;

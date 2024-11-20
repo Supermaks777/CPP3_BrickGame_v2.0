@@ -3,9 +3,21 @@
 
 enum class Direction {
     Up,
+    Right,
+    Down,
+    Left
+};
+
+enum class UserAction {
+    Start,
+    Pause,
+    Terminate,
+    Up,
+    Right,
     Down,
     Left,
-    Right
+    Non_action,
+    NUM_ACTIONS
 };
 
 #endif // DIRECTION_H
