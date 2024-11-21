@@ -5,10 +5,8 @@
 
 int main() {
     SnakeModel model(10, 20);
-    SnakeView view(10, 20);
+    SnakeView view(model, 10, 20);
     SnakeController controller(model, view);
-
-    controller.gameLoop();
 
     return 0;
 }

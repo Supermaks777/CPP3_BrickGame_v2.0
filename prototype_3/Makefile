@@ -8,7 +8,7 @@ CXXFLAGS = -std=c++17 -Wall
 LDFLAGS = -lncurses
 
 # Source files
-SRCS = snake.cpp
+SRCS = snake.cpp SnakeView.cpp
 
 # Object files
 OBJS = $(SRCS:.cpp=.o)

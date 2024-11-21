@@ -27,46 +27,42 @@ public:
         endwin();
     }
 
-    void display(const std::vector<std::pair<int, int>>& snake) {
+    void display(const std::vector<std::pair<int, int>>& snake, const std::pair<int, int>& food) {
         clear();
         printFrame();
         printSnake(snake);
         printFood(food);
-        printScore(0);
-        printHighScore(0);
-        printLevel(0);
+        printScore();
+        printHighScore();
+        printLevel();
         printState();
         refresh();
     }
 
     void printSnake(const std::vector<std::pair<int, int>>& snake){
-        for (int y = 0; y < height; ++y) {
-            for (int x = 0; x < width; ++x) {
-                printCell(x, y, snake);
-            }
-        }
+        for (const std::pair<int, int>& segment : snake) {printSegment(segment);}
     }
 
-    void printCell(int x, int y, const std::vector<std::pair<int, int>>& snake){
-        if (std::find(snake.begin(), snake.end(), std::make_pair(x, y)) != snake.end()){
-            mvaddch(y, 2 * x + 1, ACS_CKBOARD);
-            mvaddch(y, 2 * x + 2, ACS_CKBOARD);
-        }
+    void printSegment(const std::pair<int, int>& segment){
+        mvaddch(segment.second + 1, 2 * segment.first + 1, ACS_CKBOARD);
+        mvaddch(segment.second + 1, 2 * segment.first + 2, ACS_CKBOARD);
     }
 
     void printFood(const std::pair<int, int>& food){
-        mvaddch(food.second, 2 * food.first + 1, 'F');
-        mvaddch(food.second, 2 * food.first + 2, 'F');
+        mvaddch(food.second + 1, 2 * food.first + 1, 'F');
+        mvaddch(food.second + 1, 2 * food.first + 2, 'F');
     } 
 
     void printState(){
-          if (state == GameState::Paused) mvaddch(12, 8, "Pause");
-          if (state == GameState::GameOver) mvaddch(12, 8, "Game Over");
-          if (state == GameState::Paused) mvaddch(12, 8, "You are Win");
+        std::string statusString = "";
+        if (state == GameState::Paused) statusString = "Pause";
+        if (state == GameState::GameOver) statusString = "Game Over";
+        if (state == GameState::Win) statusString = "You are Win";
+        mvprintw(height + 4, 8, "%s", statusString.c_str());
     }
 
     void printFrame(){
-        printRectangle(0, 2 * width + 1, 0, 2 * width + 1);
+        printRectangle(0, height + 1, 0, 2 * width + 1);
     }
 
     void printRectangle(int top_y, int bottom_y, int left_x, int right_x) {
@@ -81,21 +77,21 @@ public:
     };
 
 
-    void printScore(int currentScore) {
+    void printScore() {
         printRectangle(1, 3, 2 * width + 4, 2 * width + 18);
         mvprintw(1, 2 * width + 5, " Score ");
         mvprintw(2, 2 * width + 6, "        ");
-        mvprintw(2, 2 * width + 6, "%d", currentScore);
+        mvprintw(2, 2 * width + 6, "%d", score);
     };
 
-    void printHighScore(int highScore) {
+    void printHighScore() {
         printRectangle(5, 7, 2 * width + 4, 2 * width + 18);
         mvprintw(5, 2 * width + 5, " High score ");
         mvprintw(6, 2 * width + 6, "      ");
         mvprintw(6, 2 * width + 6, "%d", highScore);
     };
 
-    void printLevel(int level) {
+    void printLevel() {
         printRectangle(9, 11, 2 * width + 4, 2 * width + 18);
         mvprintw(9, 2 * width + 5, " Level ");
         mvprintw(10, 2 * width + 6, "      ");

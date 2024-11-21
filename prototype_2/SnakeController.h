@@ -8,18 +8,19 @@
 #include "SnakeView.h"
 #include "Common.h"
 
-class SnakeController {
+class SnakeController : public QObject {
+    Q_OBJECT
+
 public:
-    SnakeController(SnakeModel& model, SnakeView& view) : model(model), view(view) {}
+    SnakeController(SnakeModel& model, SnakeView& view) : model(model), view(view) {
+        connect(&view, &SnakeView::updateGame, this, &SnakeController::gameLoop);
+    }
 
     void gameLoop() {
-        while (model.getState() != GameState::Exit) {
-            translator();
-            view.display(model.getSnake(), model.getFood());
-            UserAction userAction = view.getInput();
-            model.processing(userAction);
-            if (userAction != UserAction::Action) std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        }
+        translator();
+        view.display(model.getSnake(), model.getFood());
+        UserAction userAction = view.getInput();
+        model.processing(userAction);
     }
 
     void translator(){
