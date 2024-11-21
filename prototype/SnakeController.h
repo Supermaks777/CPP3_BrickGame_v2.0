@@ -6,24 +6,27 @@
 #include <chrono>
 #include "SnakeModel.h"
 #include "SnakeView.h"
-#include "Direction.h"
+#include "Common.h"
 
 class SnakeController {
 public:
     SnakeController(SnakeModel& model, SnakeView& view) : model(model), view(view) {}
 
-    void run() {
-        // Direction currentDirection = Direction::Right;
-        // bool directionChanged = false;
-
-
+    void gameLoop() {
         while (model.getState() != GameState::GameOver) {
-            view.display(model.getSnake(), model.getFood(), model.getState() == GameState::Paused);
+            translator();
+            view.display(model.getSnake(), model.getFood());
             UserAction userAction = view.getInput();
             model.processing(userAction);
-            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+            if (userAction != UserAction::Action) std::this_thread::sleep_for(std::chrono::milliseconds(2000 - 200 * model.level));
         }
-        std::cout << "Game Over!" << std::endl;
+    }
+
+    void translator(){
+        view.level = model.level;
+        view.score = model.score;
+        view.highScore = model.highScore;
+        view.state = model.state;
     }
 
 private:

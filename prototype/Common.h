@@ -1,5 +1,5 @@
-#ifndef DIRECTION_H
-#define DIRECTION_H
+#ifndef COMMON_H
+#define COMMON_H
 
 enum class Direction {
     Up,
@@ -16,8 +16,17 @@ enum class UserAction {
     Right,
     Down,
     Left,
+    Action,
     Non_action,
     NUM_ACTIONS
 };
 
-#endif // DIRECTION_H
+enum class GameState {
+    Playing,
+    GameOver,
+    Paused,
+    Win
+};
+
+
+#endif // COMMON_H
