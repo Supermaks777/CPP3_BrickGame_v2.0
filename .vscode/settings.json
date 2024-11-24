@@ -56,6 +56,20 @@
         "streambuf": "cpp",
         "thread": "cpp",
         "typeinfo": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "__node_handle": "c",
+        "__bit_reference": "cpp",
+        "__bits": "cpp",
+        "__config": "cpp",
+        "__debug": "cpp",
+        "__errc": "cpp",
+        "__mutex_base": "cpp",
+        "__split_buffer": "cpp",
+        "__threading_support": "cpp",
+        "__tuple": "cpp",
+        "__verbose_abort": "cpp",
+        "cstring": "cpp",
+        "__nullptr": "cpp",
+        "__string": "cpp"
     }
 }
