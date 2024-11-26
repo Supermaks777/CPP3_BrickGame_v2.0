@@ -200,11 +200,9 @@ void snakeGameLoop(GameInfo_t *gameInfo) {
   LastKey_t last_key_ = {0, 0};
   bool hold = false;
 
-  //разное
   int key = 0;
   UserAction_t userAction = 0;
-  // struct timeval last_update_time_, current_time_;
-  struct timeval last_update_time_;
+  struct timeval last_update_time_, current_time_;
   gettimeofday(&last_update_time_, NULL);
   printFrames();
 
@@ -219,23 +217,43 @@ void snakeGameLoop(GameInfo_t *gameInfo) {
     if (key != ERR) {
       userAction = getSignal(key, &hold, &last_key_);
       updateModelSnake(userAction);
-    } else {
-        usleep(500000);
-        updateModelSnake(NoAction);  
-    };
-    // if (TimerAction(&last_update_time_, &current_time_, gameInfo->speed)) updateGameInfoSnake(NoAction);
+    } else if (TimerAction(&last_update_time_, &current_time_, gameInfo->speed)) updateGameInfoSnake(NoAction);
   };
 };
 
+int initialiseMatrix(int*** pointer, int rowsCount, int clmnsCount){
+  int errCode = 0;
+  *pointer = calloc(clmnsCount, sizeof(int *));
+  if (*pointer != NULL) {
+    for (int i = 0; i < clmnsCount; i++) {
+      *pointer[i] = calloc(rowsCount, sizeof(int));
+      if (*pointer[i] == NULL) {
+          // при ошибке - освобождение ранее выделенной памяти
+          for (int j = 0; j < i; j++) free(*pointer[j]);
+          free(*pointer);
+          fprintf(stderr, "Ошибка при выделении памяти (столбцы)\n");
+          errCode = 1;
+      }
+    } 
+  } else {
+    fprintf(stderr, "Ошибка при выделении памяти (строки)\n");
+    errCode = 2;
+  };
+  return errCode;
+}
+
+void freeMatrixMemory(int*** pointer, int rowsCount, int clmnsCount) {
+    if (*pointer != NULL) {
+      for (int i = 0; i < clmnsCount; i++) {
+          if (*pointer[i] != NULL) free(*pointer[i]);
+      };
+      free(*pointer);
+      *pointer = NULL;
+    }
+}
+
 void snakeRun(){
-  printf("point_3\n");
 //инициализация GameInfo
-  int field1[BOARD_HEIGHT][BOARD_WIDTH] = {0};
-    // game->field = malloc(rows * sizeof(int *));
-    // for (int i = 0; i < rows; i++) {
-    //     game->field[i] = malloc(cols * sizeof(int));
-    // }
-  int next[BOARD_HEIGHT][BOARD_WIDTH] = {0};
   int score = {0};
   int high_score = {0};
   int level = {0};
@@ -243,34 +261,10 @@ void snakeRun(){
   int pause = {0};
   PlayerState_t state = sStart;
 
-  printf("point_4\n");
-
   GameInfo_t gameInfo = {0};
 
-  // инициализация массива
-  gameInfo.field = calloc(BOARD_HEIGHT, sizeof(int *));
-  if (gameInfo.field == NULL) {
-    // Обработка ошибки: не удалось выделить память для указателей строк
-    fprintf(stderr, "Ошибка при выделении памяти для field.\n");
-    return;
-  }
-    for (int i = 0; i < BOARD_HEIGHT; i++) {
-        gameInfo.field[i] = calloc(BOARD_WIDTH, sizeof(int));
-        if (gameInfo.field[i] == NULL) {
-            // Обработка ошибки: не удалось выделить память для столбцов
-            // Освобождение ранее выделенной памяти
-            for (int j = 0; j < i; j++) {
-                free(gameInfo.field[j]);
-            }
-            free(gameInfo.field);
-            fprintf(stderr, "Ошибка при выделении памяти для field[%d].\n", i);
-            return;
-        }
-    }
-  // gameInfo.field = &field1;
-  gameInfo.next = &next;
-    // gameInfo.field = (int (*)[BOARD_WIDTH])field;  // Исправьте эту строку
-    // gameInfo.next = (int (*)[BOARD_WIDTH])next;    // Исправьте эту строку
+  gameInfo.field = NULL;
+  gameInfo.next = NULL;
   gameInfo.score = &score;
   gameInfo.high_score = &high_score;
   gameInfo.level = &level;
@@ -278,14 +272,13 @@ void snakeRun(){
   gameInfo.pause = &pause;
   gameInfo.state = &state;
 
-  printf("point_5\n");
-
-  initialScreen();
-  printf("point_6\n");
-  snakeGameLoop(&gameInfo);
-  printf("point_7\n");
-  return;
-  unitialScreen();
+  if (!initialiseMatrix(&gameInfo.field, BOARD_HEIGHT, BOARD_WIDTH) && !initialiseMatrix(&gameInfo.next, BOARD_HEIGHT, BOARD_WIDTH)){
+    initialScreen();
+    snakeGameLoop(&gameInfo);
+    unitialScreen();
+  }
+  freeMatrixMemory(&gameInfo.field, BOARD_HEIGHT, BOARD_WIDTH);
+  freeMatrixMemory(&gameInfo.next, BOARD_HEIGHT, BOARD_WIDTH);
 
 }
 
