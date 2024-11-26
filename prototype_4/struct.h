@@ -61,12 +61,12 @@ typedef struct {
 typedef struct {
   int **field;
   int **next;
-  int score;
-  int high_score;
-  int level;
-  int speed;
-  int pause;
-  PlayerState_t state;
+  int* score;
+  int* high_score;
+  int* level;
+  int* speed;
+  int* pause;
+  PlayerState_t* state;
 } GameInfo_t;
 
 typedef struct FiniteStateMachine_t FiniteStateMachine_t;

@@ -1,22 +1,22 @@
 #ifndef SNAKE_CONTROLLER_H
 #define SNAKE_CONTROLLER_H
-
-#include <iostream>
-#include <thread>
-#include <chrono>
+#include "Common.h"
 #include "SnakeModel.h"
 #include "SnakeView.h"
-#include "Common.h"
 
-class SnakeController {
-public:
-    SnakeController(SnakeModel& model, SnakeView& view) : model(model), view(view) {
-        view.startGame();
-    }
 
-private:
-    SnakeModel& model;
-    SnakeView& view;
-};
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+// Функции, доступные для вызова из C
+void updateModelSnake(UserAction_t userAction);
+void getGameInfo(GameInfo_t* gameInfo);
+void snakeRunNow();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // SNAKE_CONTROLLER_H

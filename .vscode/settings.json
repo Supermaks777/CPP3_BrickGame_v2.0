@@ -70,6 +70,10 @@
         "__verbose_abort": "cpp",
         "cstring": "cpp",
         "__nullptr": "cpp",
-        "__string": "cpp"
+        "__string": "cpp",
+        "snakeview.h": "c",
+        "snakecontrollerapi.h": "c",
+        "struct.h": "c",
+        "locale": "c"
     }
 }

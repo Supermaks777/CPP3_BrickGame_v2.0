@@ -7,6 +7,7 @@
 #include <algorithm>
 #include "Common.h"
 #include "struct.h"
+    #include <iostream>
 
 #define RECORD_FILE_NAME "record.db"
 
@@ -78,6 +79,22 @@ public:
             if (userAction == UserAction::Left) updateSnake(Direction::Left);
             if (userAction == UserAction::Non_action) updateSnake(direction);
             if (userAction == UserAction::Action) updateSnake(direction);
+        }
+    }
+
+    UserAction convertUserAction(UserAction_t src) {
+        switch (src) {
+            case Start: return UserAction::Start;
+            case Pause: return UserAction::Pause;
+            case Terminate: return UserAction::Terminate;
+            case Left: return UserAction::Left;
+            case Right: return UserAction::Right;
+            case Up: return UserAction::Up;
+            case Down: return UserAction::Down;
+            case Action: return UserAction::Action;
+            case NoAction: return UserAction::Non_action;
+            case NUM_ACTIONS: return UserAction::NUM_ACTIONS;
+            default: return UserAction::Start;
         }
     }
 
@@ -178,14 +195,16 @@ public:
 
     void getGameInfo(GameInfo_t* gameInfo){
         clearField(gameInfo);
+        std::cout << "point_9" << std::endl;
+        return;
         saveSnake(gameInfo);
         clearNext(gameInfo);
         saveFood(gameInfo);
-        gameInfo->score = score;
-        gameInfo->high_score = highScore;
-        gameInfo->level = level;
-        gameInfo->pause = state == GameState::Paused;
-        gameInfo->state = getState();
+        *gameInfo->score = score;
+        *gameInfo->high_score = highScore;
+        *gameInfo->level = level;
+        *gameInfo->pause = state == GameState::Paused;
+        *gameInfo->state = getState();
     }
 
     void saveSnake(GameInfo_t* gameInfo){

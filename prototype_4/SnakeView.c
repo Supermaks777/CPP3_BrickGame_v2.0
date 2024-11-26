@@ -1,13 +1,7 @@
-#include "front.h"
+#include "SnakeView.h"
+#include <stdlib.h>  
 
-#include <ncurses.h>
-#include <stdio.h>
-#include <sys/time.h>
-#include <time.h>
-#include <unistd.h>
 
-#include "const.h"
-#include "struct.h"
 
 /// @brief определяет сигнал на основании нажатой клавиши
 /// @param key нажатая клавиша
@@ -56,9 +50,9 @@ void printFrames(){
     mvprintw(1, 2 * BOARD_WIDTH + 5, " Score ");
     printRectangle(5, 7, 2 * BOARD_WIDTH + 4, 2 * BOARD_WIDTH + 18);    //highscore
     mvprintw(5, 2 * BOARD_WIDTH + 5, " High score ");
-    PrintRectangle(9, 11, 2 * BOARD_WIDTH + 4, 2 * BOARD_WIDTH + 18);   //level
+    printRectangle(9, 11, 2 * BOARD_WIDTH + 4, 2 * BOARD_WIDTH + 18);   //level
     mvprintw(9, 2 * BOARD_WIDTH + 5, " Level ");
-    PrintRectangle(13, 19, 2 * BOARD_WIDTH + 4, 2 * BOARD_WIDTH + 18);  //nextplayer
+    printRectangle(13, 19, 2 * BOARD_WIDTH + 4, 2 * BOARD_WIDTH + 18);  //nextplayer
     mvprintw(13, 2 * BOARD_WIDTH + 5, " Next figure ");
 }
 
@@ -99,14 +93,14 @@ void printLevel(GameInfo_t *gameInfo) {
 
 /// @brief отобразиь следующую фигурку НЕАКТУАЛЬНО
 /// @param parameters_
-void PrintNextPlayer(Parameters_t *parameters_) {
-  int bit_mask_ = block_collection_[*parameters_->next_player_][0];
-  for (int i = 0; i < BLOCK_HEIGHT; i++) {
-    for (int j = 0; j < BLOCK_WIDTH; j++) {
-      printCell(i + 15, 2 * (j + BOARD_WIDTH) + 8, (bit_mask_ & (1 << (i * 4 + j))) == 0 ? ' ' : ACS_CKBOARD);
-    };
-  };
-};
+// void printNextPlayer(Parameters_t *parameters_) {
+//   int bit_mask_ = block_collection_[*parameters_->next_player_][0];
+//   for (int i = 0; i < BLOCK_HEIGHT; i++) {
+//     for (int j = 0; j < BLOCK_WIDTH; j++) {
+//       printCell(i + 15, 2 * (j + BOARD_WIDTH) + 8, (bit_mask_ & (1 << (i * 4 + j))) == 0 ? ' ' : ACS_CKBOARD);
+//     };
+//   };
+// };
 
 /// @brief отобразиь следующую фигурку
 /// @param parameters_
@@ -150,9 +144,9 @@ void updateScreenSnake(GameInfo_t *gameInfo){
 
 void printStatus(GameInfo_t *gameInfo){
     mvprintw(BOARD_HEIGHT + 3, 2, "                          ");
-    if (gameInfo->state == sStart) mvprintw(BOARD_HEIGHT + 3, 2, "Press ENTER to Start!");
-    if (gameInfo->score == sGameOver) mvprintw(BOARD_HEIGHT + 3, 2, "Game Over! Press ENTER to Start!");
-    if (gameInfo->score == sPause) mvprintw(BOARD_HEIGHT + 3, 2, "Paused! Press P to Continue!");
+    if (*gameInfo->state == sStart) mvprintw(BOARD_HEIGHT + 3, 2, "Press ENTER to Start!");
+    if (*gameInfo->score == sGameOver) mvprintw(BOARD_HEIGHT + 3, 2, "Game Over! Press ENTER to Start!");
+    if (*gameInfo->score == sPause) mvprintw(BOARD_HEIGHT + 3, 2, "Paused! Press P to Continue!");
 }
 
 /// @brief определяет срабатывание по таймеру
@@ -175,31 +169,31 @@ int TimerAction(struct timeval *last_update_time_,
   return result;
 }
 
-void TetrisLoop(GameInfo_t *gameInfo) {
-  //инициализация последнего нажатия
-  LastKey_t last_key_ = {0, 0};
-  bool hold = false;
+// void TetrisLoop(GameInfo_t *gameInfo) {
+//   //инициализация последнего нажатия
+//   LastKey_t last_key_ = {0, 0};
+//   bool hold = false;
 
-  //разное
-  int key = 0;
-  UserAction_t user_action_ = 0;
-  struct timeval last_update_time_, current_time_;
-  gettimeofday(&last_update_time_, NULL);
+//   //разное
+//   int key = 0;
+//   UserAction_t user_action_ = 0;
+//   struct timeval last_update_time_, current_time_;
+//   gettimeofday(&last_update_time_, NULL);
 
-  //игровой цикл
-  while (gameInfo->state != sExitGame) {
-    SetGameBoard(parameters_->game_board_->cells_, parameters_);
-    PrintActualScreen(parameters_);
-    key = getch();
-    if (key != ERR) {
-      user_action_ = GetSignal(key, &hold, &last_key_);
-      userInput(user_action_, hold, parameters_);
-    };
-    if (TimerAction(&last_update_time_, &current_time_,
-                    *parameters_->current_speed_))
-      userInput(Down, false, parameters_);
-  };
-};
+//   //игровой цикл
+//   while (gameInfo->state != sExitGame) {
+//     SetGameBoard(parameters_->game_board_->cells_, parameters_);
+//     printActualScreen(parameters_);
+//     key = getch();
+//     if (key != ERR) {
+//       user_action_ = GetSignal(key, &hold, &last_key_);
+//       userInput(user_action_, hold, parameters_);
+//     };
+//     if (TimerAction(&last_update_time_, &current_time_,
+//                     *parameters_->current_speed_))
+//       userInput(Down, false, parameters_);
+//   };
+// };
 
 void snakeGameLoop(GameInfo_t *gameInfo) {
   //инициализация последнего нажатия
@@ -209,13 +203,17 @@ void snakeGameLoop(GameInfo_t *gameInfo) {
   //разное
   int key = 0;
   UserAction_t userAction = 0;
-  struct timeval last_update_time_, current_time_;
+  // struct timeval last_update_time_, current_time_;
+  struct timeval last_update_time_;
   gettimeofday(&last_update_time_, NULL);
   printFrames();
 
+
   //игровой цикл
-  while (gameInfo->state != sExitGame) {
-    GetGameInfo(gameInfo);
+  while (*gameInfo->state != sExitGame) {
+    getGameInfo(gameInfo);
+  printf("point_8\n");
+  return;
     updateScreenSnake(gameInfo);
     key = getch();
     if (key != ERR) {
@@ -230,8 +228,13 @@ void snakeGameLoop(GameInfo_t *gameInfo) {
 };
 
 void snakeRun(){
+  printf("point_3\n");
 //инициализация GameInfo
-  int field[BOARD_HEIGHT][BOARD_WIDTH] = {0};
+  int field1[BOARD_HEIGHT][BOARD_WIDTH] = {0};
+    // game->field = malloc(rows * sizeof(int *));
+    // for (int i = 0; i < rows; i++) {
+    //     game->field[i] = malloc(cols * sizeof(int));
+    // }
   int next[BOARD_HEIGHT][BOARD_WIDTH] = {0};
   int score = {0};
   int high_score = {0};
@@ -240,9 +243,34 @@ void snakeRun(){
   int pause = {0};
   PlayerState_t state = sStart;
 
+  printf("point_4\n");
+
   GameInfo_t gameInfo = {0};
-  gameInfo.field = &field;
+
+  // инициализация массива
+  gameInfo.field = calloc(BOARD_HEIGHT, sizeof(int *));
+  if (gameInfo.field == NULL) {
+    // Обработка ошибки: не удалось выделить память для указателей строк
+    fprintf(stderr, "Ошибка при выделении памяти для field.\n");
+    return;
+  }
+    for (int i = 0; i < BOARD_HEIGHT; i++) {
+        gameInfo.field[i] = calloc(BOARD_WIDTH, sizeof(int));
+        if (gameInfo.field[i] == NULL) {
+            // Обработка ошибки: не удалось выделить память для столбцов
+            // Освобождение ранее выделенной памяти
+            for (int j = 0; j < i; j++) {
+                free(gameInfo.field[j]);
+            }
+            free(gameInfo.field);
+            fprintf(stderr, "Ошибка при выделении памяти для field[%d].\n", i);
+            return;
+        }
+    }
+  // gameInfo.field = &field1;
   gameInfo.next = &next;
+    // gameInfo.field = (int (*)[BOARD_WIDTH])field;  // Исправьте эту строку
+    // gameInfo.next = (int (*)[BOARD_WIDTH])next;    // Исправьте эту строку
   gameInfo.score = &score;
   gameInfo.high_score = &high_score;
   gameInfo.level = &level;
@@ -250,8 +278,13 @@ void snakeRun(){
   gameInfo.pause = &pause;
   gameInfo.state = &state;
 
+  printf("point_5\n");
+
   initialScreen();
+  printf("point_6\n");
   snakeGameLoop(&gameInfo);
+  printf("point_7\n");
+  return;
   unitialScreen();
 
 }
