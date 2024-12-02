@@ -169,31 +169,36 @@ int TimerAction(struct timeval *last_update_time_,
   return result;
 }
 
-// void TetrisLoop(GameInfo_t *gameInfo) {
-//   //инициализация последнего нажатия
-//   LastKey_t last_key_ = {0, 0};
-//   bool hold = false;
+void TetrisLoop(GameInfo_t *gameInfo) {
+  //инициализация последнего нажатия
+  LastKey_t last_key_ = {0, 0};
+  bool hold = false;
 
-//   //разное
-//   int key = 0;
-//   UserAction_t user_action_ = 0;
-//   struct timeval last_update_time_, current_time_;
-//   gettimeofday(&last_update_time_, NULL);
+  //разное
+  int key = 0;
+  UserAction_t user_action_ = 0;
+  struct timeval last_update_time_, current_time_;
+  gettimeofday(&last_update_time_, NULL);
 
-//   //игровой цикл
-//   while (gameInfo->state != sExitGame) {
-//     SetGameBoard(parameters_->game_board_->cells_, parameters_);
-//     printActualScreen(parameters_);
-//     key = getch();
-//     if (key != ERR) {
-//       user_action_ = GetSignal(key, &hold, &last_key_);
-//       userInput(user_action_, hold, parameters_);
-//     };
-//     if (TimerAction(&last_update_time_, &current_time_,
-//                     *parameters_->current_speed_))
-//       userInput(Down, false, parameters_);
-//   };
-// };
+  //игровой цикл
+  while (gameInfo->state != sExitGame) {
+    getGameInfoTetris(gameInfo);
+    updateScreenTetris(gameInfo);
+
+
+
+    SetGameBoard(parameters_->game_board_->cells_, parameters_);
+    printActualScreen(parameters_);
+    key = getch();
+    if (key != ERR) {
+      user_action_ = getSignal(key, &hold, &last_key_);
+      updateModelTetris(user_action_, hold);
+    };
+    if (TimerAction(&last_update_time_, &current_time_,
+                    *parameters_->current_speed_))
+      updateModelTetris(Down, false);
+  };
+};
 
 void snakeGameLoop(GameInfo_t *gameInfo) {
   //инициализация последнего нажатия
@@ -209,15 +214,13 @@ void snakeGameLoop(GameInfo_t *gameInfo) {
 
   //игровой цикл
   while (*gameInfo->state != sExitGame) {
-    getGameInfo(gameInfo);
-  printf("point_8\n");
-  return;
+    getGameInfoSnake(gameInfo);
     updateScreenSnake(gameInfo);
     key = getch();
     if (key != ERR) {
       userAction = getSignal(key, &hold, &last_key_);
       updateModelSnake(userAction);
-    } else if (TimerAction(&last_update_time_, &current_time_, gameInfo->speed)) updateGameInfoSnake(NoAction);
+    } else if (TimerAction(&last_update_time_, &current_time_, gameInfo->speed)) updateModelSnake(NoAction);
   };
 };
 
@@ -226,10 +229,10 @@ int initialiseMatrix(int*** pointer, int rowsCount, int clmnsCount){
   *pointer = calloc(clmnsCount, sizeof(int *));
   if (*pointer != NULL) {
     for (int i = 0; i < clmnsCount; i++) {
-      *pointer[i] = calloc(rowsCount, sizeof(int));
-      if (*pointer[i] == NULL) {
+      (*pointer)[i] = calloc(rowsCount, sizeof(int));
+      if ((*pointer)[i] == NULL) {
           // при ошибке - освобождение ранее выделенной памяти
-          for (int j = 0; j < i; j++) free(*pointer[j]);
+          for (int j = 0; j < i; j++) free((*pointer)[j]);
           free(*pointer);
           fprintf(stderr, "Ошибка при выделении памяти (столбцы)\n");
           errCode = 1;
@@ -245,7 +248,7 @@ int initialiseMatrix(int*** pointer, int rowsCount, int clmnsCount){
 void freeMatrixMemory(int*** pointer, int rowsCount, int clmnsCount) {
     if (*pointer != NULL) {
       for (int i = 0; i < clmnsCount; i++) {
-          if (*pointer[i] != NULL) free(*pointer[i]);
+          if ((*pointer)[i] != NULL) free((*pointer)[i]);
       };
       free(*pointer);
       *pointer = NULL;

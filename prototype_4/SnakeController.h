@@ -12,7 +12,7 @@ extern "C" {
 
 // Функции, доступные для вызова из C
 void updateModelSnake(UserAction_t userAction);
-void getGameInfo(GameInfo_t* gameInfo);
+void getGameInfoSnake(GameInfo_t* gameInfo);
 void snakeRunNow();
 
 #ifdef __cplusplus

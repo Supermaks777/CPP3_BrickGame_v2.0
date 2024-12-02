@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 void updateModelSnake(UserAction_t userAction);
-void getGameInfo(GameInfo_t* gameInfo);
+void getGameInfoSnake(GameInfo_t* gameInfo);
 void snakeRunNow();
 void snakeRun();  // Добавьте эту строку
 

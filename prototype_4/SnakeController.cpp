@@ -10,7 +10,7 @@ extern "C" void updateModelSnake(UserAction_t userActionSource) {
     model->processing(userAction);
 }
 
-extern "C" void getGameInfo(GameInfo_t* gameInfo) {
+extern "C" void getGameInfoSnake(GameInfo_t* gameInfo) {
     if (model == nullptr) model = new SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
     std::cout << "point_10" << std::endl;
     model->getGameInfo(gameInfo);
