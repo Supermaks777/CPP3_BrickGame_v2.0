@@ -13,12 +13,8 @@ void updateModelTetris(UserAction_t userAction){
 
 }
 
-Parameters_t* initParameneters(){
-  Parameters_t* = calloc();
-  
-}
 
-void getGameInfoTetris(GameInfo_t* gameInfo){
+void getGameInfoTetris(GameInfo_t* gameInfo, bool* flagExit){
   *gameInfo->level = *parameters_->current_level_;
   *gameInfo->score = *parameters_->current_score_;
   *gameInfo->high_score = *parameters_->max_score_;
@@ -27,6 +23,7 @@ void getGameInfoTetris(GameInfo_t* gameInfo){
   *gameInfo->pause = *parameters_->current_state_ == sPause;
   getField(gameInfo->field);
   getNext(gameInfo->next);
+  *flagExit = *parameters_->current_state_ == sExitGame; 
 }
 
 void getField(int*** pointer){

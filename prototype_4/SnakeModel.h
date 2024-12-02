@@ -59,6 +59,8 @@ public:
         if (level < 10 && score % 5 == 0) level++;
     }
 
+
+
     void increaseHighScore(){
         if (score > highScore) highScore = score;
     }
@@ -77,7 +79,7 @@ public:
             if (userAction == UserAction::Right) updateSnake(Direction::Right);
             if (userAction == UserAction::Down) updateSnake(Direction::Down);
             if (userAction == UserAction::Left) updateSnake(Direction::Left);
-            if (userAction == UserAction::Non_action) updateSnake(direction);
+            if (userAction == UserAction::NUM_ACTIONS) updateSnake(direction);
             if (userAction == UserAction::Action) updateSnake(direction);
         }
     }
@@ -92,7 +94,6 @@ public:
             case Up: return UserAction::Up;
             case Down: return UserAction::Down;
             case Action: return UserAction::Action;
-            case NoAction: return UserAction::Non_action;
             case NUM_ACTIONS: return UserAction::NUM_ACTIONS;
             default: return UserAction::Start;
         }
@@ -195,8 +196,6 @@ public:
 
     void getGameInfo(GameInfo_t* gameInfo){
         clearField(gameInfo);
-        std::cout << "point_9" << std::endl;
-        return;
         saveSnake(gameInfo);
         clearNext(gameInfo);
         saveFood(gameInfo);
@@ -204,7 +203,11 @@ public:
         *gameInfo->high_score = highScore;
         *gameInfo->level = level;
         *gameInfo->pause = state == GameState::Paused;
-        *gameInfo->state = getState();
+        *gameInfo->speed = getSpeed();
+    }
+
+    int getSpeed(){
+        return 1000 - level * 50;
     }
 
     void saveSnake(GameInfo_t* gameInfo){

@@ -66,7 +66,6 @@ typedef struct {
   int* level;
   int* speed;
   int* pause;
-  PlayerState_t* state;
 } GameInfo_t;
 
 typedef struct FiniteStateMachine_t FiniteStateMachine_t;
@@ -125,5 +124,19 @@ static const int block_collection_[NUM_BLOCK_TYPES][NUM_BLOCK_STATES] = {
     {0b0000000001100011, 0b0000001001100100, 0b0000000001100011,
      0b0000001001100100},  // Z
 };
+
+typedef enum {
+    MENU_SNAKE,
+    MENU_TETRIS,
+    MENU_EXIT,
+    MENU_SIZE  // Размер перечисления
+} MenuItem_t;
+
+typedef struct {
+  MenuItem_t selected;
+  UserAction_t userAction;
+  GameInfo_t gameInfo;
+  bool flagExit;
+} MainMenuParameters_t;
 
 #endif  // TETRIS_STRUCT

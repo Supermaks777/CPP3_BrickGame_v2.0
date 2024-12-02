@@ -1,33 +1,84 @@
 #include "SnakeView.h"
 #include <stdlib.h>  
+//определяет залипание по тикам
+bool getIsHoldByTick(int key){
+  bool result;
+  static int lastKey = 0;
+  static clock_t lastTime = 0;
+  clock_t currentTime = clock();
+  result = (key == lastKey && currentTime - lastTime < DEBOUNCE_TIME) ? true : false;  
+  lastKey = key;
+  lastTime = currentTime;
+  return result;
+}
 
+// определяет точный промежуток времени между событиями
+double getTimevalDiff(struct timeval *start, struct timeval *end){
+  return (end->tv_sec - start->tv_sec) + (end->tv_usec - end->tv_usec)*1e-6;
+}
+
+// определяет залипание по точному времени
+bool getIsHold(int key){
+  bool result;
+  static int lastKey = 0;
+  static struct timeval lastTime = {0,0};
+  static struct timeval currentTime;
+  gettimeofday(&currentTime, NULL);
+  result = (key == lastKey && getTimevalDiff(&lastTime, &currentTime) < 0.2) ? true : false;
+  lastKey = key;
+  lastTime = currentTime;
+  return result;
+}
+
+// получает сигнал пользовать по нажатой кнопке
+UserAction_t getAction(int key){
+  UserAction_t result;
+  switch (key){
+    case KEY_DOWN:
+    case KEY_DOWN_DOUBLE:
+      result = Down;
+      break;
+    case KEY_LEFT:
+    case KEY_LEFT_DOUBLE:
+      result = Left;
+      break;
+    case KEY_RIGHT:
+    case KEY_RIGHT_DOUBLE:
+      result = Right;
+      break;
+    case KEY_UP:
+    case KEY_UP_DOUBLE:
+      result = Up;
+      break;
+    case KEY_ESCAPE:
+      result = Terminate;
+      break;
+    case KEY_START:
+      result = Start;
+      break;
+    case KEY_SPACE:
+      result = Action;
+      break;
+    case 'p':
+    case 'P':
+      result = Pause;
+    default:
+      result = NUM_ACTIONS;
+      break;
+  };
+  return result;
+}
 
 
 /// @brief определяет сигнал на основании нажатой клавиши
 /// @param key нажатая клавиша
 /// @param hold указатель на переменную удержание
-/// @param last_key_ указатель на структуру последнего нажатия
 /// @return
-UserAction_t getSignal(int key, bool *hold, LastKey_t *last_key_) {
-  //проверяю зажата ли клавиша и сохраняю структуру последнего нажатия
-  clock_t current_time = clock();
-  if (key == last_key_->key &&
-      current_time - last_key_->time_stamp < DEBOUNCE_TIME)
-    *hold = true;
-  last_key_->key = key;
-  last_key_->time_stamp = current_time;
-
-  //определяю сигнал
-  UserAction_t userAction = Up;
-  if (key == KEY_DOWN || key == KEY_DOWN_DOUBLE) userAction = Down;
-  if (key == KEY_LEFT || key == KEY_LEFT_DOUBLE) userAction = Left;
-  if (key == KEY_RIGHT || key == KEY_RIGHT_DOUBLE) userAction = Right;
-  if (key == KEY_ESCAPE) userAction = Terminate;
-  if (key == KEY_START) userAction = Start;
-  if (key == 'p' || key == 'P') userAction = Pause;
-  if (key == KEY_SPACE) userAction = Action;
-  return userAction;
+UserAction_t getSignal(int key, bool *hold) {
+  *hold = getIsHold(key);
+  return getAction(key);
 }
+
 
 /// @brief отобразить игровое поле
 /// @param parameters_
@@ -39,11 +90,13 @@ void printGameBoard(GameInfo_t *gameInfo) {
   }
 };
 
+// печатает заданный символ на игровом поле
 void printCell(int y, int x, chtype symbol){
     mvaddch(y, x, symbol);
     mvaddch(y, x + 1, symbol);
 }
 
+// отрисовывает все рамки
 void printFrames(){
     printRectangle(0, 2 * BOARD_WIDTH + 1, 0, 2 * BOARD_WIDTH + 1);     //gameboard
     printRectangle(1, 3, 2 * BOARD_WIDTH + 4, 2 * BOARD_WIDTH + 18);    //score
@@ -91,16 +144,6 @@ void printLevel(GameInfo_t *gameInfo) {
   mvprintw(10, 2 * BOARD_WIDTH + 6, "%7d", gameInfo->level);
 };
 
-/// @brief отобразиь следующую фигурку НЕАКТУАЛЬНО
-/// @param parameters_
-// void printNextPlayer(Parameters_t *parameters_) {
-//   int bit_mask_ = block_collection_[*parameters_->next_player_][0];
-//   for (int i = 0; i < BLOCK_HEIGHT; i++) {
-//     for (int j = 0; j < BLOCK_WIDTH; j++) {
-//       printCell(i + 15, 2 * (j + BOARD_WIDTH) + 8, (bit_mask_ & (1 << (i * 4 + j))) == 0 ? ' ' : ACS_CKBOARD);
-//     };
-//   };
-// };
 
 /// @brief отобразиь следующую фигурку
 /// @param parameters_
@@ -112,6 +155,7 @@ void printNextPlayer(GameInfo_t *gameInfo) {
   };
 };
 
+// отрисовывает еду на игровом поле
 void printFood(GameInfo_t *gameInfo){
   for (int i = 0; i < BOARD_HEIGHT; i++) {
     for (int j = 0; j < BOARD_WIDTH; j++) {
@@ -120,8 +164,7 @@ void printFood(GameInfo_t *gameInfo){
   }
 }
 
-/// @brief итобразить игровое поле польностью
-/// @param parameters_
+// обновить игровое поле тетрис
 void updateScreenTetris(GameInfo_t *gameInfo){
     printGameBoard(gameInfo);
     printScore(gameInfo);
@@ -132,104 +175,77 @@ void updateScreenTetris(GameInfo_t *gameInfo){
     refresh();
 };
 
+// обновить игровое поле змейка
 void updateScreenSnake(GameInfo_t *gameInfo){
     printGameBoard(gameInfo);
     printScore(gameInfo);
     printHighScore(gameInfo);
     printLevel(gameInfo);
-    printNextPlayer(gameInfo);
     printStatus(gameInfo);
     refresh();
 };
 
-void printStatus(GameInfo_t *gameInfo){
-    mvprintw(BOARD_HEIGHT + 3, 2, "                          ");
-    if (*gameInfo->state == sStart) mvprintw(BOARD_HEIGHT + 3, 2, "Press ENTER to Start!");
-    if (*gameInfo->score == sGameOver) mvprintw(BOARD_HEIGHT + 3, 2, "Game Over! Press ENTER to Start!");
-    if (*gameInfo->score == sPause) mvprintw(BOARD_HEIGHT + 3, 2, "Paused! Press P to Continue!");
+// отобразить паузу
+void printPause(GameInfo_t *gameInfo){
+    // mvprintw(BOARD_HEIGHT + 3, 2, "                          ");
+    if (*gameInfo->pause) mvprintw(BOARD_HEIGHT + 3, 2, "Paused! Press P to Continue!");
 }
 
 /// @brief определяет срабатывание по таймеру
-/// @param last_update_time_ последнее срабатывание
-/// @param current_time_  текущее срабатывание
-/// @param speed скорость (задержка)
-/// @return решение: 1 сработал, 0 нет
-int TimerAction(struct timeval *last_update_time_,
-                struct timeval *current_time_, int speed) {
-  int result = 0;
-  gettimeofday(current_time_, NULL);
-  double elapsed_time =
-      (current_time_->tv_sec - last_update_time_->tv_sec) * 1000.0 +
-      (current_time_->tv_usec - last_update_time_->tv_usec) / 1000.0;
-  if (elapsed_time >= speed) {
-    *last_update_time_ = *current_time_;
-    result = 1;
-  }
+
+bool TimerAction(int speed) {
+  bool result;
+  static struct timeval lastTime = {0,0};
+  static struct timeval currentTime;
+  gettimeofday(&currentTime, NULL);
+  result = (getTimevalDiff(&lastTime, &currentTime) < speed / 1000) ? true : false;
+  lastTime = currentTime;
   usleep(1000);
   return result;
 }
 
-void TetrisLoop(GameInfo_t *gameInfo) {
-  //инициализация последнего нажатия
-  LastKey_t last_key_ = {0, 0};
+// игровой цикл тетриса
+void tetrisGameLoop(GameInfo_t *gameInfo) {
+  bool flagExit = false;
   bool hold = false;
-
-  //разное
   int key = 0;
-  UserAction_t user_action_ = 0;
-  struct timeval last_update_time_, current_time_;
-  gettimeofday(&last_update_time_, NULL);
-
-  //игровой цикл
-  while (gameInfo->state != sExitGame) {
+  UserAction_t userAction = 0;
+  while (!flagExit) {
     getGameInfoTetris(gameInfo);
     updateScreenTetris(gameInfo);
-
-
-
-    SetGameBoard(parameters_->game_board_->cells_, parameters_);
-    printActualScreen(parameters_);
     key = getch();
     if (key != ERR) {
-      user_action_ = getSignal(key, &hold, &last_key_);
-      updateModelTetris(user_action_, hold);
+      userAction = getAction(key);
+      hold = getIsHold(key);
+      updateModelTetris(userAction, hold, &flagExit);
     };
-    if (TimerAction(&last_update_time_, &current_time_,
-                    *parameters_->current_speed_))
-      updateModelTetris(Down, false);
+    if (TimerAction(gameInfo->speed)) updateModelTetris(Down, false, &flagExit);
   };
 };
 
+// игровой цикл змейки
 void snakeGameLoop(GameInfo_t *gameInfo) {
-  //инициализация последнего нажатия
-  LastKey_t last_key_ = {0, 0};
-  bool hold = false;
-
+  bool flagExit = false;
   int key = 0;
   UserAction_t userAction = 0;
-  struct timeval last_update_time_, current_time_;
-  gettimeofday(&last_update_time_, NULL);
-  printFrames();
-
-
-  //игровой цикл
-  while (*gameInfo->state != sExitGame) {
+  while (!flagExit) {
     getGameInfoSnake(gameInfo);
     updateScreenSnake(gameInfo);
     key = getch();
     if (key != ERR) {
-      userAction = getSignal(key, &hold, &last_key_);
+      userAction = getAction(key);
       updateModelSnake(userAction);
-    } else if (TimerAction(&last_update_time_, &current_time_, gameInfo->speed)) updateModelSnake(NoAction);
+    } else if (TimerAction(gameInfo->speed)) updateModelSnake(NUM_ACTIONS);
   };
 };
 
-int initialiseMatrix(int*** pointer, int rowsCount, int clmnsCount){
+// выделение памяти для динамической матрицы (для игрового поля и следущей фигурки)
+int initialiseMatrix(int*** pointer){
   int errCode = 0;
-  *pointer = calloc(clmnsCount, sizeof(int *));
+  *pointer = calloc(BOARD_HEIGHT, sizeof(int *));
   if (*pointer != NULL) {
-    for (int i = 0; i < clmnsCount; i++) {
-      (*pointer)[i] = calloc(rowsCount, sizeof(int));
+    for (int i = 0; i < BOARD_HEIGHT; i++) {
+      (*pointer)[i] = calloc(BOARD_WIDTH, sizeof(int));
       if ((*pointer)[i] == NULL) {
           // при ошибке - освобождение ранее выделенной памяти
           for (int j = 0; j < i; j++) free((*pointer)[j]);
@@ -245,9 +261,10 @@ int initialiseMatrix(int*** pointer, int rowsCount, int clmnsCount){
   return errCode;
 }
 
-void freeMatrixMemory(int*** pointer, int rowsCount, int clmnsCount) {
+// высвобожение памяти от динамической матрицы
+void freeMatrixMemory(int*** pointer) {
     if (*pointer != NULL) {
-      for (int i = 0; i < clmnsCount; i++) {
+      for (int i = 0; i < BOARD_HEIGHT; i++) {
           if ((*pointer)[i] != NULL) free((*pointer)[i]);
       };
       free(*pointer);
@@ -255,48 +272,82 @@ void freeMatrixMemory(int*** pointer, int rowsCount, int clmnsCount) {
     }
 }
 
-void snakeRun(){
-//инициализация GameInfo
-  int score = {0};
-  int high_score = {0};
-  int level = {0};
-  int speed = {0};
-  int pause = {0};
-  PlayerState_t state = sStart;
-
-  GameInfo_t gameInfo = {0};
-
-  gameInfo.field = NULL;
-  gameInfo.next = NULL;
-  gameInfo.score = &score;
-  gameInfo.high_score = &high_score;
-  gameInfo.level = &level;
-  gameInfo.speed = &speed;
-  gameInfo.pause = &pause;
-  gameInfo.state = &state;
-
-  if (!initialiseMatrix(&gameInfo.field, BOARD_HEIGHT, BOARD_WIDTH) && !initialiseMatrix(&gameInfo.next, BOARD_HEIGHT, BOARD_WIDTH)){
-    initialScreen();
-    snakeGameLoop(&gameInfo);
-    unitialScreen();
-  }
-  freeMatrixMemory(&gameInfo.field, BOARD_HEIGHT, BOARD_WIDTH);
-  freeMatrixMemory(&gameInfo.next, BOARD_HEIGHT, BOARD_WIDTH);
-
-}
-
-
+//запуск и настройка ncurses
 void initialScreen() {
-  //запуск и настройка ncurses
-  srand(time(NULL));  //инициалзиация псевдослучайного ряда
-  initscr();             // инициализация дисплея
-  keypad(stdscr, true);  // разрешить специальные символы
-  noecho();              // не показывать ввод
-  curs_set(0);           // спрятать курсор
-  nodelay(stdscr, true);  // не ждет ответа пользователя
-  endwin();  // конец работы в интерфейсе
+  srand(time(NULL));        //  инициалзиация псевдослучайного ряда
+  initscr();                //  инициализация дисплея
+  keypad(stdscr, true);     //  разрешить специальные символы
+  noecho();                 //  не показывать ввод
+  curs_set(0);              //  спрятать курсор
+  nodelay(stdscr, true);    //  не ждет ответа пользователя
+  clear();                  //  очищаю экран        
 };
 
-void unitialScreen(){
-    endwin();  // конец работы в интерфейсе
+// конец работы в интерфейсе
+void uninitialScreen(){
+    endwin();  
 }
+
+// игровой цикл главного меню
+void mainLoop(){
+  MenuItem_t selected = MENU_SNAKE;
+  UserAction_t userAction;
+  bool flagExit = false;
+  GameInfo_t gameInfo = {0};
+  MainMenuParameters_t parameters = {MENU_SNAKE, NUM_ACTIONS, &gameInfo, false};
+  if (!initialiseMatrix(&gameInfo.field) && !initialiseMatrix(&gameInfo.next)){
+    initialScreen();
+    while (!parameters.flagExit){
+      printMainMenu(&parameters);
+      int key = getch();
+      parameters.userAction = getAction(key);
+      updateMainMenu(&parameters);
+    }   
+    unitialScreen(); 
+  }
+  freeMatrixMemory(&gameInfo.field);
+  freeMatrixMemory(&gameInfo.next);
+}
+
+// отображение главного меню
+void printMainMenu(MainMenuParameters_t* parameters){
+  printFrames();
+  const char *menuItems[] = {"Snake", "Tetris", "Exit"};
+  for (int i = 0; i < MENU_SIZE; i++){
+    if (i == parameters->selected) attron(A_REVERSE);
+    mvprintw(i + 5, 10, "%s", menuItems[i]);
+    attroff(A_REVERSE);
+  }
+  refresh();
+}
+
+// обработка действия пользователя
+void updateMainMenu(MainMenuParameters_t* parameters){
+  switch (parameters->userAction){
+    case Up:
+      if (parameters->selected > 0) parameters->selected--;
+      break;
+    case Down:
+      if (parameters->selected < MENU_SIZE - 1) parameters->selected++;
+      break;
+    case Action:
+      ProcessinMainMenu(parameters);
+      break;
+  }
+}
+
+// обработка нажатия кнопки "действие"
+void processinMainMenu(MainMenuParameters_t* parameters){
+  switch (parameters->selected){
+    case MENU_SNAKE:
+      snakeGameLoop(&parameters->gameInfo);
+      break;
+    case MENU_TETRIS:
+      tetrisGameLoop(&parameters->gameInfo);
+      break;
+    case MENU_EXIT:
+      parameters->flagExit = true;
+      break;
+  }
+}
+
