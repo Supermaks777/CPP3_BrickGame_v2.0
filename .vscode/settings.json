@@ -74,6 +74,9 @@
         "snakeview.h": "c",
         "snakecontrollerapi.h": "c",
         "struct.h": "c",
-        "locale": "c"
+        "locale": "c",
+        "view.h": "c",
+        "stdlib.h": "c",
+        "time.h": "c"
     }
 }

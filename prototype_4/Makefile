@@ -10,8 +10,8 @@ CFLAGS = -std=c11 -Wall
 LDFLAGS = -lncurses
 
 # Source files
-SRCS_CPP = snake.cpp SnakeController.cpp 
-SRCS_C = SnakeView.c
+SRCS_CPP = snake.cpp SnakeController.cpp SnakeModel.cpp
+SRCS_C = View.c
 
 # Object files
 OBJS_CPP = $(SRCS_CPP:.cpp=.o)

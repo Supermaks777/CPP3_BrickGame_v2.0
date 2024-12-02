@@ -7,10 +7,15 @@
 extern "C" {
 #endif
 
-void updateModelSnake(UserAction_t userAction);
+void updateModelSnake(UserAction_t userAction, bool* flagExit);
 void getGameInfoSnake(GameInfo_t* gameInfo);
-void snakeRunNow();
-void snakeRun();  // Добавьте эту строку
+void startGameSnake();
+void exitGameSnake();
+
+void startGame();
+
+// void snakeRunNow();
+// void snakeRun();  // Добавьте эту строку
 
 #ifdef __cplusplus
 }

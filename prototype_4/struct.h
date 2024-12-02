@@ -61,11 +61,11 @@ typedef struct {
 typedef struct {
   int **field;
   int **next;
-  int* score;
-  int* high_score;
-  int* level;
-  int* speed;
-  int* pause;
+  int score;
+  int high_score;
+  int level;
+  int speed;
+  int pause;
 } GameInfo_t;
 
 typedef struct FiniteStateMachine_t FiniteStateMachine_t;
@@ -135,7 +135,7 @@ typedef enum {
 typedef struct {
   MenuItem_t selected;
   UserAction_t userAction;
-  GameInfo_t gameInfo;
+  GameInfo_t* gameInfo;
   bool flagExit;
 } MainMenuParameters_t;
 

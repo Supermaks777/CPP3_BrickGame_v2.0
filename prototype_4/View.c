@@ -1,4 +1,7 @@
-#include "SnakeView.h"
+#ifndef VIEW_C
+#define VIEW_C
+
+#include "View.h"
 #include <stdlib.h>  
 //определяет залипание по тикам
 bool getIsHoldByTick(int key){
@@ -186,9 +189,9 @@ void updateScreenSnake(GameInfo_t *gameInfo){
 };
 
 // отобразить паузу
-void printPause(GameInfo_t *gameInfo){
+void printStatus(GameInfo_t *gameInfo){
     // mvprintw(BOARD_HEIGHT + 3, 2, "                          ");
-    if (*gameInfo->pause) mvprintw(BOARD_HEIGHT + 3, 2, "Paused! Press P to Continue!");
+    if (gameInfo->pause) mvprintw(BOARD_HEIGHT + 3, 2, "Paused! Press P to Continue!");
 }
 
 /// @brief определяет срабатывание по таймеру
@@ -205,38 +208,40 @@ bool TimerAction(int speed) {
 }
 
 // игровой цикл тетриса
-void tetrisGameLoop(GameInfo_t *gameInfo) {
-  bool flagExit = false;
-  bool hold = false;
-  int key = 0;
-  UserAction_t userAction = 0;
-  while (!flagExit) {
-    getGameInfoTetris(gameInfo);
-    updateScreenTetris(gameInfo);
-    key = getch();
-    if (key != ERR) {
-      userAction = getAction(key);
-      hold = getIsHold(key);
-      updateModelTetris(userAction, hold, &flagExit);
-    };
-    if (TimerAction(gameInfo->speed)) updateModelTetris(Down, false, &flagExit);
-  };
-};
+// void tetrisGameLoop(GameInfo_t *gameInfo) {
+//   bool flagExit = false;
+//   bool hold = false;
+//   int key = 0;
+//   UserAction_t userAction = 0;
+//   while (!flagExit) {
+//     getGameInfoTetris(gameInfo);
+//     updateScreenTetris(gameInfo);
+//     key = getch();
+//     if (key != ERR) {
+//       userAction = getAction(key);
+//       hold = getIsHold(key);
+//       updateModelTetris(userAction, hold, &flagExit);
+//     };
+//     if (TimerAction(gameInfo->speed)) updateModelTetris(Down, false, &flagExit);
+//   };
+// };
 
 // игровой цикл змейки
 void snakeGameLoop(GameInfo_t *gameInfo) {
   bool flagExit = false;
   int key = 0;
   UserAction_t userAction = 0;
+  startGameSnake();
   while (!flagExit) {
     getGameInfoSnake(gameInfo);
     updateScreenSnake(gameInfo);
     key = getch();
     if (key != ERR) {
       userAction = getAction(key);
-      updateModelSnake(userAction);
-    } else if (TimerAction(gameInfo->speed)) updateModelSnake(NUM_ACTIONS);
+      updateModelSnake(userAction, &flagExit);
+    } else if (TimerAction(gameInfo->speed)) updateModelSnake(NUM_ACTIONS, &flagExit);
   };
+  exitGameSnake();
 };
 
 // выделение памяти для динамической матрицы (для игрового поля и следущей фигурки)
@@ -290,9 +295,6 @@ void uninitialScreen(){
 
 // игровой цикл главного меню
 void mainLoop(){
-  MenuItem_t selected = MENU_SNAKE;
-  UserAction_t userAction;
-  bool flagExit = false;
   GameInfo_t gameInfo = {0};
   MainMenuParameters_t parameters = {MENU_SNAKE, NUM_ACTIONS, &gameInfo, false};
   if (!initialiseMatrix(&gameInfo.field) && !initialiseMatrix(&gameInfo.next)){
@@ -303,7 +305,7 @@ void mainLoop(){
       parameters.userAction = getAction(key);
       updateMainMenu(&parameters);
     }   
-    unitialScreen(); 
+    uninitialScreen(); 
   }
   freeMatrixMemory(&gameInfo.field);
   freeMatrixMemory(&gameInfo.next);
@@ -331,7 +333,9 @@ void updateMainMenu(MainMenuParameters_t* parameters){
       if (parameters->selected < MENU_SIZE - 1) parameters->selected++;
       break;
     case Action:
-      ProcessinMainMenu(parameters);
+      processinMainMenu(parameters);
+      break;
+    default:
       break;
   }
 }
@@ -340,14 +344,17 @@ void updateMainMenu(MainMenuParameters_t* parameters){
 void processinMainMenu(MainMenuParameters_t* parameters){
   switch (parameters->selected){
     case MENU_SNAKE:
-      snakeGameLoop(&parameters->gameInfo);
+      snakeGameLoop(parameters->gameInfo);
       break;
     case MENU_TETRIS:
-      tetrisGameLoop(&parameters->gameInfo);
+      // tetrisGameLoop(&parameters->gameInfo);
       break;
     case MENU_EXIT:
       parameters->flagExit = true;
       break;
+    default:
+      break;
   }
 }
 
+#endif // VIEW_C

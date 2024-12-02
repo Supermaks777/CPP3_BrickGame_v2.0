@@ -2,7 +2,7 @@
 #define SNAKE_CONTROLLER_H
 #include "Common.h"
 #include "SnakeModel.h"
-#include "SnakeView.h"
+#include "View.h"
 
 
 #ifdef __cplusplus
@@ -11,9 +11,14 @@ extern "C" {
 
 
 // Функции, доступные для вызова из C
-void updateModelSnake(UserAction_t userAction);
+void updateModelSnake(UserAction_t userAction, bool* flagExit);
 void getGameInfoSnake(GameInfo_t* gameInfo);
-void snakeRunNow();
+void startGameSnake();
+void exitGameSnake();
+
+void startGame();
+
+// void snakeRunNow();
 
 #ifdef __cplusplus
 }

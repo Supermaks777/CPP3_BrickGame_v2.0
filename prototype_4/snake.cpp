@@ -3,8 +3,7 @@
 
 
     int main() {
-        std::cout << "point_1" << std::endl;
-        snakeRunNow();
+        startGame();
         return 0;
     }
 
