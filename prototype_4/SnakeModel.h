@@ -14,7 +14,8 @@
 
 class SnakeModel {
 public:
-    SnakeModel(int width, int height) : width(width), height(height){ startGame(); }
+    // SnakeModel(int width, int height) : width(width), height(height){ startGame(); }
+    SnakeModel(int height, int width) : width(width), height(height){ startGame(); }
     int width, height;
     UserAction convertUserAction(UserAction_t src);
     void updateModel(UserAction userAction, bool* flagExit);

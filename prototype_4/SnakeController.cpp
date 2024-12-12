@@ -24,7 +24,7 @@ extern "C" void startGameSnake(){
     model->startGame();
 }
 
-extern "C" void exitGameSnake(){
+extern "C" void  exitGameSnake(){
     model->exitGame();
 }
 

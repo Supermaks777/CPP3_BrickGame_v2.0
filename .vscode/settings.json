@@ -77,6 +77,15 @@
         "locale": "c",
         "view.h": "c",
         "stdlib.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "__hash_table": "cpp",
+        "__locale": "cpp",
+        "bitset": "cpp",
+        "complex": "cpp",
+        "condition_variable": "cpp",
+        "ios": "cpp",
+        "mutex": "cpp",
+        "queue": "cpp",
+        "stack": "cpp"
     }
 }

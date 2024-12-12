@@ -64,11 +64,15 @@ UserAction_t getAction(int key){
       break;
     case 'p':
     case 'P':
+    case 'З':
+    case 'з':
       result = Pause;
+      break;
     default:
       result = NUM_ACTIONS;
       break;
   };
+  mvprintw(29, 2, "%7d", result);
   return result;
 }
 
@@ -85,18 +89,35 @@ UserAction_t getSignal(int key, bool *hold) {
 
 /// @brief отобразить игровое поле
 /// @param parameters_
-void printGameBoard(GameInfo_t *gameInfo) {
+void printFood(GameInfo_t *gameInfo) {
+  int length = 0;
   for (int i = 0; i < BOARD_HEIGHT; i++) {
     for (int j = 0; j < BOARD_WIDTH; j++) {
-        printCell(i + 1, 2 * j + 1, gameInfo->field[i][j] == 0 ? ' ' : ACS_CKBOARD);
+        if (gameInfo->next[i][j]) printCell(i,j,'F');
+        // printCell(i, j, gameInfo->next[i][j] == 0 ? ' ' : 'F');
+        length += gameInfo->next[i][j];
     }
   }
+  mvprintw(27, 2, "%7d", length);
+};
+
+/// @brief отобразить игровое поле
+/// @param parameters_
+void printGameBoard(GameInfo_t *gameInfo) {
+  int length = 0;
+  for (int i = 0; i < BOARD_HEIGHT; i++) {
+    for (int j = 0; j < BOARD_WIDTH; j++) {
+        printCell(i, j, gameInfo->field[i][j] == 0 ? ' ' : ACS_CKBOARD);
+        length += gameInfo->field[i][j];
+    }
+  }
+  mvprintw(25, 2, "%7d", length);
 };
 
 // печатает заданный символ на игровом поле
 void printCell(int y, int x, chtype symbol){
-    mvaddch(y, x, symbol);
-    mvaddch(y, x + 1, symbol);
+    mvaddch(1 + y, 1 + 2 * x, symbol);
+    mvaddch(1 + y, 1 + 2 * x + 1, symbol);
 }
 
 // отрисовывает все рамки
@@ -158,14 +179,6 @@ void printNextPlayer(GameInfo_t *gameInfo) {
   };
 };
 
-// отрисовывает еду на игровом поле
-void printFood(GameInfo_t *gameInfo){
-  for (int i = 0; i < BOARD_HEIGHT; i++) {
-    for (int j = 0; j < BOARD_WIDTH; j++) {
-        printCell(i + 1, 2 * j + 1, gameInfo->next[i][j] == 0 ? ' ' : ACS_CKBOARD);
-    }
-  }
-}
 
 // обновить игровое поле тетрис
 void updateScreenTetris(GameInfo_t *gameInfo){
@@ -181,6 +194,7 @@ void updateScreenTetris(GameInfo_t *gameInfo){
 // обновить игровое поле змейка
 void updateScreenSnake(GameInfo_t *gameInfo){
     printGameBoard(gameInfo);
+    printFood(gameInfo);
     printScore(gameInfo);
     printHighScore(gameInfo);
     printLevel(gameInfo);
@@ -191,20 +205,28 @@ void updateScreenSnake(GameInfo_t *gameInfo){
 // отобразить паузу
 void printStatus(GameInfo_t *gameInfo){
     // mvprintw(BOARD_HEIGHT + 3, 2, "                          ");
-    if (gameInfo->pause) mvprintw(BOARD_HEIGHT + 3, 2, "Paused! Press P to Continue!");
+    // if (gameInfo->pause) mvprintw(BOARD_HEIGHT + 3, 2, "Paused! Press P to Continue!");
+    mvprintw(BOARD_HEIGHT + 3, 2, (gameInfo->pause) ? "Paused! Press P to Continue!" : "                              ");
 }
 
-/// @brief определяет срабатывание по таймеру
+/// @brief определяет срабатывание по таймеру, то есть истина при срабатывании таймера (превышении порога)
 
 bool TimerAction(int speed) {
-  bool result;
+  bool result = {false};
   static struct timeval lastTime = {0,0};
   static struct timeval currentTime;
   gettimeofday(&currentTime, NULL);
-  result = (getTimevalDiff(&lastTime, &currentTime) < speed / 1000) ? true : false;
-  lastTime = currentTime;
-  usleep(1000);
+  if (getTimevalDiff(&lastTime, &currentTime) * 1000 > speed){
+    result = true;
+    lastTime = currentTime;
+  } else usleep(1000);
   return result;
+
+
+  // result = (getTimevalDiff(&lastTime, &currentTime) > speed / 1000) ? true : false;
+  // lastTime = currentTime;
+  // usleep(1000);
+  // return result;
 }
 
 // игровой цикл тетриса
@@ -239,8 +261,10 @@ void snakeGameLoop(GameInfo_t *gameInfo) {
     if (key != ERR) {
       userAction = getAction(key);
       updateModelSnake(userAction, &flagExit);
-    } else if (TimerAction(gameInfo->speed)) updateModelSnake(NUM_ACTIONS, &flagExit);
+    } else if (TimerAction(gameInfo->speed)) updateModelSnake(Action, &flagExit);
   };
+  clear();
+  printFrames();
   exitGameSnake();
 };
 

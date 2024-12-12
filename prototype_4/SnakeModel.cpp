@@ -76,7 +76,6 @@
             if (userAction == UserAction::Right) updateSnake(Direction::Right);
             if (userAction == UserAction::Down) updateSnake(Direction::Down);
             if (userAction == UserAction::Left) updateSnake(Direction::Left);
-            if (userAction == UserAction::NUM_ACTIONS) updateSnake(direction);
             if (userAction == UserAction::Action) updateSnake(direction);
         }
         *flagExit = state == GameState::GameOver;
@@ -111,7 +110,7 @@
         snake.clear();
         level = 0;
         score = 0;
-        state = GameState::Paused;
+        state = GameState::Playing;
         direction = Direction::Right;
         initSnake();
         addFood();
@@ -239,7 +238,7 @@
     void SnakeModel::clearField(GameInfo_t* gameInfo){
         for (int y = 0; y < BOARD_HEIGHT; y++){
             for (int x = 0; x < BOARD_WIDTH; x++){
-                gameInfo->field[x][y] = 0;
+                gameInfo->field[y][x] = 0;
             }
         }
     }
@@ -249,7 +248,7 @@
     void SnakeModel::clearNext(GameInfo_t* gameInfo){
         for (int y = 0; y < BOARD_HEIGHT; y++){
             for (int x = 0; x < BOARD_WIDTH; x++){
-                gameInfo->next[x][y] = 0;
+                gameInfo->next[y][x] = 0;
             }
         }
     }

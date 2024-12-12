@@ -24,6 +24,7 @@ double getTimevalDiff(struct timeval *start, struct timeval *end);
 bool getIsHold(int key);
 UserAction_t getAction(int key);
 UserAction_t getSignal(int key, bool *hold);
+void printFood(GameInfo_t *gameInfo);
 void printGameBoard(GameInfo_t *gameInfo);
 void printCell(int y, int x, chtype symbol);
 void printFrames();
