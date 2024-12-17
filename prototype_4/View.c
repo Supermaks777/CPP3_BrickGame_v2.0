@@ -202,31 +202,32 @@ void updateScreenSnake(GameInfo_t *gameInfo){
     refresh();
 };
 
+// обновить игровое поле универсальное
+void updateScreen(GameInfo_t *gameInfo){
+    printGameBoard(gameInfo);
+    printScore(gameInfo);
+    printHighScore(gameInfo);
+    printLevel(gameInfo);
+    printStatus(gameInfo);
+    refresh();
+};
+
 // отобразить паузу
 void printStatus(GameInfo_t *gameInfo){
-    // mvprintw(BOARD_HEIGHT + 3, 2, "                          ");
-    // if (gameInfo->pause) mvprintw(BOARD_HEIGHT + 3, 2, "Paused! Press P to Continue!");
     mvprintw(BOARD_HEIGHT + 3, 2, (gameInfo->pause) ? "Paused! Press P to Continue!" : "                              ");
 }
 
 /// @brief определяет срабатывание по таймеру, то есть истина при срабатывании таймера (превышении порога)
 
-bool TimerAction(int speed) {
+bool TimerAction(int speed, struct timeval * lastTime) {
   bool result = {false};
-  static struct timeval lastTime = {0,0};
-  static struct timeval currentTime;
+  struct timeval currentTime;
   gettimeofday(&currentTime, NULL);
-  if (getTimevalDiff(&lastTime, &currentTime) * 1000 > speed){
+  if (getTimevalDiff(lastTime, &currentTime) * 1000 > speed){
     result = true;
-    lastTime = currentTime;
+    *lastTime = currentTime;
   } else usleep(1000);
   return result;
-
-
-  // result = (getTimevalDiff(&lastTime, &currentTime) > speed / 1000) ? true : false;
-  // lastTime = currentTime;
-  // usleep(1000);
-  // return result;
 }
 
 // игровой цикл тетриса
@@ -249,32 +250,60 @@ bool TimerAction(int speed) {
 // };
 
 // игровой цикл змейки
-void snakeGameLoop(GameInfo_t *gameInfo) {
+// void snakeGameLoop(GameInfo_t *gameInfo) {
+//   bool flagExit = false;
+//   int key = 0;
+//   struct timeval lastTime;
+//   gettimeofday(&lastTime, NULL);
+//   UserAction_t userAction = 0;
+//   startGameSnake();
+//   while (!flagExit) {
+//     getGameInfoSnake(gameInfo);
+//     updateScreenSnake(gameInfo);
+//     key = getch();
+//     if (key != ERR) {
+//       userAction = getAction(key);
+//       updateModelSnake(userAction, &flagExit);
+//       gettimeofday(&lastTime, NULL);
+//     } else if (TimerAction(gameInfo->speed, &lastTime)) updateModelSnake(Action, &flagExit);
+//   };
+//   clear();
+//   printFrames();
+//   exitGameSnake();
+// };
+
+// игровой цикл змейки
+void GameLoop(GameInfo_t *gameInfo, MenuItem_t selectedGame) {
   bool flagExit = false;
+  bool hold = false;
   int key = 0;
+  struct timeval lastTime;
+  gettimeofday(&lastTime, NULL);
   UserAction_t userAction = 0;
-  startGameSnake();
+  startGame(selectedGame);
   while (!flagExit) {
-    getGameInfoSnake(gameInfo);
-    updateScreenSnake(gameInfo);
+    getGameInfo(gameInfo, selectedGame);
+    updateScreen(gameInfo);
     key = getch();
     if (key != ERR) {
       userAction = getAction(key);
-      updateModelSnake(userAction, &flagExit);
-    } else if (TimerAction(gameInfo->speed)) updateModelSnake(Action, &flagExit);
+      hold = getIsHold(key);
+      updateModel(userAction, &flagExit, selectedGame);
+      gettimeofday(&lastTime, NULL);
+    } else if (TimerAction(gameInfo->speed, &lastTime)) updateModel(Action, &flagExit, selectedGame);
   };
   clear();
   printFrames();
-  exitGameSnake();
+  exitGame(selectedGame);
 };
 
 // выделение памяти для динамической матрицы (для игрового поля и следущей фигурки)
-int initialiseMatrix(int*** pointer){
+int initialiseMatrix(int*** pointer, int height, int width){
   int errCode = 0;
-  *pointer = calloc(BOARD_HEIGHT, sizeof(int *));
+  *pointer = calloc(height, sizeof(int *));
   if (*pointer != NULL) {
-    for (int i = 0; i < BOARD_HEIGHT; i++) {
-      (*pointer)[i] = calloc(BOARD_WIDTH, sizeof(int));
+    for (int i = 0; i < height; i++) {
+      (*pointer)[i] = calloc(width, sizeof(int));
       if ((*pointer)[i] == NULL) {
           // при ошибке - освобождение ранее выделенной памяти
           for (int j = 0; j < i; j++) free((*pointer)[j]);
@@ -291,9 +320,9 @@ int initialiseMatrix(int*** pointer){
 }
 
 // высвобожение памяти от динамической матрицы
-void freeMatrixMemory(int*** pointer) {
+void freeMatrixMemory(int*** pointer, int height) {
     if (*pointer != NULL) {
-      for (int i = 0; i < BOARD_HEIGHT; i++) {
+      for (int i = 0; i < height; i++) {
           if ((*pointer)[i] != NULL) free((*pointer)[i]);
       };
       free(*pointer);
@@ -321,7 +350,7 @@ void uninitialScreen(){
 void mainLoop(){
   GameInfo_t gameInfo = {0};
   MainMenuParameters_t parameters = {MENU_SNAKE, NUM_ACTIONS, &gameInfo, false};
-  if (!initialiseMatrix(&gameInfo.field) && !initialiseMatrix(&gameInfo.next)){
+  if (!initialiseMatrix(&gameInfo.field, BOARD_HEIGHT, BOARD_WIDTH) && !initialiseMatrix(&gameInfo.next, BLOCK_HEIGHT, BLOCK_WIDTH)){
     initialScreen();
     while (!parameters.flagExit){
       printMainMenu(&parameters);
@@ -331,8 +360,8 @@ void mainLoop(){
     }   
     uninitialScreen(); 
   }
-  freeMatrixMemory(&gameInfo.field);
-  freeMatrixMemory(&gameInfo.next);
+  freeMatrixMemory(&gameInfo.field, BOARD_HEIGHT);
+  freeMatrixMemory(&gameInfo.next, BLOCK_HEIGHT);
 }
 
 // отображение главного меню
@@ -368,7 +397,7 @@ void updateMainMenu(MainMenuParameters_t* parameters){
 void processinMainMenu(MainMenuParameters_t* parameters){
   switch (parameters->selected){
     case MENU_SNAKE:
-      snakeGameLoop(parameters->gameInfo);
+      GameLoop(parameters->gameInfo, MENU_SNAKE);
       break;
     case MENU_TETRIS:
       // tetrisGameLoop(&parameters->gameInfo);

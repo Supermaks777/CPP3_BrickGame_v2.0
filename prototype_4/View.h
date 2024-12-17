@@ -37,17 +37,19 @@ void printFood(GameInfo_t *gameInfo);
 void updateScreenTetris(GameInfo_t *gameInfo);
 void updateScreenSnake(GameInfo_t *gameInfo);
 void printStatus(GameInfo_t *gameInfo);
-bool TimerAction(int speed);
+bool TimerAction(int speed, struct timeval * lastTime);
 void tetrisGameLoop(GameInfo_t *gameInfo);
 void snakeGameLoop(GameInfo_t *gameInfo);
-int initialiseMatrix(int*** pointer);
-void freeMatrixMemory(int*** pointer);
+int initialiseMatrix(int*** pointer, int height, int width);
+void freeMatrixMemory(int*** pointer, int height);
 void initialScreen();
 void uninitialScreen();
 void mainLoop();
 void printMainMenu(MainMenuParameters_t* parameters);
 void updateMainMenu(MainMenuParameters_t* parameters);
 void processinMainMenu(MainMenuParameters_t* parameters);
+void updateScreen(GameInfo_t *gameInfo);
+void GameLoop(GameInfo_t *gameInfo, MenuItem_t selectedGame);
 
 #ifdef __cplusplus
 }

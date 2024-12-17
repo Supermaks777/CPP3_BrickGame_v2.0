@@ -3,7 +3,7 @@
 
 
     int main() {
-        startGame();
+        startApp();
         return 0;
     }
 

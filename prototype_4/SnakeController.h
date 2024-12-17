@@ -11,12 +11,12 @@ extern "C" {
 
 
 // Функции, доступные для вызова из C
-void updateModelSnake(UserAction_t userAction, bool* flagExit);
-void getGameInfoSnake(GameInfo_t* gameInfo);
-void startGameSnake();
-void exitGameSnake();
+void updateModel(UserAction_t userAction, bool* flagExit, MenuItem_t selectedGame);
+void getGameInfo(GameInfo_t* gameInfo, MenuItem_t selectedGame);
+void startGame(MenuItem_t selectedGame);
+void exitGame(MenuItem_t selectedGame);
 
-void startGame();
+void startApp();
 
 // void snakeRunNow();
 

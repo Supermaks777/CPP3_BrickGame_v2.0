@@ -204,7 +204,6 @@
     void SnakeModel::getGameInfo(GameInfo_t* gameInfo){
         clearField(gameInfo);
         saveSnake(gameInfo);
-        clearNext(gameInfo);
         saveFood(gameInfo);
         gameInfo->score = score;
         gameInfo->high_score = highScore;
@@ -216,7 +215,7 @@
     /// @brief возвращает значение скорости (задержка в миллисекундах)
     /// @return задержка в миллисекундах
     int SnakeModel::getSpeed(){
-        return 1000 - level * 50;
+        return 400 - level * 30;
     }
 
     /// @brief обновляет игровое поле (field) в структуре для отображения 
@@ -230,7 +229,7 @@
     /// @brief обновляет поле next в структуре для отображения (для отображения еды)
     /// @param gameInfo указатель на структуру
     void SnakeModel::saveFood(GameInfo_t* gameInfo){
-        gameInfo->next[food.second][food.first] = 1;
+        gameInfo->field[food.second][food.first] = 1;
     }
 
     /// @brief очищает игровое поле (field) в структуре на отображение
@@ -243,15 +242,6 @@
         }
     }
 
-    /// @brief очищает поле next (отображение еды) в структуре на отображение
-    /// @param gameInfo указатель на структуру
-    void SnakeModel::clearNext(GameInfo_t* gameInfo){
-        for (int y = 0; y < BOARD_HEIGHT; y++){
-            for (int x = 0; x < BOARD_WIDTH; x++){
-                gameInfo->next[y][x] = 0;
-            }
-        }
-    }
 
     // /// @brief 
     // /// @return 
