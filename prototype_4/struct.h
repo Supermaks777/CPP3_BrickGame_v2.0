@@ -14,10 +14,10 @@ typedef enum {
   sShifting,
   sAttaching,
   sPause,
-  sGameOver,
   sExitGame,
-  sPlaying,
   sWin,
+  sPlaying,
+  sGameOver,
   NUM_STATES
 } PlayerState_t;
 
@@ -68,8 +68,6 @@ typedef struct {
   int pause;
 } GameInfo_t;
 
-typedef struct FiniteStateMachine_t FiniteStateMachine_t;
-
 //доска
 typedef struct {
   int cells_[BOARD_HEIGHT][BOARD_WIDTH];
@@ -83,29 +81,32 @@ typedef struct {
   int block_rotation_;
 } Player_t;
 
-//параметры игры
+
+// Параметры игры
 typedef struct {
-  FiniteStateMachine_t *fsm_;
-  PlayerState_t *current_state_;
-  Board_t *board_;
-  Player_t *current_player_;
-  BlockType_t *next_player_;
-  Board_t *game_board_;
-  Board_t *check_board_;
-  int *current_score_;
-  int *current_level_;
-  int *current_speed_;
-  int *max_score_;
+  FiniteStateMachine_t fsm_;
+  PlayerState_t current_state_;
+  Board_t board_;
+  Player_t current_player_;
+  BlockType_t next_player_;
+  Board_t game_board_;
+  Board_t check_board_;
+  int current_score_;
+  int current_level_;
+  int current_speed_;
+  int max_score_;
 } Parameters_t;
 
 // Указатель на функцию
-typedef void (*ActionCallback)(Parameters_t *);
+typedef void (*ActionCallback)(Parameters_t *);  // Теперь корректно
 
-//структура fsm
+typedef struct FiniteStateMachine_t FiniteStateMachine_t;
 struct FiniteStateMachine_t {
-  ActionCallback action_table_[NUM_STATES][NUM_ACTIONS];
-  ActionCallback event_table_[NUM_STATES][NUM_EVENTS];
+  ActionCallback action_table_[NUM_STATES][NUM_ACTIONS];  // Теперь корректно
 };
+
+// Указатель на функцию
+
 
 // Глобальные переменные
 static const int block_collection_[NUM_BLOCK_TYPES][NUM_BLOCK_STATES] = {

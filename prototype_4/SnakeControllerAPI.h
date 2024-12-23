@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-void updateModel(UserAction_t userAction, bool* flagExit, MenuItem_t selectedGame);
+void updateModel(UserAction_t userAction, bool hold, bool* flagExit, MenuItem_t selectedGame);
 void getGameInfo(GameInfo_t* gameInfo, MenuItem_t selectedGame);
 void startGame(MenuItem_t selectedGame);
 void exitGame(MenuItem_t selectedGame);

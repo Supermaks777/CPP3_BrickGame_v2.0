@@ -1,41 +1,73 @@
 #include "backend.h"
 
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
 
-#include "const.h"
-#include "struct.h"
-static Parameters_t* parameters_ = NULL;
 
-void updateModelTetris(UserAction_t userAction){
-  if (parameters_ == NULL) initParameneters();
+//выделение памяти под структуру (при начале игры)
+void initModelTetris(Parameters_t **parameters_){
+    if (parameters_) *parameters_ = calloc(1, sizeof(Parameters_t));
+}
 
+//очищение памяти (при конце игры)
+void cleanupParameters(Parameters_t **parameters_){
+  if (parameters_ == NULL || *parameters_ == NULL) return;
+  free(parameters_);
+  *parameters_ = NULL; 
+}
+//установка дефолтных значений для структуры
+/// @brief устанавливает значения для начала игры
+/// @param parameters_ текущие параметры
+void setDefaultParameters(Parameters_t *parameters_) {
+  if (!parameters_) return;
+  initFSM(parameters_);
+  parameters_->current_state_ = sStart;
+  clearBoard(parameters_->board_.cells_);
+  setNextPlayer(parameters_);
+  SetNewPlayer(parameters_);
+  clearBoard(parameters_->game_board_.cells_);
+  clearBoard(parameters_->check_board_.cells_);
+  parameters_->current_score_ = 0;
+  parameters_->current_level_ = 0;
+  parameters_->current_speed_ = 500;
+  LoadRecord(parameters_);
+};
+
+//заполнение структуры вьюера
+void getGameInfoTetris(GameInfo_t* gameInfo, Parameters_t *parameters_){
+  getField(gameInfo->field, parameters_);
+  getNext(gameInfo->next, parameters_);
+  gameInfo->score = parameters_->current_score_;
+  gameInfo->high_score = parameters_->max_score_;
+  gameInfo->level = parameters_->current_level_;
+  gameInfo->speed = parameters_->current_speed_;
+  gameInfo->pause = parameters_->current_state_ == sPause;
+}
+
+//отработка действия пользователя
+
+/// @brief обработка сигнала от пользователя
+/// @param signal_ сигнал, полученный от пользователя
+/// @param hold удержание (не используется)
+/// @param parameters_ текущие параметры
+void updateModelTetris(UserAction_t userAction, bool hold, bool *flagExit, Parameters_t *parameters_) {
+  if (parameters_->current_state_ >= NUM_STATES && userAction >= NUM_ACTIONS) return;
+  ActionCallback action = parameters_->fsm_->action_table_[parameters_->current_state_][userAction];
+  if (action != NULL) action(parameters_);
+  hold = !hold;
+  *flagExit = parameters_->current_state_  == sExitGame;
 }
 
 
-void getGameInfoTetris(GameInfo_t* gameInfo, bool* flagExit){
-  *gameInfo->level = *parameters_->current_level_;
-  *gameInfo->score = *parameters_->current_score_;
-  *gameInfo->high_score = *parameters_->max_score_;
-  *gameInfo->speed = *parameters_->current_speed_;
-  *gameInfo->state = *parameters_->current_state_;
-  *gameInfo->pause = *parameters_->current_state_ == sPause;
-  getField(gameInfo->field);
-  getNext(gameInfo->next);
-  *flagExit = *parameters_->current_state_ == sExitGame; 
-}
 
-void getField(int*** pointer){
+void getField(int*** pointer, Parameters_t *parameters_){
   for (int i = 0; i < BOARD_HEIGHT; i++) {
     for (int j = 0; j < BOARD_WIDTH; j++) {
-      (*pointer)[i][j] = parameters_->board_->cells_[i][j];
+      (*pointer)[i][j] = parameters_->board_.cells_[i][j];
     };
   };
 }
 
-void getNext(int*** pointer){
-  int bit_mask_ = block_collection_[*parameters_->next_player_][0];
+void getNext(int*** pointer, Parameters_t *parameters_){
+  int bit_mask_ = block_collection_[parameters_->next_player_][0];
   for (int i = 0; i < BLOCK_HEIGHT; i++) {
     for (int j = 0; j < BLOCK_WIDTH; j++) {
       (*pointer)[i][j] = bit_mask_ & (1 << (i * 4 + j));
@@ -45,7 +77,7 @@ void getNext(int*** pointer){
 
 /// @brief инициализирует поле нулями
 /// @param parameters_ текущие параметры
-void ClearBoard(int matrix_[BOARD_HEIGHT][BOARD_WIDTH]) {
+void clearBoard(int matrix_[BOARD_HEIGHT][BOARD_WIDTH]) {
   for (int i = 0; i < BOARD_HEIGHT; i++) {
     for (int j = 0; j < BOARD_WIDTH; j++) {
       matrix_[i][j] = 0;
@@ -53,16 +85,7 @@ void ClearBoard(int matrix_[BOARD_HEIGHT][BOARD_WIDTH]) {
   };
 };
 
-/// @brief устанавливает значения для начала игры
-/// @param parameters_ текущие параметры
-void InitializeParameters(Parameters_t *parameters_) {
-  *parameters_->current_level_ = 0;
-  *parameters_->current_score_ = 0;
-  *parameters_->current_speed_ = 500;
-  InitializeBoard(parameters_->board_->cells_);
-  InitNextPlayer(parameters_);
-  SetNewPlayer(parameters_);
-};
+
 
 /// @brief проверяет заблокировано (запрещено) ли следующее положение
 /// @param parameters_ текущие параметры
@@ -70,25 +93,20 @@ void InitializeParameters(Parameters_t *parameters_) {
 /// @param shift_y_ смещение по вертикали (+1 вниз)
 /// @param shift_state смещение по вращению (+1 вращение)
 /// @return TRUE если следующее положение заблокировано, FALSE если разрешено
-bool CheckNextPlayerState(Parameters_t *parameters_, int shift_x_, int shift_y_,
-                          int shift_state) {
+bool CheckNextPlayerState(Parameters_t *parameters_, int shift_x_, int shift_y_, int shift_state) {
   int next_player_matrix_[BLOCK_HEIGHT][BLOCK_WIDTH] = {0};
   int next_player_state_ = GetNextBlockRotationState(parameters_, shift_state);
-  SetPlayerToBlock(next_player_matrix_,
-                   parameters_->current_player_->block_type_,
-                   next_player_state_);
+  SetPlayerToBlock(next_player_matrix_, parameters_->current_player_.block_type_, next_player_state_);
   SetNextBoardToBlock(next_player_matrix_, parameters_, shift_x_, shift_y_);
   return CheckBlockMatrix(next_player_matrix_);
 };
 
-/// @brief выдает следущее значене состояния вращения блока (по принципу
-/// бесконечного ряда)
+/// @brief выдает следущее значене состояния вращения блока (по принципу бесконечного ряда)
 /// @param parameters текущие параметры
-/// @param shift_state_ смещение по вращению (1 - следующая ротация, 0 - не
-/// вращать)
+/// @param shift_state_ смещение по вращению (1 - следующая ротация, 0 - не вращать)
 /// @return новый номер позиции (вращение)
 int GetNextBlockRotationState(Parameters_t *parameters, int shift_state_) {
-  return (parameters->current_player_->block_rotation_ + shift_state_ +
+  return (parameters->current_player_.block_rotation_ + shift_state_ +
           NUM_BLOCK_STATES) %
          NUM_BLOCK_STATES;
 };
@@ -116,12 +134,12 @@ void SetNextBoardToBlock(int matrix[BLOCK_HEIGHT][BLOCK_WIDTH],
   int x, y;
   for (int i = 0; i < BLOCK_HEIGHT; i++) {
     for (int j = 0; j < +BLOCK_WIDTH; j++) {
-      x = j + parameters_->current_player_->x_ + shift_x_;
-      y = i + parameters_->current_player_->y_ + shift_y_;
+      x = j + parameters_->current_player_.x_ + shift_x_;
+      y = i + parameters_->current_player_.y_ + shift_y_;
       if (x < 0 || x >= BOARD_WIDTH || y < 0 || y >= BOARD_HEIGHT)
         matrix[i][j] = matrix[i][j] + 1;
       else
-        matrix[i][j] = matrix[i][j] + parameters_->board_->cells_[y][x];
+        matrix[i][j] = matrix[i][j] + parameters_->board_.cells_[y][x];
     };
   };
 };
@@ -156,12 +174,12 @@ void SetPlayerToGameBoard(int matrix[BOARD_HEIGHT][BOARD_WIDTH],
                           Parameters_t *parameters_) {
   int x = 0, y = 0;
   int bit_mask_ =
-      block_collection_[parameters_->current_player_->block_type_]
-                       [parameters_->current_player_->block_rotation_];
+      block_collection_[parameters_->current_player_.block_type_]
+                       [parameters_->current_player_.block_rotation_];
   for (int i = 0; i < BLOCK_HEIGHT; i++) {
     for (int j = 0; j < BLOCK_WIDTH; j++) {
-      y = i + parameters_->current_player_->y_;
-      x = j + parameters_->current_player_->x_;
+      y = i + parameters_->current_player_.y_;
+      x = j + parameters_->current_player_.x_;
       if (!(y < 0 || y >= BOARD_HEIGHT || x < 0 || x >= BOARD_WIDTH))
         matrix[y][x] = matrix[y][x] + (bit_mask_ & (1 << (i * 4 + j))) ? 1 : 0;
     };
@@ -175,7 +193,7 @@ void SetBoardToGameBoard(int matrix[BOARD_HEIGHT][BOARD_WIDTH],
                          const Parameters_t *parameters_) {
   for (int i = 0; i < BOARD_HEIGHT; i++) {
     for (int j = 0; j < BOARD_WIDTH; j++) {
-      matrix[i][j] = matrix[i][j] + parameters_->board_->cells_[i][j];
+      matrix[i][j] = matrix[i][j] + parameters_->board_.cells_[i][j];
     };
   };
 };
@@ -183,11 +201,11 @@ void SetBoardToGameBoard(int matrix[BOARD_HEIGHT][BOARD_WIDTH],
 /// @brief устанавливает текущего игрока из next и случайно генерирует next
 /// @param parameters_  текущие параметры
 void SetNewPlayer(Parameters_t *parameters_) {
-  parameters_->current_player_->block_type_ = *parameters_->next_player_;
-  parameters_->current_player_->block_rotation_ = 0;
-  parameters_->current_player_->x_ = INIT_PLAYER_X;
-  parameters_->current_player_->y_ = INIT_PLAYER_Y;
-  InitNextPlayer(parameters_);
+  parameters_->current_player_.block_type_ = parameters_->next_player_;
+  parameters_->current_player_.block_rotation_ = 0;
+  parameters_->current_player_.x_ = INIT_PLAYER_X;
+  parameters_->current_player_.y_ = INIT_PLAYER_Y;
+  setNextPlayer(parameters_);
 };
 
 /// @brief переводит игрока в следующее состояние
@@ -197,9 +215,9 @@ void SetNewPlayer(Parameters_t *parameters_) {
 /// @param shift_state смещение по вращению (+1 вращение)
 void SetNextPlayerStat(Parameters_t *parameters_, int shift_x_, int shift_y_,
                        int shift_state) {
-  parameters_->current_player_->x_ += shift_x_;
-  parameters_->current_player_->y_ += shift_y_;
-  parameters_->current_player_->block_rotation_ =
+  parameters_->current_player_.x_ += shift_x_;
+  parameters_->current_player_.y_ += shift_y_;
+  parameters_->current_player_.block_rotation_ =
       GetNextBlockRotationState(parameters_, shift_state);
 };
 
@@ -226,7 +244,7 @@ void CollapseLines(Parameters_t *parameters_) {
 /// @param level уровень
 /// @return значение скорости (задержки)
 void UpdateSpeed(Parameters_t *parameters_) {
-  *parameters_->current_speed_ = 500 - 30 * (*parameters_->current_level_);
+  parameters_->current_speed_ = 500 - 30 * parameters_->current_level_;
 };
 
 /// @brief проверяет является ли строка полностью заполненной
@@ -236,7 +254,7 @@ void UpdateSpeed(Parameters_t *parameters_) {
 bool IsFullLine(int y_, Parameters_t *parameters_) {
   bool is_full_line_ = true;
   for (int i = 0; i < BOARD_WIDTH && is_full_line_ == true; i++) {
-    if (!parameters_->board_->cells_[y_][i]) is_full_line_ = false;
+    if (!parameters_->board_.cells_[y_][i]) is_full_line_ = false;
   };
   return is_full_line_;
 };
@@ -248,7 +266,7 @@ bool IsFullLine(int y_, Parameters_t *parameters_) {
 bool IsEmptyLine(int y_, Parameters_t *parameters_) {
   bool is_empty_line_ = true;
   for (int i = 0; i < BOARD_WIDTH && is_empty_line_ == true; i++) {
-    if (!!parameters_->board_->cells_[y_][i]) is_empty_line_ = false;
+    if (!!parameters_->board_.cells_[y_][i]) is_empty_line_ = false;
   };
   return is_empty_line_;
 }
@@ -260,7 +278,7 @@ bool IsEmptyLine(int y_, Parameters_t *parameters_) {
 void FallingTopLines(int collapsed_line_, Parameters_t *parameters_) {
   for (int i = collapsed_line_ - 1; i >= 0; i--) {
     for (int j = 0; j < BOARD_WIDTH; j++) {
-      parameters_->board_->cells_[i + 1][j] = parameters_->board_->cells_[i][j];
+      parameters_->board_.cells_[i + 1][j] = parameters_->board_.cells_[i][j];
     }
   }
 };
@@ -268,10 +286,10 @@ void FallingTopLines(int collapsed_line_, Parameters_t *parameters_) {
 /// @brief обновляет рекорд, если текущий счет больше рекорда
 /// @param parameters_ текущие параметры
 void UpdateRecord(Parameters_t *parameters_) {
-  *parameters_->max_score_ =
-      (*parameters_->current_score_ > *parameters_->max_score_)
-          ? *parameters_->current_score_
-          : *parameters_->max_score_;
+  parameters_->max_score_ =
+      (parameters_->current_score_ > parameters_->max_score_)
+          ? parameters_->current_score_
+          : parameters_->max_score_;
 };
 
 /// @brief обновляет текущий счет в зависимости от количество схлопнувшихся
@@ -281,21 +299,21 @@ void UpdateRecord(Parameters_t *parameters_) {
 void UpdateScore(int num_collapsed_lines, Parameters_t *parameters_) {
   int points[] = {0, 100, 300, 700, 1500};
   if (num_collapsed_lines >= 1 && num_collapsed_lines <= 4)
-    *parameters_->current_score_ += points[num_collapsed_lines];
+    parameters_->current_score_ += points[num_collapsed_lines];
 };
 
 /// @brief обновляет значение текущего уровня в зависимости от текущего счета
 /// @param parameters_ текущие параметры
 void UpdateLevel(Parameters_t *parameters_) {
-  int current_level_ = *parameters_->current_score_ / LEVEL_STEP;
-  *parameters_->current_level_ =
+  int current_level_ = parameters_->current_score_ / LEVEL_STEP;
+  parameters_->current_level_ =
       (current_level_ > LEVEL_MAX) ? LEVEL_MAX : current_level_;
 };
 
 /// @brief первичная инициация next игрока
 /// @param parameters_  текущие параметры
-void InitNextPlayer(Parameters_t *parameters_) {
-  *parameters_->next_player_ = rand() % NUM_BLOCK_TYPES;
+void setNextPlayer(Parameters_t *parameters_) {
+  parameters_->next_player_ = rand() % NUM_BLOCK_TYPES;
 };
 
 /// @brief загружает рекорд из файла
@@ -306,7 +324,7 @@ void LoadRecord(Parameters_t *parameters_) {
     fread(parameters_->max_score_, sizeof(int), 1, p_file);
     fclose(p_file);
   } else
-    *parameters_->max_score_ = 0;
+    parameters_->max_score_ = 0;
 };
 
 /// @brief сохраняет рекорд в файл

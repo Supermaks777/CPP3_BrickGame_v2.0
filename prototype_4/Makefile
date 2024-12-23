@@ -11,7 +11,7 @@ LDFLAGS = -lncurses
 
 # Source files
 SRCS_CPP = snake.cpp SnakeController.cpp SnakeModel.cpp
-SRCS_C = View.c
+SRCS_C = View_1.c View_2.c View_3.c View_4.c backend.c
 
 # Object files
 OBJS_CPP = $(SRCS_CPP:.cpp=.o)
