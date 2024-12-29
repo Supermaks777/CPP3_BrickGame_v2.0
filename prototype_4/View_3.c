@@ -47,8 +47,8 @@ UserAction_t getAction(int key){
       break;
     case 'p':
     case 'P':
-    case 'З':
-    case 'з':
+    // case 'З':
+    // case 'з':
       result = Pause;
       break;
     default:

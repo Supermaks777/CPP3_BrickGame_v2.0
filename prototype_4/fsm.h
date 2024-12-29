@@ -1,12 +1,18 @@
 #ifndef TETRIS_FSM
 #define TETRIS_FSM
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+
 #include <stdbool.h>
 
 #include "struct.h"
 
 ;
-void initFSM(Parameters_t *parameters_);
+void initFSM(FiniteStateMachine_t* fsm_);
 
 void Action__Start_Start(Parameters_t *parameters_);
 
@@ -34,6 +40,10 @@ void setStateSpawn(Parameters_t *parameters_);
 
 void setStateAttaching(Parameters_t *parameters_);
 
-void startGame(Parameters_t *parameters_);
+void startTetrisGame(Parameters_t *parameters_);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // TETRIS_FSM

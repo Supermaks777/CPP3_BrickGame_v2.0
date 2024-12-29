@@ -1,8 +1,10 @@
 #include "SnakeController.h"
 
+
 // Статический объект модели
-static SnakeModel* model = nullptr;
-static Parameters_t* parameters_ = nullptr;
+static SnakeModel* modelSnake = nullptr;
+static Parameters_t* modelTetris = nullptr;
+static FiniteStateMachine_t fsm_;
 
 
 extern "C" {
@@ -11,34 +13,39 @@ extern "C" {
 
 extern "C" void updateModel(UserAction_t userActionSource, bool hold, bool* flagExit, MenuItem_t selectedGame) {
     if (selectedGame == MENU_SNAKE){
-        if (model == nullptr) model = new SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
-        UserAction userAction = model->convertUserAction(userActionSource);
-        model->updateModel(userAction, flagExit);
+        if (modelSnake == nullptr) modelSnake = new SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
+        UserAction userAction = modelSnake->convertUserAction(userActionSource);
+        modelSnake->updateModel(userAction, flagExit);
     }
-    if (selectedGame == MENU_TETRIS) updateModelTetris(userActionSource, hold, flagExit, parameters_); 
+    if (selectedGame == MENU_TETRIS) {
+        updateModelTetris(userActionSource, hold, flagExit, modelTetris, &fsm_); 
+    }
 }
 
 extern "C" void getGameInfo(GameInfo_t* gameInfo, MenuItem_t selectedGame) {
     if (selectedGame == MENU_SNAKE){
-        if (model == nullptr) model = new SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
-        model->getGameInfo(gameInfo);
+        if (modelSnake == nullptr) modelSnake = new SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
+        modelSnake->getGameInfo(gameInfo);
     }
-    if (selectedGame == MENU_TETRIS) getGameInfoTetris(gameInfo, parameters_);
+    if (selectedGame == MENU_TETRIS) getGameInfoTetris(gameInfo, modelTetris);
 }
 
 extern "C" void startGame(MenuItem_t selectedGame){
     if (selectedGame == MENU_SNAKE){
-        if (model == nullptr) model = new SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
-        model->startGame();
+        if (modelSnake == nullptr) modelSnake = new SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
+        modelSnake->startGame();
     }
-    if (selectedGame == MENU_TETRIS) initModelTetris(&parameters_);
+    if (selectedGame == MENU_TETRIS){
+        initModelTetris(&modelTetris);
+        initFSM(&fsm_);
+    }
 }
 
 extern "C" void  exitGame(MenuItem_t selectedGame){
     if (selectedGame == MENU_SNAKE){
-        model->exitGame();
+        modelSnake->exitGame();
     }
-    if (selectedGame == MENU_TETRIS) cleanupParameters(&parameters_);
+    if (selectedGame == MENU_TETRIS) cleanupParameters(&modelTetris);
 }
 
 extern "C" void startApp(){

@@ -2,6 +2,7 @@
 #define SNAKE_CONTROLLER_API_H
 
 #include "struct.h"
+#include "backend.h"
 
 #ifdef __cplusplus
 extern "C" {

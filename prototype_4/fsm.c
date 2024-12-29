@@ -4,20 +4,23 @@
 #include <stdio.h>
 
 #include "backend.h"
+#include "struct.h"
+
+
 
 // инициализация автомата
-void initFSM(Parameters_t *parameters_) {
-  parameters_->fsm_.action_table_[sStart][Start] = Action__Start_Start;
-  parameters_->fsm_.action_table_[sStart][Terminate] = Action__Start_Terminate;
-  parameters_->fsm_.action_table_[sPause][Pause] = Action__Pause_Pause;
-  parameters_->fsm_.action_table_[sPause][Terminate] = Action__Pause_Terminate;
-  parameters_->fsm_.action_table_[sMoving][Pause] = Action__Moving_Pause;
-  parameters_->fsm_.action_table_[sMoving][Terminate] = Action__Moving_Terminate;
-  parameters_->fsm_.action_table_[sMoving][Pause] = Action__Moving_Pause;
-  parameters_->fsm_.action_table_[sMoving][Left] = Action__Moving_Left;
-  parameters_->fsm_.action_table_[sMoving][Right] = Action__Moving_Right;
-  parameters_->fsm_.action_table_[sMoving][Down] = Action__Moving_Down;
-  parameters_->fsm_.action_table_[sMoving][Action] = Action__Moving_Action;
+void initFSM(FiniteStateMachine_t *fsm_) {
+  fsm_->action_table_[sStart][Start] = Action__Start_Start;
+  fsm_->action_table_[sStart][Terminate] = Action__Start_Terminate;
+  fsm_->action_table_[sPause][Pause] = Action__Pause_Pause;
+  fsm_->action_table_[sPause][Terminate] = Action__Pause_Terminate;
+  fsm_->action_table_[sMoving][Pause] = Action__Moving_Pause;
+  fsm_->action_table_[sMoving][Terminate] = Action__Moving_Terminate;
+  fsm_->action_table_[sMoving][Pause] = Action__Moving_Pause;
+  fsm_->action_table_[sMoving][Left] = Action__Moving_Left;
+  fsm_->action_table_[sMoving][Right] = Action__Moving_Right;
+  fsm_->action_table_[sMoving][Down] = Action__Moving_Down;
+  fsm_->action_table_[sMoving][Action] = Action__Moving_Action;
 }
 
 
@@ -25,7 +28,7 @@ void initFSM(Parameters_t *parameters_) {
 /// @brief обработка действия Старт для состояния Старт
 /// @param parameters_ текущие параметры
 void Action__Start_Start(Parameters_t *parameters_) {
-  startGame(parameters_);
+  startTetrisGame(parameters_);
   setStateSpawn(parameters_);
 };
 
@@ -103,7 +106,7 @@ void setStateAttaching(Parameters_t *parameters_){
     setStateSpawn(parameters_);
 }
 
-void startGame(Parameters_t *parameters_){
+void startTetrisGame(Parameters_t *parameters_){
   LoadRecord(parameters_);
   setDefaultParameters(parameters_);
   SetNewPlayer(parameters_);  

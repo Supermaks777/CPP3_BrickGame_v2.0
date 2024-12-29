@@ -11,14 +11,13 @@ void initModelTetris(Parameters_t **parameters_){
 void cleanupParameters(Parameters_t **parameters_){
   if (parameters_ == NULL || *parameters_ == NULL) return;
   free(parameters_);
-  *parameters_ = NULL; 
+  // *parameters_ = NULL; 
 }
 //установка дефолтных значений для структуры
 /// @brief устанавливает значения для начала игры
 /// @param parameters_ текущие параметры
 void setDefaultParameters(Parameters_t *parameters_) {
   if (!parameters_) return;
-  initFSM(parameters_);
   parameters_->current_state_ = sStart;
   clearBoard(parameters_->board_.cells_);
   setNextPlayer(parameters_);
@@ -33,13 +32,14 @@ void setDefaultParameters(Parameters_t *parameters_) {
 
 //заполнение структуры вьюера
 void getGameInfoTetris(GameInfo_t* gameInfo, Parameters_t *parameters_){
-  getField(gameInfo->field, parameters_);
-  getNext(gameInfo->next, parameters_);
+  getField(&(gameInfo->field), parameters_);
+  getNext(&(gameInfo->next), parameters_);
   gameInfo->score = parameters_->current_score_;
   gameInfo->high_score = parameters_->max_score_;
   gameInfo->level = parameters_->current_level_;
   gameInfo->speed = parameters_->current_speed_;
   gameInfo->pause = parameters_->current_state_ == sPause;
+  mvprintw(35, 2, "%7d", parameters_->current_state_);
 }
 
 //отработка действия пользователя
@@ -48,9 +48,9 @@ void getGameInfoTetris(GameInfo_t* gameInfo, Parameters_t *parameters_){
 /// @param signal_ сигнал, полученный от пользователя
 /// @param hold удержание (не используется)
 /// @param parameters_ текущие параметры
-void updateModelTetris(UserAction_t userAction, bool hold, bool *flagExit, Parameters_t *parameters_) {
+void updateModelTetris(UserAction_t userAction, bool hold, bool *flagExit, Parameters_t *parameters_, FiniteStateMachine_t *fsm_) {
   if (parameters_->current_state_ >= NUM_STATES && userAction >= NUM_ACTIONS) return;
-  ActionCallback action = parameters_->fsm_->action_table_[parameters_->current_state_][userAction];
+  ActionCallback action = fsm_->action_table_[parameters_->current_state_][userAction];
   if (action != NULL) action(parameters_);
   hold = !hold;
   *flagExit = parameters_->current_state_  == sExitGame;
@@ -162,7 +162,7 @@ bool CheckBlockMatrix(int matrix[BLOCK_HEIGHT][BLOCK_WIDTH]) {
 /// @param parameters_ текущие параметры
 void SetGameBoard(int matrix[BOARD_HEIGHT][BOARD_WIDTH],
                   Parameters_t *parameters_) {
-  ClearBoard(matrix);
+  clearBoard(matrix);
   SetPlayerToGameBoard(matrix, parameters_);
   SetBoardToGameBoard(matrix, parameters_);
 };
@@ -321,7 +321,7 @@ void setNextPlayer(Parameters_t *parameters_) {
 void LoadRecord(Parameters_t *parameters_) {
   FILE *p_file = fopen(RECORD_FILE_NAME, "rb");
   if (!!p_file) {
-    fread(parameters_->max_score_, sizeof(int), 1, p_file);
+    fread(&(parameters_->max_score_), sizeof(int), 1, p_file);
     fclose(p_file);
   } else
     parameters_->max_score_ = 0;
@@ -332,7 +332,8 @@ void LoadRecord(Parameters_t *parameters_) {
 void SaveRecord(Parameters_t *parameters_) {
   FILE *p_file = fopen(RECORD_FILE_NAME, "wb");
   if (!!p_file) {
-    fwrite(parameters_->max_score_, sizeof(int), 1, p_file);
+    // fwrite(parameters_->max_score_, sizeof(int), 1, p_file);
+    fwrite(&(parameters_->max_score_), sizeof(int), 1, p_file);
     fclose(p_file);
   };
 };

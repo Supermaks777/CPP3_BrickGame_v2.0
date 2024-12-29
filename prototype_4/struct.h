@@ -84,7 +84,6 @@ typedef struct {
 
 // Параметры игры
 typedef struct {
-  FiniteStateMachine_t fsm_;
   PlayerState_t current_state_;
   Board_t board_;
   Player_t current_player_;
@@ -97,15 +96,12 @@ typedef struct {
   int max_score_;
 } Parameters_t;
 
-// Указатель на функцию
-typedef void (*ActionCallback)(Parameters_t *);  // Теперь корректно
 
-typedef struct FiniteStateMachine_t FiniteStateMachine_t;
-struct FiniteStateMachine_t {
-  ActionCallback action_table_[NUM_STATES][NUM_ACTIONS];  // Теперь корректно
-};
+typedef void (*ActionCallback)(Parameters_t *);
+typedef struct {
+  ActionCallback action_table_[NUM_STATES][NUM_ACTIONS];  
+} FiniteStateMachine_t;
 
-// Указатель на функцию
 
 
 // Глобальные переменные

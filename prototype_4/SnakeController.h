@@ -4,6 +4,7 @@
 #include "SnakeModel.h"
 #include "View.h"
 #include "backend.h"
+#include "fsm.h"
 
 
 #ifdef __cplusplus
