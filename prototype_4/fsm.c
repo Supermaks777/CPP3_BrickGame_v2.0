@@ -10,8 +10,8 @@
 
 // инициализация автомата
 void initFSM(FiniteStateMachine_t *fsm_) {
-  fsm_->action_table_[sStart][Start] = Action__Start_Start;
-  fsm_->action_table_[sStart][Terminate] = Action__Start_Terminate;
+  // fsm_->action_table_[sStart][Start] = Action__Start_Start;
+  // fsm_->action_table_[sStart][Terminate] = Action__Start_Terminate;
   fsm_->action_table_[sPause][Pause] = Action__Pause_Pause;
   fsm_->action_table_[sPause][Terminate] = Action__Pause_Terminate;
   fsm_->action_table_[sMoving][Pause] = Action__Moving_Pause;
@@ -25,18 +25,18 @@ void initFSM(FiniteStateMachine_t *fsm_) {
 
 
 
-/// @brief обработка действия Старт для состояния Старт
-/// @param parameters_ текущие параметры
-void Action__Start_Start(Parameters_t *parameters_) {
-  startTetrisGame(parameters_);
-  setStateSpawn(parameters_);
-};
+// /// @brief обработка действия Старт для состояния Старт
+// /// @param parameters_ текущие параметры
+// void Action__Start_Start(Parameters_t *parameters_) {
+//   startTetrisGame(parameters_);
+//   setStateSpawn(parameters_);
+// };
 
-/// @brief обработка действия Выход для состояния Старт
-/// @param parameters_ текущие параметры
-void Action__Start_Terminate(Parameters_t *parameters_) {
-  setStateExit(parameters_);
-};
+// /// @brief обработка действия Выход для состояния Старт
+// /// @param parameters_ текущие параметры
+// void Action__Start_Terminate(Parameters_t *parameters_) {
+//   setStateExit(parameters_);
+// };
 
 /// @brief обработка действия Пауза для состояния Пауза
 /// @param parameters_ текущие параметры
@@ -95,6 +95,7 @@ void setStateExit(Parameters_t *parameters_){
 
 void setStateSpawn(Parameters_t *parameters_){
     parameters_->current_state_ = sSpawn;
+    SetNewPlayer(parameters_);
     if (!CheckNextPlayerState(parameters_, 0, 0, 0)) parameters_->current_state_ = sMoving;
     else setStateExit(parameters_);  
 }
@@ -106,9 +107,9 @@ void setStateAttaching(Parameters_t *parameters_){
     setStateSpawn(parameters_);
 }
 
-void startTetrisGame(Parameters_t *parameters_){
-  LoadRecord(parameters_);
-  setDefaultParameters(parameters_);
-  SetNewPlayer(parameters_);  
-}
+// void startTetrisGame(Parameters_t *parameters_){
+//   LoadRecord(parameters_);
+//   setDefaultParameters(parameters_);
+//   // SetNewPlayer(parameters_);  
+// }
 

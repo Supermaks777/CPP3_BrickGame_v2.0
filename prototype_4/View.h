@@ -50,6 +50,7 @@ void updateMainMenu(MainMenuParameters_t* parameters);
 void processinMainMenu(MainMenuParameters_t* parameters);
 void updateScreen(GameInfo_t *gameInfo);
 void GameLoop(GameInfo_t *gameInfo, MenuItem_t selectedGame);
+UserAction_t getDefaultAction(MenuItem_t selectedGame);
 
 #ifdef __cplusplus
 }

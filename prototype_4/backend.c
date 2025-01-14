@@ -8,10 +8,10 @@ void initModelTetris(Parameters_t **parameters_){
 }
 
 //очищение памяти (при конце игры)
-void cleanupParameters(Parameters_t **parameters_){
+void cleanupParameters(Parameters_t **parameters_) {
   if (parameters_ == NULL || *parameters_ == NULL) return;
-  free(parameters_);
-  // *parameters_ = NULL; 
+  free(*parameters_);  // Освобождаем память, выделенную для структуры
+  *parameters_ = NULL; // Обнуляем указатель
 }
 //установка дефолтных значений для структуры
 /// @brief устанавливает значения для начала игры
@@ -30,6 +30,15 @@ void setDefaultParameters(Parameters_t *parameters_) {
   LoadRecord(parameters_);
 };
 
+int getCountFullCells(Parameters_t *parameters_){
+  int result = 0;
+  for (int i = 0; i < BOARD_HEIGHT; i++) {
+    for (int j = 0; j < BOARD_WIDTH; j++) {
+      result += parameters_->board_.cells_[i][j];
+    };
+  };  
+};
+
 //заполнение структуры вьюера
 void getGameInfoTetris(GameInfo_t* gameInfo, Parameters_t *parameters_){
   getField(&(gameInfo->field), parameters_);
@@ -39,7 +48,7 @@ void getGameInfoTetris(GameInfo_t* gameInfo, Parameters_t *parameters_){
   gameInfo->level = parameters_->current_level_;
   gameInfo->speed = parameters_->current_speed_;
   gameInfo->pause = parameters_->current_state_ == sPause;
-  mvprintw(35, 2, "%7d", parameters_->current_state_);
+  mvprintw(35, 2, "%7d - %d", parameters_->current_state_, getCountFullCells(parameters_));
 }
 
 //отработка действия пользователя
@@ -49,6 +58,7 @@ void getGameInfoTetris(GameInfo_t* gameInfo, Parameters_t *parameters_){
 /// @param hold удержание (не используется)
 /// @param parameters_ текущие параметры
 void updateModelTetris(UserAction_t userAction, bool hold, bool *flagExit, Parameters_t *parameters_, FiniteStateMachine_t *fsm_) {
+  mvprintw(24, 2, "%7d - %d", parameters_->current_state_, userAction);
   if (parameters_->current_state_ >= NUM_STATES && userAction >= NUM_ACTIONS) return;
   ActionCallback action = fsm_->action_table_[parameters_->current_state_][userAction];
   if (action != NULL) action(parameters_);
@@ -59,21 +69,23 @@ void updateModelTetris(UserAction_t userAction, bool hold, bool *flagExit, Param
 
 
 void getField(int*** pointer, Parameters_t *parameters_){
+  int tempMatrix[BOARD_HEIGHT][BOARD_WIDTH];
+  SetGameBoard(tempMatrix, parameters_);
   for (int i = 0; i < BOARD_HEIGHT; i++) {
     for (int j = 0; j < BOARD_WIDTH; j++) {
-      (*pointer)[i][j] = parameters_->board_.cells_[i][j];
+      (*pointer)[i][j] = tempMatrix[i][j];
     };
   };
 }
 
-void getNext(int*** pointer, Parameters_t *parameters_){
+void getNext(int*** pointer, Parameters_t *parameters_) {
   int bit_mask_ = block_collection_[parameters_->next_player_][0];
   for (int i = 0; i < BLOCK_HEIGHT; i++) {
     for (int j = 0; j < BLOCK_WIDTH; j++) {
-      (*pointer)[i][j] = bit_mask_ & (1 << (i * 4 + j));
-    };
-  };
-};
+      (*pointer)[i][j] = (bit_mask_ & (1 << (i * 4 + j))) ? 1 : 0;
+    }
+  }
+}
 
 /// @brief инициализирует поле нулями
 /// @param parameters_ текущие параметры
@@ -319,7 +331,7 @@ void setNextPlayer(Parameters_t *parameters_) {
 /// @brief загружает рекорд из файла
 /// @param parameters_ текущие параметры
 void LoadRecord(Parameters_t *parameters_) {
-  FILE *p_file = fopen(RECORD_FILE_NAME, "rb");
+  FILE *p_file = fopen(RECORD_TETRIS_FILE_NAME, "rb");
   if (!!p_file) {
     fread(&(parameters_->max_score_), sizeof(int), 1, p_file);
     fclose(p_file);
@@ -330,10 +342,17 @@ void LoadRecord(Parameters_t *parameters_) {
 /// @brief сохраняет рекорд в файл
 /// @param parameters_ текущие параметры
 void SaveRecord(Parameters_t *parameters_) {
-  FILE *p_file = fopen(RECORD_FILE_NAME, "wb");
+  FILE *p_file = fopen(RECORD_TETRIS_FILE_NAME, "wb");
   if (!!p_file) {
     // fwrite(parameters_->max_score_, sizeof(int), 1, p_file);
     fwrite(&(parameters_->max_score_), sizeof(int), 1, p_file);
     fclose(p_file);
   };
 };
+
+void startTetrisGame(Parameters_t *parameters_){
+  LoadRecord(parameters_);
+  setDefaultParameters(parameters_);
+  setStateSpawn(parameters_); 
+  mvprintw(31, 2, "%7d", 123);
+}

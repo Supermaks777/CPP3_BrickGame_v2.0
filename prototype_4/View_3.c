@@ -70,6 +70,7 @@ UserAction_t getSignal(int key, bool *hold) {
 
 // игровой цикл змейки
 void GameLoop(GameInfo_t *gameInfo, MenuItem_t selectedGame) {
+  UserAction_t defaultAction = getDefaultAction(selectedGame); 
   bool flagExit = false;
   bool hold = false;
   int key = 0;
@@ -86,13 +87,18 @@ void GameLoop(GameInfo_t *gameInfo, MenuItem_t selectedGame) {
       hold = getIsHold(key);
       updateModel(userAction, hold, &flagExit, selectedGame);
       gettimeofday(&lastTime, NULL);
-    } else if (TimerAction(gameInfo->speed, &lastTime)) updateModel(Action, hold, &flagExit, selectedGame);
+    // } else if (TimerAction(gameInfo->speed, &lastTime)) updateModel(Action, hold, &flagExit, selectedGame);
+    } else if (TimerAction(gameInfo->speed, &lastTime)) updateModel(defaultAction, hold, &flagExit, selectedGame);
   };
   clear();
   printFrames();
   exitGame(selectedGame);
 };
 
-
+UserAction_t getDefaultAction(MenuItem_t selectedGame){
+  if (selectedGame == MENU_SNAKE) return Action;
+  if (selectedGame == MENU_TETRIS) return Down;
+  return NUM_ACTIONS;
+}
 
 #endif // VIEW_C

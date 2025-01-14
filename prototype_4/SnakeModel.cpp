@@ -141,7 +141,7 @@
 
     /// @brief загружаем рекорд из файла
     void SnakeModel::loadRecord() {
-    FILE *p_file = fopen(RECORD_FILE_NAME, "rb");
+    FILE *p_file = fopen(RECORD_SNAKE_FILE_NAME, "rb");
     if (!!p_file) {
         fread(&highScore, sizeof(int), 1, p_file);
         fclose(p_file);
@@ -150,7 +150,7 @@
 
     /// @brief записываем рекород в файл
     void SnakeModel::saveRecord() {
-    FILE *p_file = fopen(RECORD_FILE_NAME, "wb");
+    FILE *p_file = fopen(RECORD_SNAKE_FILE_NAME, "wb");
     if (!!p_file) {
         fwrite(&highScore, sizeof(int), 1, p_file);
         fclose(p_file);

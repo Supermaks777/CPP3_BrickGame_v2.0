@@ -38,6 +38,7 @@ extern "C" void startGame(MenuItem_t selectedGame){
     if (selectedGame == MENU_TETRIS){
         initModelTetris(&modelTetris);
         initFSM(&fsm_);
+        startTetrisGame(modelTetris);
     }
 }
 

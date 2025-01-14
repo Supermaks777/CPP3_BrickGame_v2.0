@@ -93,37 +93,16 @@ void printLevel(GameInfo_t *gameInfo) {
 void printNextPlayer(GameInfo_t *gameInfo) {
   for (int i = 0; i < BLOCK_HEIGHT; i++) {
     for (int j = 0; j < BLOCK_WIDTH; j++) {
-      printCell(i + 15, 2 * (j + BOARD_WIDTH) + 8, gameInfo->next[i][j] == 0 ? ' ' : ACS_CKBOARD);
+      mvaddch(i + 15, 2 * (j + BOARD_WIDTH) + 8, gameInfo->next[i][j] == 0 ? ' ' : ACS_CKBOARD);
+      mvaddch(i + 15, 2 * (j + BOARD_WIDTH) + 9, gameInfo->next[i][j] == 0 ? ' ' : ACS_CKBOARD);
     };
   };
 };
 
-
-// // обновить игровое поле тетрис
-// void updateScreenTetris(GameInfo_t *gameInfo){
-//     printGameBoard(gameInfo);
-//     printScore(gameInfo);
-//     printHighScore(gameInfo);
-//     printLevel(gameInfo);
-//     printNextPlayer(gameInfo);
-//     printStatus(gameInfo);
-//     refresh();
-// };
-
-// // обновить игровое поле змейка
-// void updateScreenSnake(GameInfo_t *gameInfo){
-//     printGameBoard(gameInfo);
-//     printFood(gameInfo);
-//     printScore(gameInfo);
-//     printHighScore(gameInfo);
-//     printLevel(gameInfo);
-//     printStatus(gameInfo);
-//     refresh();
-// };
-
 // обновить игровое поле универсальное
 void updateScreen(GameInfo_t *gameInfo){
     printGameBoard(gameInfo);
+    printNextPlayer(gameInfo);
     printScore(gameInfo);
     printHighScore(gameInfo);
     printLevel(gameInfo);

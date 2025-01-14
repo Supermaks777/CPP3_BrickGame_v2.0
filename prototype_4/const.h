@@ -11,7 +11,8 @@
 #define INIT_PLAYER_Y 0
 #define LEVEL_MAX 10
 #define LEVEL_STEP 600
-#define RECORD_FILE_NAME "record.db"
+#define RECORD_TETRIS_FILE_NAME "tetris.db"
+#define RECORD_SNAKE_FILE_NAME "snake.db"
 
 #define DEBOUNCE_TIME 200000
 #define KEY_ESCAPE 27

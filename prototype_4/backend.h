@@ -77,4 +77,6 @@ void LoadRecord(Parameters_t *parameters_);
 
 void SaveRecord(Parameters_t *parameters_);
 
+void startTetrisGame(Parameters_t *parameters_);
+
 #endif  // TETRIS_BACKEND
