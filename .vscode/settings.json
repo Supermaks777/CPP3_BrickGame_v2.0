@@ -86,6 +86,8 @@
         "ios": "cpp",
         "mutex": "cpp",
         "queue": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "ui.h": "c",
+        "const.h": "c"
     }
 }
