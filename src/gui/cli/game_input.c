@@ -4,6 +4,10 @@
 #include "ui.h"
 
 // получает сигнал пользовать по нажатой кнопке
+
+/// @brief преобразует нажатие клавиши в команду пользователя
+/// @param key нажатая клавиша
+/// @return команда
 UserAction_t getAction(int key){
   UserAction_t result;
   switch (key){
@@ -34,8 +38,6 @@ UserAction_t getAction(int key){
       break;
     case 'p':
     case 'P':
-    // case 'З':
-    // case 'з':
       result = Pause;
       break;
     default:
@@ -48,7 +50,7 @@ UserAction_t getAction(int key){
 /// @brief определяет сигнал на основании нажатой клавиши
 /// @param key нажатая клавиша
 /// @param hold указатель на переменную удержание
-/// @return
+/// @return команда пользователя
 UserAction_t getSignal(int key, bool *hold) {
   *hold = getIsHold(key);
   return getAction(key);

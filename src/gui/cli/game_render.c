@@ -2,24 +2,10 @@
 #define GAME_RENDER_C
 
 #include "ui.h"
-// #include <stdlib.h>  
-
 
 
 /// @brief отобразить игровое поле
-/// @param parameters_
-void printFood(GameInfo_t *gameInfo) {
-  int length = 0;
-  for (int i = 0; i < BOARD_HEIGHT; i++) {
-    for (int j = 0; j < BOARD_WIDTH; j++) {
-        if (gameInfo->next[i][j]) printCell(i,j,'F');
-        length += gameInfo->next[i][j];
-    }
-  }
-};
-
-/// @brief отобразить игровое поле
-/// @param parameters_
+/// @param gameInfo параметры  
 void printGameBoard(GameInfo_t *gameInfo) {
   int length = 0;
   for (int i = 0; i < BOARD_HEIGHT; i++) {
@@ -31,12 +17,17 @@ void printGameBoard(GameInfo_t *gameInfo) {
 };
 
 // печатает заданный символ на игровом поле
+
+/// @brief печатает двойной символ на игровом поле
+/// @param y координата по вертикали
+/// @param x координата по горизонтали
+/// @param symbol символ для печати
 void printCell(int y, int x, chtype symbol){
     mvaddch(1 + y, 1 + 2 * x, symbol);
     mvaddch(1 + y, 1 + 2 * x + 1, symbol);
 }
 
-// отрисовывает все рамки
+/// @brief отрисовывает все рамки
 void printFrames(){
     printRectangle(0, 2 * BOARD_WIDTH + 1, 0, 2 * BOARD_WIDTH + 1);     //gameboard
     printRectangle(1, 3, 2 * BOARD_WIDTH + 4, 2 * BOARD_WIDTH + 18);    //score
@@ -67,26 +58,26 @@ void printRectangle(int top_y, int bottom_y, int left_x, int right_x) {
 };
 
 /// @brief отобразить текущий счет
-/// @param parameters_
+/// @param gameInfo параметры
 void printScore(GameInfo_t *gameInfo) {
   mvprintw(2, 2 * BOARD_WIDTH + 6, "%7d", gameInfo->score);
 };
 
 /// @brief отобразить рекорд
-/// @param parameters_
+/// @param gameInfo параметры
 void printHighScore(GameInfo_t *gameInfo) {
   mvprintw(6, 2 * BOARD_WIDTH + 6, "%7d", gameInfo->high_score);
 };
 
 /// @brief отобразить текущий уровень
-/// @param parameters_
+/// @param *gameInfo параметры
 void printLevel(GameInfo_t *gameInfo) {
   mvprintw(10, 2 * BOARD_WIDTH + 6, "%7d", gameInfo->level);
 };
 
 
 /// @brief отобразиь следующую фигурку
-/// @param parameters_
+/// @param gameInfo параметры
 void printNextPlayer(GameInfo_t *gameInfo) {
   for (int i = 0; i < BLOCK_HEIGHT; i++) {
     for (int j = 0; j < BLOCK_WIDTH; j++) {
@@ -96,7 +87,8 @@ void printNextPlayer(GameInfo_t *gameInfo) {
   };
 };
 
-// обновить игровое поле универсальное
+/// @brief обновить игровое поле 
+/// @param gameInfo параметры
 void updateScreen(GameInfo_t *gameInfo){
     printGameBoard(gameInfo);
     printNextPlayer(gameInfo);
@@ -107,12 +99,14 @@ void updateScreen(GameInfo_t *gameInfo){
     refresh();
 };
 
-// отобразить паузу
+
+/// @brief отобразить статус паузы
+/// @param gameInfo 
 void printStatus(GameInfo_t *gameInfo){
     mvprintw(BOARD_HEIGHT + 3, 2, (gameInfo->pause) ? "Paused! Press P to Continue!" : "                              ");
 }
 
-//запуск и настройка ncurses
+/// @brief запуск и настройка ncurses
 void initialScreen() {
   srand(time(NULL));        //  инициалзиация псевдослучайного ряда
   initscr();                //  инициализация дисплея
@@ -123,7 +117,7 @@ void initialScreen() {
   clear();                  //  очищаю экран        
 };
 
-// конец работы в интерфейсе
+/// @brief конец работы в интерфейсе
 void uninitialScreen(){
     endwin();  
 }

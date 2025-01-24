@@ -6,7 +6,7 @@
 
 
     /// @brief устанавливает направление (только под прямым углом)
-    /// @param newDirection 
+    /// @param newDirection новое направление
     void SnakeModel::setDirection(Direction newDirection){
         direction = static_cast<int>(direction) % 2 == static_cast<int>(newDirection) % 2 ? direction : newDirection;
     }
@@ -64,7 +64,7 @@
     }
 
     /// @brief обновляем модель на с учетом команды пользователя (FSM)
-    /// @param userAction 
+    /// @param userAction действие пользователя
     void SnakeModel::updateModel(UserAction userAction, bool* flagExit) {
         if (state == GameState::Paused){
             if (userAction == UserAction::Pause) state = GameState::Playing;
@@ -98,12 +98,6 @@
             default: return UserAction::Start;
         }
     }
-
-    // /// @brief 
-    // void SnakeModel::newGame(){
-    //     initGame();
-    //     state = GameState::Playing;
-    // }
 
     /// @brief сбрасывает до начального состояния параметры модели
     void SnakeModel::initGame(){
@@ -241,19 +235,5 @@
             }
         }
     }
-
-
-    // /// @brief 
-    // /// @return 
-    // PlayerState_t SnakeModel::getState(){
-    //     PlayerState_t result;
-    //     if (state == GameState::Playing) result = sPlaying;
-    //     if (state == GameState::Win) result = sWin;
-    //     if (state == GameState::Exit) result = sExitGame;
-    //     if (state == GameState::GameOver) result = sGameOver;
-    //     if (state == GameState::Paused) result = sPause;
-    //     return result;
-    // }
-
 
 #endif // SNAKE_MODEL_CPP

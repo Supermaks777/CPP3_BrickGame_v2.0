@@ -10,23 +10,44 @@ CFLAGS = -std=c11 -Wall -Werror -Wimplicit-function-declaration -Wreturn-type
 LDFLAGS = -lncurses
 
 # Source files
-SRCS_CPP = brick_game.cpp brick_game/controller/controller.cpp brick_game/snake/SnakeModel.cpp
-SRCS_C = gui/cli/game_input.c gui/cli/game_loop.c gui/cli/game_render.c gui/cli/main_loop.c gui/cli/ui_helpers.c brick_game/tetris/TetrisModel.c brick_game/tetris/fsm.c
+SRCS_CPP = brick_game.cpp brick_game/controller/controller.cpp
+SRCS_C = gui/cli/game_input.c gui/cli/game_loop.c gui/cli/game_render.c gui/cli/main_loop.c gui/cli/ui_helpers.c
+
+# Model source files
+MODEL_SRCS_CPP = brick_game/snake/SnakeModel.cpp
+MODEL_SRCS_C = brick_game/tetris/TetrisModel.c brick_game/tetris/fsm.c
 
 # Object files
 OBJS_CPP = $(SRCS_CPP:.cpp=.o)
 OBJS_C = $(SRCS_C:.c=.o)
 
+# Model object files
+MODEL_OBJS_CPP = $(MODEL_SRCS_CPP:.cpp=.o)
+MODEL_OBJS_C = $(MODEL_SRCS_C:.c=.o)
+
+# Library names
+MODEL_LIB_CPP = libmodel_cpp.a
+MODEL_LIB_C = libmodel_c.a
+
 # Executable name
 TARGET = snake_game
 
 # Default target
-all: clean $(TARGET)
+all: clean_all $(MODEL_LIB_CPP) $(MODEL_LIB_C) $(TARGET)
+	make clean
 	./$(TARGET)
 
 # Link object files to create executable
-$(TARGET): $(OBJS_CPP) $(OBJS_C)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS_CPP) $(OBJS_C) $(LDFLAGS)
+$(TARGET): $(OBJS_CPP) $(OBJS_C) $(MODEL_LIB_CPP) $(MODEL_LIB_C)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS_CPP) $(OBJS_C) -L. -lmodel_cpp -lmodel_c $(LDFLAGS)
+
+# Create C++ model library
+$(MODEL_LIB_CPP): $(MODEL_OBJS_CPP)
+	ar rcs $(MODEL_LIB_CPP) $(MODEL_OBJS_CPP)
+
+# Create C model library
+$(MODEL_LIB_C): $(MODEL_OBJS_C)
+	ar rcs $(MODEL_LIB_C) $(MODEL_OBJS_C)
 
 # Compile C++ source files to object files
 %.o: %.cpp
@@ -38,7 +59,10 @@ $(TARGET): $(OBJS_CPP) $(OBJS_C)
 
 # Clean up build files
 clean:
-	rm -f $(OBJS_CPP) $(OBJS_C) $(TARGET)
+	rm -f $(OBJS_CPP) $(OBJS_C) $(MODEL_OBJS_CPP) $(MODEL_OBJS_C) $(MODEL_LIB_CPP) $(MODEL_LIB_C) 
+
+clean_all: clean
+	rm -f $(TARGET)
 
 # Phony targets
 .PHONY: all clean

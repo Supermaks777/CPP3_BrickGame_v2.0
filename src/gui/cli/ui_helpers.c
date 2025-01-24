@@ -3,12 +3,17 @@
 //вспомогательные
 #include "ui.h"
 
-// определяет точный промежуток времени между событиями
+/// @brief определяет точный промежуток времени между событиями
+/// @param start момент первого события
+/// @param end момент второго события
+/// @return промежуток времени
 double getTimevalDiff(struct timeval *start, struct timeval *end){
   return (end->tv_sec - start->tv_sec) + (end->tv_usec - end->tv_usec)*1e-6;
 }
 
-// определяет залипание по точному времени
+/// @brief определяет залипание по точному времени
+/// @param key нажатая клавиша
+/// @return 
 bool getIsHold(int key){
   bool result;
   static int lastKey = 0;
@@ -22,7 +27,9 @@ bool getIsHold(int key){
 }
 
 /// @brief определяет срабатывание по таймеру, то есть истина при срабатывании таймера (превышении порога)
-
+/// @param speed скорость игры (задержка)
+/// @param lastTime последний момент времени
+/// @return факт срабатывания
 bool TimerAction(int speed, struct timeval * lastTime) {
   bool result = {false};
   struct timeval currentTime;
@@ -34,7 +41,11 @@ bool TimerAction(int speed, struct timeval * lastTime) {
   return result;
 }
 
-// выделение памяти для динамической матрицы (для игрового поля и следущей фигурки)
+/// @brief выделение памяти для динамической матрицы
+/// @param pointer указатель на матрицу
+/// @param height высота матрицы
+/// @param width ширина матрицы
+/// @return 
 int initialiseMatrix(int*** pointer, int height, int width){
   int errCode = 0;
   *pointer = calloc(height, sizeof(int *));
@@ -56,7 +67,9 @@ int initialiseMatrix(int*** pointer, int height, int width){
   return errCode;
 }
 
-// высвобожение памяти от динамической матрицы
+/// @brief высвобожение памяти от динамической матрицы
+/// @param pointer указатель на матрицу
+/// @param height высота матрицы
 void freeMatrixMemory(int*** pointer, int height) {
     if (*pointer != NULL) {
       for (int i = 0; i < height; i++) {

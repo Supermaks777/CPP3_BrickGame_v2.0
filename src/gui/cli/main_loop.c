@@ -3,8 +3,7 @@
 
 #include "ui.h"
 
-
-// игровой цикл главного меню
+/// @brief игровой цикл главного меню
 void mainLoop(){
   GameInfo_t gameInfo = {0};
   MainMenuParameters_t parameters = {MENU_SNAKE, NUM_ACTIONS, &gameInfo, false};
@@ -22,7 +21,8 @@ void mainLoop(){
   freeMatrixMemory(&gameInfo.next, BLOCK_HEIGHT);
 }
 
-// отображение главного меню
+/// @brief отображение главного меню
+/// @param parameters параметры
 void printMainMenu(MainMenuParameters_t* parameters){
   printFrames();
   const char *menuItems[] = {"Snake", "Tetris", "Exit"};
@@ -34,7 +34,8 @@ void printMainMenu(MainMenuParameters_t* parameters){
   refresh();
 }
 
-// обработка действия пользователя
+/// @brief обработка действия пользователя
+/// @param parameters параметры
 void updateMainMenu(MainMenuParameters_t* parameters){
   switch (parameters->userAction){
     case Up:
@@ -51,7 +52,8 @@ void updateMainMenu(MainMenuParameters_t* parameters){
   }
 }
 
-// обработка нажатия кнопки "действие"
+/// @brief обработка нажатия кнопки "действие"
+/// @param parameters параметры
 void processinMainMenu(MainMenuParameters_t* parameters){
   switch (parameters->selected){
     case MENU_SNAKE:

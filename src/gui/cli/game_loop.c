@@ -3,6 +3,10 @@
 #include "ui.h"
 
 // игровой цикл универсальный
+
+/// @brief игровой цикл
+/// @param gameInfo параметры игры
+/// @param selectedGame выбранная игра
 void GameLoop(GameInfo_t *gameInfo, MenuItem_t selectedGame) {
   UserAction_t defaultAction = getDefaultAction(selectedGame); 
   bool flagExit = false;
@@ -28,6 +32,10 @@ void GameLoop(GameInfo_t *gameInfo, MenuItem_t selectedGame) {
   exitGame(selectedGame);
 };
 
+
+/// @brief возвращает действие "по умолчанию" в зависимости от выбранной игры
+/// @param selectedGame выбранная игра
+/// @return возвращает действие для змейки, вниз для тетриса или ошибку в ином случае
 UserAction_t getDefaultAction(MenuItem_t selectedGame){
   if (selectedGame == MENU_SNAKE) return Action;
   if (selectedGame == MENU_TETRIS) return Down;
