@@ -13,11 +13,9 @@ void printFood(GameInfo_t *gameInfo) {
   for (int i = 0; i < BOARD_HEIGHT; i++) {
     for (int j = 0; j < BOARD_WIDTH; j++) {
         if (gameInfo->next[i][j]) printCell(i,j,'F');
-        // printCell(i, j, gameInfo->next[i][j] == 0 ? ' ' : 'F');
         length += gameInfo->next[i][j];
     }
   }
-  mvprintw(27, 2, "%7d", length);
 };
 
 /// @brief отобразить игровое поле
@@ -30,7 +28,6 @@ void printGameBoard(GameInfo_t *gameInfo) {
         length += gameInfo->field[i][j];
     }
   }
-  mvprintw(25, 2, "%7d", length);
 };
 
 // печатает заданный символ на игровом поле

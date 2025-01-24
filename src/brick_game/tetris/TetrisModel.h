@@ -5,6 +5,7 @@
 
 #include "../common/const.h"
 #include "../common/struct.h"
+#include "fsm.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>

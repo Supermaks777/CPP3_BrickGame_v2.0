@@ -42,7 +42,6 @@ UserAction_t getAction(int key){
       result = NUM_ACTIONS;
       break;
   };
-  mvprintw(29, 2, "%7d", result);
   return result;
 }
 

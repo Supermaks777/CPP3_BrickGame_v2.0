@@ -30,15 +30,6 @@ void setDefaultParameters(Parameters_t *parameters_) {
   LoadRecord(parameters_);
 };
 
-int getCountFullCells(Parameters_t *parameters_){
-  int result = 0;
-  for (int i = 0; i < BOARD_HEIGHT; i++) {
-    for (int j = 0; j < BOARD_WIDTH; j++) {
-      result += parameters_->board_.cells_[i][j];
-    };
-  };  
-};
-
 //заполнение структуры вьюера
 void getGameInfoTetris(GameInfo_t* gameInfo, Parameters_t *parameters_){
   getField(&(gameInfo->field), parameters_);
@@ -48,7 +39,6 @@ void getGameInfoTetris(GameInfo_t* gameInfo, Parameters_t *parameters_){
   gameInfo->level = parameters_->current_level_;
   gameInfo->speed = parameters_->current_speed_;
   gameInfo->pause = parameters_->current_state_ == sPause;
-  mvprintw(35, 2, "%7d - %d", parameters_->current_state_, getCountFullCells(parameters_));
 }
 
 //отработка действия пользователя
@@ -58,7 +48,6 @@ void getGameInfoTetris(GameInfo_t* gameInfo, Parameters_t *parameters_){
 /// @param hold удержание (не используется)
 /// @param parameters_ текущие параметры
 void updateModelTetris(UserAction_t userAction, bool hold, bool *flagExit, Parameters_t *parameters_, FiniteStateMachine_t *fsm_) {
-  mvprintw(24, 2, "%7d - %d", parameters_->current_state_, userAction);
   if (parameters_->current_state_ >= NUM_STATES && userAction >= NUM_ACTIONS) return;
   ActionCallback action = fsm_->action_table_[parameters_->current_state_][userAction];
   if (action != NULL) action(parameters_);
@@ -354,5 +343,4 @@ void startTetrisGame(Parameters_t *parameters_){
   LoadRecord(parameters_);
   setDefaultParameters(parameters_);
   setStateSpawn(parameters_); 
-  mvprintw(31, 2, "%7d", 123);
 }

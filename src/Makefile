@@ -3,15 +3,15 @@ CXX = g++
 CC = gcc
 
 # Compiler flags
-CXXFLAGS = -std=c++17 -Wall
-CFLAGS = -std=c11 -Wall
+CXXFLAGS = -std=c++17 -Wall -Werror -Wreturn-type
+CFLAGS = -std=c11 -Wall -Werror -Wimplicit-function-declaration -Wreturn-type
 
-# ncurses library	
+# ncurses library
 LDFLAGS = -lncurses
 
 # Source files
 SRCS_CPP = brick_game.cpp brick_game/controller/controller.cpp brick_game/snake/SnakeModel.cpp
-SRCS_C = gui/cli/game_input.c gui/cli/game_loop.c gui/cli/game_render.c gui/cli/main_loop.c gui/cli/ui_helpers.c brick_game/tetris/backend.c brick_game/fsm.c
+SRCS_C = gui/cli/game_input.c gui/cli/game_loop.c gui/cli/game_render.c gui/cli/main_loop.c gui/cli/ui_helpers.c brick_game/tetris/TetrisModel.c brick_game/tetris/fsm.c
 
 # Object files
 OBJS_CPP = $(SRCS_CPP:.cpp=.o)

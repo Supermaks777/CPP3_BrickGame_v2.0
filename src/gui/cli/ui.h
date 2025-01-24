@@ -18,7 +18,7 @@ extern "C" {
 #include "../../brick_game/common/struct.h"
 #include "../../brick_game/common/const.h"
 #include "../../brick_game/controller/controllerAPI.h"
-#include "SnakeControllerAPI.h"
+#include "../../brick_game/controller/controllerAPI.h"
 
 bool getIsHoldByTick(int key);
 double getTimevalDiff(struct timeval *start, struct timeval *end);
