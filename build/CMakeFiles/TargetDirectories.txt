@@ -1,0 +1,4 @@
+/Users/jocastab/Projects/CPP3_BrickGame_v2.0/build/CMakeFiles/BrickGameDesktop.dir
+/Users/jocastab/Projects/CPP3_BrickGame_v2.0/build/CMakeFiles/edit_cache.dir
+/Users/jocastab/Projects/CPP3_BrickGame_v2.0/build/CMakeFiles/rebuild_cache.dir
+/Users/jocastab/Projects/CPP3_BrickGame_v2.0/build/CMakeFiles/BrickGameDesktop_autogen.dir
