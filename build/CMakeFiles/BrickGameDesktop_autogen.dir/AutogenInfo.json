@@ -512,39 +512,7 @@
 	"CMAKE_SOURCE_DIR" : "/Users/jocastab/Projects/CPP3_BrickGame_v2.0",
 	"DEP_FILE" : "",
 	"DEP_FILE_RULE_NAME" : "",
-	"HEADERS" : 
-	[
-		[
-			"/Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/controller/controller.h",
-			"MU",
-			"MKPA2Q5QEO/moc_controller.cpp",
-			null
-		],
-		[
-			"/Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/snake/SnakeModel.h",
-			"MU",
-			"OT3IVW6HJO/moc_SnakeModel.cpp",
-			null
-		],
-		[
-			"/Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/tetris/TetrisModel.h",
-			"MU",
-			"HL65UGKF35/moc_TetrisModel.cpp",
-			null
-		],
-		[
-			"/Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/tetris/fsm.h",
-			"MU",
-			"HL65UGKF35/moc_fsm.cpp",
-			null
-		],
-		[
-			"/Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/gui/desktop/vscode/mainwindow.h",
-			"MU",
-			"HLFKKOT32S/moc_mainwindow.cpp",
-			null
-		]
-	],
+	"HEADERS" : [],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "/Users/jocastab/Projects/CPP3_BrickGame_v2.0/build/BrickGameDesktop_autogen/include",
 	"MOC_COMPILATION_FILE" : "/Users/jocastab/Projects/CPP3_BrickGame_v2.0/build/BrickGameDesktop_autogen/mocs_compilation.cpp",
@@ -603,44 +571,7 @@
 	"QT_VERSION_MAJOR" : 6,
 	"QT_VERSION_MINOR" : 6,
 	"SETTINGS_FILE" : "/Users/jocastab/Projects/CPP3_BrickGame_v2.0/build/CMakeFiles/BrickGameDesktop_autogen.dir/AutogenUsed.txt",
-	"SOURCES" : 
-	[
-		[
-			"/Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game.cpp",
-			"MU",
-			null
-		],
-		[
-			"/Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/controller/controller.cpp",
-			"MU",
-			null
-		],
-		[
-			"/Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/snake/SnakeModel.cpp",
-			"MU",
-			null
-		],
-		[
-			"/Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/tetris/TetrisModel.c",
-			"MU",
-			null
-		],
-		[
-			"/Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/tetris/fsm.c",
-			"MU",
-			null
-		],
-		[
-			"/Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/gui/desktop/vscode/main.cpp",
-			"MU",
-			null
-		],
-		[
-			"/Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/gui/desktop/vscode/mainwindow.cpp",
-			"MU",
-			null
-		]
-	],
+	"SOURCES" : [],
 	"UIC_OPTIONS" : [],
 	"UIC_SEARCH_PATHS" : [],
 	"UIC_SKIP" : [],

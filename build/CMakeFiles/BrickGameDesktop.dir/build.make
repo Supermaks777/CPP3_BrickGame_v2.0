@@ -83,132 +83,20 @@ CMakeFiles/BrickGameDesktop.dir/BrickGameDesktop_autogen/mocs_compilation.cpp.s:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BrickGameDesktop.dir/BrickGameDesktop_autogen/mocs_compilation.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jocastab/Projects/CPP3_BrickGame_v2.0/build/BrickGameDesktop_autogen/mocs_compilation.cpp -o CMakeFiles/BrickGameDesktop.dir/BrickGameDesktop_autogen/mocs_compilation.cpp.s
 
-CMakeFiles/BrickGameDesktop.dir/src/brick_game.cpp.o: CMakeFiles/BrickGameDesktop.dir/flags.make
-CMakeFiles/BrickGameDesktop.dir/src/brick_game.cpp.o: ../src/brick_game.cpp
-CMakeFiles/BrickGameDesktop.dir/src/brick_game.cpp.o: CMakeFiles/BrickGameDesktop.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jocastab/Projects/CPP3_BrickGame_v2.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/BrickGameDesktop.dir/src/brick_game.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/BrickGameDesktop.dir/src/brick_game.cpp.o -MF CMakeFiles/BrickGameDesktop.dir/src/brick_game.cpp.o.d -o CMakeFiles/BrickGameDesktop.dir/src/brick_game.cpp.o -c /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game.cpp
-
-CMakeFiles/BrickGameDesktop.dir/src/brick_game.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BrickGameDesktop.dir/src/brick_game.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game.cpp > CMakeFiles/BrickGameDesktop.dir/src/brick_game.cpp.i
-
-CMakeFiles/BrickGameDesktop.dir/src/brick_game.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BrickGameDesktop.dir/src/brick_game.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game.cpp -o CMakeFiles/BrickGameDesktop.dir/src/brick_game.cpp.s
-
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/controller/controller.cpp.o: CMakeFiles/BrickGameDesktop.dir/flags.make
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/controller/controller.cpp.o: ../src/brick_game/controller/controller.cpp
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/controller/controller.cpp.o: CMakeFiles/BrickGameDesktop.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jocastab/Projects/CPP3_BrickGame_v2.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/BrickGameDesktop.dir/src/brick_game/controller/controller.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/BrickGameDesktop.dir/src/brick_game/controller/controller.cpp.o -MF CMakeFiles/BrickGameDesktop.dir/src/brick_game/controller/controller.cpp.o.d -o CMakeFiles/BrickGameDesktop.dir/src/brick_game/controller/controller.cpp.o -c /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/controller/controller.cpp
-
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/controller/controller.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BrickGameDesktop.dir/src/brick_game/controller/controller.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/controller/controller.cpp > CMakeFiles/BrickGameDesktop.dir/src/brick_game/controller/controller.cpp.i
-
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/controller/controller.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BrickGameDesktop.dir/src/brick_game/controller/controller.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/controller/controller.cpp -o CMakeFiles/BrickGameDesktop.dir/src/brick_game/controller/controller.cpp.s
-
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/snake/SnakeModel.cpp.o: CMakeFiles/BrickGameDesktop.dir/flags.make
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/snake/SnakeModel.cpp.o: ../src/brick_game/snake/SnakeModel.cpp
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/snake/SnakeModel.cpp.o: CMakeFiles/BrickGameDesktop.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jocastab/Projects/CPP3_BrickGame_v2.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/BrickGameDesktop.dir/src/brick_game/snake/SnakeModel.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/BrickGameDesktop.dir/src/brick_game/snake/SnakeModel.cpp.o -MF CMakeFiles/BrickGameDesktop.dir/src/brick_game/snake/SnakeModel.cpp.o.d -o CMakeFiles/BrickGameDesktop.dir/src/brick_game/snake/SnakeModel.cpp.o -c /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/snake/SnakeModel.cpp
-
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/snake/SnakeModel.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BrickGameDesktop.dir/src/brick_game/snake/SnakeModel.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/snake/SnakeModel.cpp > CMakeFiles/BrickGameDesktop.dir/src/brick_game/snake/SnakeModel.cpp.i
-
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/snake/SnakeModel.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BrickGameDesktop.dir/src/brick_game/snake/SnakeModel.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/snake/SnakeModel.cpp -o CMakeFiles/BrickGameDesktop.dir/src/brick_game/snake/SnakeModel.cpp.s
-
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/TetrisModel.c.o: CMakeFiles/BrickGameDesktop.dir/flags.make
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/TetrisModel.c.o: ../src/brick_game/tetris/TetrisModel.c
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/TetrisModel.c.o: CMakeFiles/BrickGameDesktop.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jocastab/Projects/CPP3_BrickGame_v2.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/TetrisModel.c.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/TetrisModel.c.o -MF CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/TetrisModel.c.o.d -o CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/TetrisModel.c.o -c /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/tetris/TetrisModel.c
-
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/TetrisModel.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/TetrisModel.c.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/tetris/TetrisModel.c > CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/TetrisModel.c.i
-
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/TetrisModel.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/TetrisModel.c.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/tetris/TetrisModel.c -o CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/TetrisModel.c.s
-
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/fsm.c.o: CMakeFiles/BrickGameDesktop.dir/flags.make
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/fsm.c.o: ../src/brick_game/tetris/fsm.c
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/fsm.c.o: CMakeFiles/BrickGameDesktop.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jocastab/Projects/CPP3_BrickGame_v2.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/fsm.c.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/fsm.c.o -MF CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/fsm.c.o.d -o CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/fsm.c.o -c /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/tetris/fsm.c
-
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/fsm.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/fsm.c.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/tetris/fsm.c > CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/fsm.c.i
-
-CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/fsm.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/fsm.c.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/brick_game/tetris/fsm.c -o CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/fsm.c.s
-
-CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/main.cpp.o: CMakeFiles/BrickGameDesktop.dir/flags.make
-CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/main.cpp.o: ../src/gui/desktop/vscode/main.cpp
-CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/main.cpp.o: CMakeFiles/BrickGameDesktop.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jocastab/Projects/CPP3_BrickGame_v2.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/main.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/main.cpp.o -MF CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/main.cpp.o.d -o CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/main.cpp.o -c /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/gui/desktop/vscode/main.cpp
-
-CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/main.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/gui/desktop/vscode/main.cpp > CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/main.cpp.i
-
-CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/main.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/gui/desktop/vscode/main.cpp -o CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/main.cpp.s
-
-CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/mainwindow.cpp.o: CMakeFiles/BrickGameDesktop.dir/flags.make
-CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/mainwindow.cpp.o: ../src/gui/desktop/vscode/mainwindow.cpp
-CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/mainwindow.cpp.o: CMakeFiles/BrickGameDesktop.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jocastab/Projects/CPP3_BrickGame_v2.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/mainwindow.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/mainwindow.cpp.o -MF CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/mainwindow.cpp.o.d -o CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/mainwindow.cpp.o -c /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/gui/desktop/vscode/mainwindow.cpp
-
-CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/mainwindow.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/mainwindow.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/gui/desktop/vscode/mainwindow.cpp > CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/mainwindow.cpp.i
-
-CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/mainwindow.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/mainwindow.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/gui/desktop/vscode/mainwindow.cpp -o CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/mainwindow.cpp.s
-
 # Object files for target BrickGameDesktop
 BrickGameDesktop_OBJECTS = \
-"CMakeFiles/BrickGameDesktop.dir/BrickGameDesktop_autogen/mocs_compilation.cpp.o" \
-"CMakeFiles/BrickGameDesktop.dir/src/brick_game.cpp.o" \
-"CMakeFiles/BrickGameDesktop.dir/src/brick_game/controller/controller.cpp.o" \
-"CMakeFiles/BrickGameDesktop.dir/src/brick_game/snake/SnakeModel.cpp.o" \
-"CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/TetrisModel.c.o" \
-"CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/fsm.c.o" \
-"CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/main.cpp.o" \
-"CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/mainwindow.cpp.o"
+"CMakeFiles/BrickGameDesktop.dir/BrickGameDesktop_autogen/mocs_compilation.cpp.o"
 
 # External object files for target BrickGameDesktop
 BrickGameDesktop_EXTERNAL_OBJECTS =
 
 BrickGameDesktop: CMakeFiles/BrickGameDesktop.dir/BrickGameDesktop_autogen/mocs_compilation.cpp.o
-BrickGameDesktop: CMakeFiles/BrickGameDesktop.dir/src/brick_game.cpp.o
-BrickGameDesktop: CMakeFiles/BrickGameDesktop.dir/src/brick_game/controller/controller.cpp.o
-BrickGameDesktop: CMakeFiles/BrickGameDesktop.dir/src/brick_game/snake/SnakeModel.cpp.o
-BrickGameDesktop: CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/TetrisModel.c.o
-BrickGameDesktop: CMakeFiles/BrickGameDesktop.dir/src/brick_game/tetris/fsm.c.o
-BrickGameDesktop: CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/main.cpp.o
-BrickGameDesktop: CMakeFiles/BrickGameDesktop.dir/src/gui/desktop/vscode/mainwindow.cpp.o
 BrickGameDesktop: CMakeFiles/BrickGameDesktop.dir/build.make
 BrickGameDesktop: /usr/local/Qt-6.6.2/lib/libQt6Widgets.6.6.2.dylib
 BrickGameDesktop: /usr/local/Qt-6.6.2/lib/libQt6Gui.6.6.2.dylib
 BrickGameDesktop: /usr/local/Qt-6.6.2/lib/libQt6Core.6.6.2.dylib
 BrickGameDesktop: CMakeFiles/BrickGameDesktop.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/jocastab/Projects/CPP3_BrickGame_v2.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable BrickGameDesktop"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/jocastab/Projects/CPP3_BrickGame_v2.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable BrickGameDesktop"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/BrickGameDesktop.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
