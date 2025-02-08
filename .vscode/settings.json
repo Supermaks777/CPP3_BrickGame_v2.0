@@ -89,5 +89,6 @@
         "stack": "cpp",
         "ui.h": "c",
         "const.h": "c"
-    }
+    },
+    "bitoAI.codeCompletion.enableAutoCompletion": false
 }

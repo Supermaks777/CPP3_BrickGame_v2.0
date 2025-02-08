@@ -3,14 +3,14 @@ CXX = g++
 CC = gcc
 
 # Compiler flags
-CXXFLAGS = -std=c++17 -Wall -Wreturn-type -Wno-unknown-pragmas
+CXXFLAGS = -std=c++17 -Wall -Werror -Wreturn-type -Wno-unknown-pragmas
 CFLAGS = -std=c11 -Wall -Werror -Wimplicit-function-declaration -Wreturn-type
 
 # Флаг для выбора интерфейса (ncurses или Qt)
-USE_QT ?= 1
+USE_QT = 1
 
-# Путь к Qt
-QT_PATH = /usr/local/Qt-6.6.2/
+# Путь к Qt (замени на свой путь)
+QT_PATH = /Users/<ваше_имя>/Qt/6.2.0/clang_64
 
 # Настройки для Qt
 ifeq ($(USE_QT), 1)
