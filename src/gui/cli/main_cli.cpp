@@ -1,9 +1,9 @@
-    #include "../../brick_game/controller/controller.h"
+    #include "../../brick_game/controller/cli_controller.h"
 
 
 
     int main() {
-        startApp();
+        cli_startApp();
         return 0;
     }
 

@@ -1,4 +1,4 @@
-#include "controller.h"
+#include "cli_controller.h"
 
 // Статический объект модели
 static SnakeModel* modelSnake = nullptr;
@@ -9,24 +9,7 @@ extern "C" {
     void mainLoop();
 }
 
-#ifdef USE_QT
-Controller::Controller(QObject *parent) : QObject(parent) {
-    // Инициализация моделей, если нужно
-}
-
-void Controller::handleUserAction(UserAction_t userAction) {
-    bool hold = false; // Для Qt удержание не используется
-    updateModel(userAction, hold, &flagExit, selectedGame);
-}
-
-void Controller::handleRequestGameInfo() {
-    GameInfo_t gameInfo;
-    getGameInfo(&gameInfo, selectedGame);
-    emit gameInfoUpdated(gameInfo);
-}
-#endif // USE_QT
-
-extern "C" void updateModel(UserAction_t userActionSource, bool hold, bool* flagExit, MenuItem_t selectedGame) {
+extern "C" void cli_updateModel(UserAction_t userActionSource, bool hold, bool* flagExit, MenuItem_t selectedGame) {
     if (selectedGame == MENU_SNAKE) {
         if (modelSnake == nullptr) modelSnake = new SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
         UserAction userAction = modelSnake->convertUserAction(userActionSource);
@@ -37,7 +20,7 @@ extern "C" void updateModel(UserAction_t userActionSource, bool hold, bool* flag
     }
 }
 
-extern "C" void getGameInfo(GameInfo_t* gameInfo, MenuItem_t selectedGame) {
+extern "C" void cli_getGameInfo(GameInfo_t* gameInfo, MenuItem_t selectedGame) {
     if (selectedGame == MENU_SNAKE) {
         if (modelSnake == nullptr) modelSnake = new SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
         modelSnake->getGameInfo(gameInfo);
@@ -45,7 +28,7 @@ extern "C" void getGameInfo(GameInfo_t* gameInfo, MenuItem_t selectedGame) {
     if (selectedGame == MENU_TETRIS) getGameInfoTetris(gameInfo, modelTetris);
 }
 
-extern "C" void startGame(MenuItem_t selectedGame) {
+extern "C" void cli_startGame(MenuItem_t selectedGame) {
     if (selectedGame == MENU_SNAKE) {
         if (modelSnake == nullptr) modelSnake = new SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
         modelSnake->startGame();
@@ -57,17 +40,13 @@ extern "C" void startGame(MenuItem_t selectedGame) {
     }
 }
 
-extern "C" void exitGame(MenuItem_t selectedGame) {
+extern "C" void cli_exitGame(MenuItem_t selectedGame) {
     if (selectedGame == MENU_SNAKE) {
         modelSnake->exitGame();
     }
     if (selectedGame == MENU_TETRIS) cleanupParameters(&modelTetris);
 }
 
-extern "C" void startApp() {
-#ifdef USE_QT
-    // Для Qt mainLoop не используется, вместо этого запускается QApplication
-#else
+extern "C" void cli_startApp() {
     mainLoop();
-#endif
 }
