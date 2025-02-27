@@ -22,6 +22,7 @@ public:
     void getGameInfo(GameInfo_t* gameInfo);
     void startGame();
     void exitGame();
+    void gameLoop(bool* flagExit);
 
     Direction getDirection() const;
 

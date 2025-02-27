@@ -10,7 +10,7 @@ CFLAGS = -std=c11 -Wall -Werror -Wimplicit-function-declaration -Wreturn-type
 LDFLAGS = -lncurses
 
 # Source files
-SRCS_CPP = gui/cli/main_cli.cpp brick_game/controller/controller.cpp
+SRCS_CPP = gui/cli/main_cli.cpp brick_game/controller/cli_controller.cpp
 SRCS_C = gui/cli/game_input.c gui/cli/game_loop.c gui/cli/game_render.c gui/cli/main_loop.c gui/cli/ui_helpers.c
 
 # Model source files

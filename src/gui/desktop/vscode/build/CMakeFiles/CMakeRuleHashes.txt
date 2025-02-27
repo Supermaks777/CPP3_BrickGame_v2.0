@@ -1,2 +1,0 @@
-# Hashes of file build rules.
-351242eed8e1befdb902f753c7d27a62 CMakeFiles/BrickGameDesktop_autogen

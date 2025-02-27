@@ -55,7 +55,13 @@ void updateModelTetris(UserAction_t userAction, bool hold, bool *flagExit, Param
   *flagExit = parameters_->current_state_  == sExitGame;
 }
 
-
+/// @brief обработка сигнала от пользователя
+/// @param signal_ сигнал, полученный от пользователя
+/// @param hold удержание (не используется)
+/// @param parameters_ текущие параметры
+void gameLoopTetris(bool hold, bool *flagExit, Parameters_t *parameters_, FiniteStateMachine_t *fsm_) {
+  updateModelTetris(Action, hold, flagExit, parameters_, fsm_);
+}
 
 void getField(int*** pointer, Parameters_t *parameters_){
   int tempMatrix[BOARD_HEIGHT][BOARD_WIDTH];

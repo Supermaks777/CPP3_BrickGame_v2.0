@@ -235,5 +235,10 @@
             }
         }
     }
+    /// @brief отрабатывает срабатывание по таймеру
+    /// @param flagExit указатель на флаг выхода из игры
+    void SnakeModel::gameLoop(bool* flagExit){
+        updateModel(UserAction::Action, flagExit);
+    }
 
 #endif // SNAKE_MODEL_CPP
