@@ -1,4 +1,3 @@
-# Compiler
 CXX = g++
 CC = gcc
 
@@ -9,6 +8,10 @@ CFLAGS = -std=c11 -Wall -Werror -Wimplicit-function-declaration -Wreturn-type
 # ncurses library
 LDFLAGS = -lncurses
 
+# Google Test flags
+GTEST_DIR = /usr/local/opt/googletest  # Путь к Google Test (для macOS)
+GTEST_LIBS = -lgtest -lgtest_main -pthread
+
 # Source files
 SRCS_CPP = gui/cli/main_cli.cpp brick_game/controller/cli_controller.cpp
 SRCS_C = gui/cli/game_input.c gui/cli/game_loop.c gui/cli/game_render.c gui/cli/main_loop.c gui/cli/ui_helpers.c
@@ -16,6 +19,9 @@ SRCS_C = gui/cli/game_input.c gui/cli/game_loop.c gui/cli/game_render.c gui/cli/
 # Model source files
 MODEL_SRCS_CPP = brick_game/snake/SnakeModel.cpp
 MODEL_SRCS_C = brick_game/tetris/TetrisModel.c brick_game/tetris/fsm.c
+
+# Test source files
+TEST_SRCS_CPP = tests/snake_model_test.cpp
 
 # Object files
 OBJS_CPP = $(SRCS_CPP:.cpp=.o)
@@ -25,12 +31,18 @@ OBJS_C = $(SRCS_C:.c=.o)
 MODEL_OBJS_CPP = $(MODEL_SRCS_CPP:.cpp=.o)
 MODEL_OBJS_C = $(MODEL_SRCS_C:.c=.o)
 
+# Test object files
+TEST_OBJS_CPP = $(TEST_SRCS_CPP:.cpp=.o)
+
 # Library names
 MODEL_LIB_CPP = libmodel_cpp.a
 MODEL_LIB_C = libmodel_c.a
 
 # Executable name
 TARGET = snake_game
+
+# Test executable name
+TEST_TARGET = snake_game_tests
 
 # Default target
 all: clean_all $(MODEL_LIB_CPP) $(MODEL_LIB_C) $(TARGET)
@@ -57,12 +69,36 @@ $(MODEL_LIB_C): $(MODEL_OBJS_C)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Build and run tests
+test: $(TEST_TARGET)
+	./$(TEST_TARGET)
+
+# Link test object files to create test executable
+$(TEST_TARGET): $(TEST_OBJS_CPP) $(MODEL_LIB_CPP)
+	$(CXX) $(CXXFLAGS) -o $(TEST_TARGET) $(TEST_OBJS_CPP) -L. -lmodel_cpp $(GTEST_LIBS)
+
+# Install the program
+install:
+	cp $(TARGET) /usr/local/bin/$(TARGET)
+
+# Uninstall the program
+uninstall:
+	rm -f /usr/local/bin/$(TARGET)
+
+# Generate documentation (placeholder)
+dvi:
+	@echo "Documentation generation not implemented."
+
+# Create a distribution archive
+dist:
+	tar -czvf snake_game.tar.gz $(SRCS_CPP) $(SRCS_C) $(MODEL_SRCS_CPP) $(MODEL_SRCS_C) $(TEST_SRCS_CPP) Makefile
+
 # Clean up build files
 clean:
-	rm -f $(OBJS_CPP) $(OBJS_C) $(MODEL_OBJS_CPP) $(MODEL_OBJS_C) $(MODEL_LIB_CPP) $(MODEL_LIB_C) 
+	rm -f $(OBJS_CPP) $(OBJS_C) $(MODEL_OBJS_CPP) $(MODEL_OBJS_C) $(MODEL_LIB_CPP) $(MODEL_LIB_C) $(TEST_OBJS_CPP)
 
 clean_all: clean
-	rm -f $(TARGET)
+	rm -f $(TARGET) $(TEST_TARGET)
 
 # Phony targets
-.PHONY: all clean
+.PHONY: all clean clean_all install uninstall dvi dist test
