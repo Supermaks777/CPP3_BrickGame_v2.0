@@ -13,18 +13,17 @@ SOURCES += \
     gui/desktop/main_qt.cpp \
     brick_game/tetris/TetrisModel.c \
     brick_game/tetris/fsm.c \
-    brick_game/tetris/TetrisGame.cpp \
     gui/desktop/qtviewer_events.cpp \
     gui/desktop/qtviewer_main.cpp \
     gui/desktop/qtviewer_render.cpp
 
 HEADERS += \
     brick_game/snake/SnakeModel.h \
-    common/common.h \
-    common/commonAPI.h \
-    common/const.h \
-    common/struct.h \
-    controller/gui_controller.h \
+    brick_game/common/common.h \
+    brick_game/common/commonAPI.h \
+    brick_game/common/const.h \
+    brick_game/common/struct.h \
+    brick_game/controller/gui_controller.h \
     gui/desktop/qt_viewer.h \
     brick_game/tetris/TetrisGame.h \
     brick_game/tetris/fsm.h \

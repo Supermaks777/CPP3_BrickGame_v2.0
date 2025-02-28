@@ -56,7 +56,6 @@ SOURCES       = ../../brick_game/snake/SnakeModel.cpp \
 		../../gui/desktop/main_qt.cpp \
 		../../brick_game/tetris/TetrisModel.c \
 		../../brick_game/tetris/fsm.c \
-		brick_game/tetris/TetrisGame.cpp \
 		../../gui/desktop/qtviewer_events.cpp \
 		../../gui/desktop/qtviewer_main.cpp \
 		../../gui/desktop/qtviewer_render.cpp moc_qt_viewer.cpp
@@ -64,7 +63,6 @@ OBJECTS       = SnakeModel.o \
 		main_qt.o \
 		TetrisModel.o \
 		fsm.o \
-		TetrisGame.o \
 		qtviewer_events.o \
 		qtviewer_main.o \
 		qtviewer_render.o \
@@ -374,11 +372,11 @@ DIST          = /usr/local/Qt-6.6.2/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-6.6.2/mkspecs/features/yacc.prf \
 		/usr/local/Qt-6.6.2/mkspecs/features/lex.prf \
 		../../../../CPP3_BrickGame_v2_0.pro ../../brick_game/snake/SnakeModel.h \
-		common/common.h \
-		common/commonAPI.h \
-		common/const.h \
-		common/struct.h \
-		controller/gui_controller.h \
+		../../brick_game/common/common.h \
+		../../brick_game/common/commonAPI.h \
+		../../brick_game/common/const.h \
+		../../brick_game/common/struct.h \
+		../../brick_game/controller/gui_controller.h \
 		../../gui/desktop/qt_viewer.h \
 		../../brick_game/tetris/TetrisGame.h \
 		../../brick_game/tetris/fsm.h \
@@ -386,7 +384,6 @@ DIST          = /usr/local/Qt-6.6.2/mkspecs/features/spec_pre.prf \
 		../../gui/desktop/main_qt.cpp \
 		../../brick_game/tetris/TetrisModel.c \
 		../../brick_game/tetris/fsm.c \
-		brick_game/tetris/TetrisGame.cpp \
 		../../gui/desktop/qtviewer_events.cpp \
 		../../gui/desktop/qtviewer_main.cpp \
 		../../gui/desktop/qtviewer_render.cpp
@@ -1056,8 +1053,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/local/Qt-6.6.2/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../brick_game/snake/SnakeModel.h common/common.h common/commonAPI.h common/const.h common/struct.h controller/gui_controller.h ../../gui/desktop/qt_viewer.h ../../brick_game/tetris/TetrisGame.h ../../brick_game/tetris/fsm.h ../../brick_game/tetris/TetrisModel.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../brick_game/snake/SnakeModel.cpp ../../gui/desktop/main_qt.cpp ../../brick_game/tetris/TetrisModel.c ../../brick_game/tetris/fsm.c brick_game/tetris/TetrisGame.cpp ../../gui/desktop/qtviewer_events.cpp ../../gui/desktop/qtviewer_main.cpp ../../gui/desktop/qtviewer_render.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../brick_game/snake/SnakeModel.h ../../brick_game/common/common.h ../../brick_game/common/commonAPI.h ../../brick_game/common/const.h ../../brick_game/common/struct.h ../../brick_game/controller/gui_controller.h ../../gui/desktop/qt_viewer.h ../../brick_game/tetris/TetrisGame.h ../../brick_game/tetris/fsm.h ../../brick_game/tetris/TetrisModel.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../brick_game/snake/SnakeModel.cpp ../../gui/desktop/main_qt.cpp ../../brick_game/tetris/TetrisModel.c ../../brick_game/tetris/fsm.c ../../gui/desktop/qtviewer_events.cpp ../../gui/desktop/qtviewer_main.cpp ../../gui/desktop/qtviewer_render.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../../gui/desktop/qtviewer.ui $(DISTDIR)/
 
 
@@ -1512,9 +1509,6 @@ fsm.o: ../../brick_game/tetris/fsm.c ../../brick_game/tetris/fsm.h \
 		../../brick_game/common/const.h \
 		../../brick_game/tetris/TetrisModel.h
 	$(CC) -c $(CFLAGS) $(INCPATH) -o fsm.o ../../brick_game/tetris/fsm.c
-
-TetrisGame.o: brick_game/tetris/TetrisGame.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o TetrisGame.o brick_game/tetris/TetrisGame.cpp
 
 qtviewer_events.o: ../../gui/desktop/qtviewer_events.cpp ../../gui/desktop/qt_viewer.h \
 		/usr/local/Qt-6.6.2/include/QtWidgets/QMainWindow \
