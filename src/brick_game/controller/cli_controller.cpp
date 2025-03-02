@@ -2,7 +2,7 @@
 
 
 // Статический объект модели
-static SnakeModel* modelSnake = nullptr;
+static s21::SnakeModel* modelSnake = nullptr;
 static Parameters_t* modelTetris = nullptr;
 static FiniteStateMachine_t fsm_;
 
@@ -13,7 +13,7 @@ extern "C" {
 
 extern "C" void updateModel(UserAction_t userActionSource, bool hold, bool* flagExit, MenuItem_t selectedGame) {
     if (selectedGame == MENU_SNAKE){
-        if (modelSnake == nullptr) modelSnake = new SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
+        if (modelSnake == nullptr) modelSnake = new s21::SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
         UserAction userAction = modelSnake->convertUserAction(userActionSource);
         modelSnake->updateModel(userAction, flagExit);
     }
@@ -24,7 +24,7 @@ extern "C" void updateModel(UserAction_t userActionSource, bool hold, bool* flag
 
 extern "C" void getGameInfo(GameInfo_t* gameInfo, MenuItem_t selectedGame) {
     if (selectedGame == MENU_SNAKE){
-        if (modelSnake == nullptr) modelSnake = new SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
+        if (modelSnake == nullptr) modelSnake = new s21::SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
         modelSnake->getGameInfo(gameInfo);
     }
     if (selectedGame == MENU_TETRIS) getGameInfoTetris(gameInfo, modelTetris);
@@ -32,7 +32,7 @@ extern "C" void getGameInfo(GameInfo_t* gameInfo, MenuItem_t selectedGame) {
 
 extern "C" void startGame(MenuItem_t selectedGame){
     if (selectedGame == MENU_SNAKE){
-        if (modelSnake == nullptr) modelSnake = new SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
+        if (modelSnake == nullptr) modelSnake = new s21::SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
         modelSnake->startGame();
     }
     if (selectedGame == MENU_TETRIS){

@@ -2,6 +2,7 @@
 #define QTVIEWER_RENDER_CPP
 #include "qt_viewer.h"
 
+namespace s21 {
 
 void QTViewer::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event); // Подавляем предупреждение о неиспользуемом параметре
@@ -104,5 +105,7 @@ void QTViewer::drawStatus(QPainter &painter) {
         painter.restore();
     }
 }
+
+} // namespace s21
 
 #endif // QTVIEWER_RENDER_CPP

@@ -1,7 +1,11 @@
+#ifndef TETRIS_GAME_H
+#define TETRIS_GAME_H
+
 extern "C" {
 #include "brick_game/tetris/TetrisModel.h"
 }
 
+namespace s21 {
 class TetrisModel {
 public:
     TetrisModel() {
@@ -32,3 +36,7 @@ public:
         updateModel(UserAction_t::Down, flagExit);
     }
 };
+
+}  // namespace s21
+
+#endif // TETRIS_GAME_H

@@ -1,5 +1,5 @@
-#ifndef TETRIS_BACKEND
-#define TETRIS_BACKEND
+#ifndef TETRIS_MODEL_H
+#define TETRIS_MODEL_H
 
 #include <stdbool.h>
 
@@ -82,4 +82,4 @@ void SaveRecord(Parameters_t *parameters_);
 
 void startTetrisGame(Parameters_t *parameters_);
 
-#endif  // TETRIS_BACKEND
+#endif  // TETRIS_MODEL_H

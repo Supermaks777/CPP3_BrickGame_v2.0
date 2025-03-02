@@ -4,6 +4,7 @@
 
 #include "SnakeModel.h"
 
+namespace s21 {
 
     /// @brief устанавливает направление (только под прямым углом)
     /// @param newDirection новое направление
@@ -78,7 +79,7 @@
             if (userAction == UserAction::Left) updateSnake(Direction::Left);
             if (userAction == UserAction::Action) updateSnake(direction);
         }
-        *flagExit = state == GameState::GameOver;
+        *flagExit = (state == GameState::GameOver || state == GameState::Win);
     }
 
     /// @brief конвертирует сишное перечисление команды пользователя в перечисление-класс
@@ -129,7 +130,7 @@
         std::pair<int, int> newHead = getNewHead();
         if (!checkIsCollapse(newHead)){ 
             moveSnake(newHead);
-            if (score == height * width) state = GameState::GameOver;
+            if (score == height * width) state = GameState::Win;
         } else state = GameState::GameOver;
     }
 
@@ -240,5 +241,29 @@
     void SnakeModel::gameLoop(bool* flagExit){
         updateModel(UserAction::Action, flagExit);
     }
+
+    /// @brief возвращает текущее состояние игры
+    /// @return state - текущее состояние (GameState)
+    GameState SnakeModel::getState() const {
+        return state;
+    }
+
+    int SnakeModel::getLevel() const{
+        return level;
+    }
+
+    int SnakeModel::getScore() const{
+        return score;
+    };
+
+    int SnakeModel::getHighScore() const{
+        return highScore;
+    };
+
+    void SnakeModel::setFood(std::pair<int, int> newFood) {
+    food = newFood;
+}
+
+} // namespace s21
 
 #endif // SNAKE_MODEL_CPP

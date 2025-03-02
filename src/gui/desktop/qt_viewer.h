@@ -19,6 +19,7 @@ class QTViewer;
 }
 QT_END_NAMESPACE
 
+namespace s21 {
 class QTViewer : public QMainWindow
 {
     Q_OBJECT
@@ -65,4 +66,6 @@ private:
 
 
 };
+
+} // namespace s21
 #endif // MAINWINDOW_H

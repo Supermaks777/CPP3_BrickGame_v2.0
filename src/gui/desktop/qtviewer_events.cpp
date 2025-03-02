@@ -3,6 +3,7 @@
 
 #include "qt_viewer.h"
 
+namespace s21 {
 
 void QTViewer::keyPressEvent(QKeyEvent *event) {
     if (isMenu) hadleKeyPressEventInMenu(event);
@@ -84,4 +85,5 @@ void QTViewer::gameLoop(){
     update();
 }
 
+} // namespace s21
 #endif // QTVIEWER_EVENTS_CPP

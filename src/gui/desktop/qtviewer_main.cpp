@@ -2,6 +2,8 @@
 #define QTVIEWER_MAIN_CPP
 #include "qt_viewer.h"
 
+namespace s21 {
+
 /**
  * @brief QTViewer::QTViewer конструктор для QTViewer
  * @param parent
@@ -52,4 +54,5 @@ void QTViewer::freeGameInfo() {
     delete[] gameInfo.next;
 }
 
+} // namespace s21
 #endif // QTVIEWER_MAIN_CPP

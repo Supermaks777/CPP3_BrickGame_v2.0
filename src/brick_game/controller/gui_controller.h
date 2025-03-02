@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QTime>
 
+namespace s21 {
 
 class guiController {
 public:
@@ -94,4 +95,5 @@ public:
 
 };
 
+} // namespace s21
 #endif // GUI_CONTROLLER_H

@@ -11,9 +11,13 @@
 
 // #define RECORD_FILE_NAME "record.db"
 
+namespace s21 {
+
+class SnakeModelTest; 
 
 class SnakeModel {
 public:
+    friend class SnakeModelTest;    
     // SnakeModel(int width, int height) : width(width), height(height){ startGame(); }
     SnakeModel(int height, int width) : width(width), height(height){ startGame(); }
     int width, height;
@@ -25,6 +29,23 @@ public:
     void gameLoop(bool* flagExit);
 
     Direction getDirection() const;
+    GameState getState() const;
+    void setDirection(Direction newDirection);
+    std::pair<int, int> getFood() const;
+    void increaseScore();
+
+public:
+    void updateSnake(Direction newDirection);
+    const std::vector<std::pair<int, int>>& getSnake() const;
+    void eatFood();
+    int getLevel() const;
+    int getScore() const;
+    int getHighScore() const;
+    int getSpeed();
+    void setFood(std::pair<int, int> newFood);
+
+
+
 
 private:
     std::vector<std::pair<int, int>> snake;
@@ -35,29 +56,23 @@ private:
     int highScore;
     GameState state;
 
-    void setDirection(Direction newDirection);
     std::pair<int, int>  getNewHead();
     bool checkIsCollapse(std::pair<int, int>  newHead);
     void moveSnake(std::pair<int, int>  newHead);
-    void eatFood();
-    void increaseScore();
     void increaseLevel();
     void increaseHighScore();
     void initGame();
-    void updateSnake(Direction newDirection);
     void loadRecord();
     void saveRecord();
-    const std::vector<std::pair<int, int>>& getSnake() const;
-    std::pair<int, int> getFood() const;
     void addFood();
     void initSnake();
-    int getSpeed();
     void saveSnake(GameInfo_t* gameInfo);
     void saveFood(GameInfo_t* gameInfo);
     void clearField(GameInfo_t* gameInfo);
     void clearNext(GameInfo_t* gameInfo);
-    // PlayerState_t getState();
 
 };
+
+} // namespace s21
 
 #endif // SNAKE_MODEL_H
