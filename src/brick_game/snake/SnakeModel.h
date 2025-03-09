@@ -26,13 +26,13 @@ public:
     void getGameInfo(GameInfo_t* gameInfo);
     void startGame();
     void exitGame();
-    void gameLoop(bool* flagExit);
+    void updateModelByTimer(bool* flagExit);
 
     Direction getDirection() const;
     GameState getState() const;
-    void setDirection(Direction newDirection);
+    void updateDirection(Direction newDirection);
     std::pair<int, int> getFood() const;
-    void increaseScore();
+    void updateScore();
 
 public:
     void updateSnake(Direction newDirection);
@@ -59,8 +59,8 @@ private:
     std::pair<int, int>  getNewHead();
     bool checkIsCollapse(std::pair<int, int>  newHead);
     void moveSnake(std::pair<int, int>  newHead);
-    void increaseLevel();
-    void increaseHighScore();
+    void updateLevel();
+    void updateHighScore();
     void initGame();
     void loadRecord();
     void saveRecord();

@@ -2,18 +2,18 @@ CXX = g++
 CC = gcc
 
 # Compiler flags
-CXXFLAGS = -std=c++17 -Wall -Werror -Wreturn-type -fprofile-arcs -ftest-coverage
-CFLAGS = -std=c11 -Wall -Werror -Wimplicit-function-declaration -Wreturn-type -fprofile-arcs -ftest-coverage
+CXXFLAGS = -std=c++17 -Wall -Werror -Wreturn-type
+CFLAGS = -std=c11 -Wall -Werror -Wimplicit-function-declaration -Wreturn-type
+
+# Coverage flags (только для SnakeModel)
+COVERAGE_FLAGS = -fprofile-arcs -ftest-coverage -lgcov --coverage
 
 # ncurses library
 LDFLAGS = -lncurses
 
 # Google Test flags
-GTEST_DIR = /Users/jocastab/.brew/opt/googletest  # Путь к Google Test
+GTEST_DIR = /Users/jocastab/.brew/opt/googletest
 GTEST_LIBS = -lgtest -lgtest_main -pthread
-
-# Coverage flags
-COVERAGE_FLAGS = -lgcov --coverage
 
 # Source files
 SRCS_CPP = gui/cli/main_cli.cpp brick_game/controller/cli_controller.cpp
@@ -71,6 +71,10 @@ $(MODEL_LIB_C): $(MODEL_OBJS_C)
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+# Compile C++ SnakeModel with coverage
+brick_game/snake/SnakeModel.o: brick_game/snake/SnakeModel.cpp
+	$(CXX) $(CXXFLAGS) $(COVERAGE_FLAGS) -c $< -o $@
+
 # Compile C source files to object files
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -82,42 +86,26 @@ test: $(TEST_TARGET)
 
 # Link test object files to create test executable
 $(TEST_TARGET): $(TEST_OBJS_CPP) $(MODEL_LIB_CPP)
-	$(CXX) $(CXXFLAGS) -o $(TEST_TARGET) $(TEST_OBJS_CPP) -L. -lmodel_cpp $(GTEST_LIBS) $(COVERAGE_FLAGS)
+	$(CXX) $(CXXFLAGS) $(COVERAGE_FLAGS) -o $(TEST_TARGET) $(TEST_OBJS_CPP) -L. -lmodel_cpp $(GTEST_LIBS)
 
 # Generate coverage report
 coverage:
 	@echo "Generating coverage report for SnakeModel..."
 	@mkdir -p $(COVERAGE_DIR)
-	@lcov --capture --directory . --output-file $(COVERAGE_DIR)/coverage.info --ignore-errors inconsistent,usage
-	@lcov --extract $(COVERAGE_DIR)/coverage.info '*/brick_game/snake/SnakeModel.cpp' '*/brick_game/snake/SnakeModel.h' --output-file $(COVERAGE_DIR)/filtered_coverage.info
+	@lcov --capture --directory brick_game/snake --output-file $(COVERAGE_DIR)/coverage.info --ignore-errors inconsistent,usage
+	@lcov --extract $(COVERAGE_DIR)/coverage.info '*/brick_game/snake/SnakeModel.cpp' --output-file $(COVERAGE_DIR)/filtered_coverage.info
 	@genhtml $(COVERAGE_DIR)/filtered_coverage.info --output-directory $(COVERAGE_DIR)/html
 	@echo "Coverage report generated in $(COVERAGE_DIR)/html/index.html"
-	@open $(COVERAGE_DIR)/html/index.html  # Открываем отчет в браузере (macOS)
-
-# Install the program
-install:
-	cp $(TARGET) /usr/local/bin/$(TARGET)
-
-# Uninstall the program
-uninstall:
-	rm -f /usr/local/bin/$(TARGET)
-
-# Generate documentation (placeholder)
-dvi:
-	@echo "Documentation generation not implemented."
-
-# Create a distribution archive
-dist:
-	tar -czvf snake_game.tar.gz $(SRCS_CPP) $(SRCS_C) $(MODEL_SRCS_CPP) $(MODEL_SRCS_C) $(TEST_SRCS_CPP) Makefile
+	@open $(COVERAGE_DIR)/html/index.html
 
 # Clean up build files
 clean:
 	rm -f $(OBJS_CPP) $(OBJS_C) $(MODEL_OBJS_CPP) $(MODEL_OBJS_C) $(MODEL_LIB_CPP) $(MODEL_LIB_C) $(TEST_OBJS_CPP)
-	rm -f *.gcda *.gcno *.gcov  # Очищаем файлы для анализа покрытия
+	rm -f brick_game/snake/*.gcda brick_game/snake/*.gcno brick_game/snake/*.gcov
 
 clean_all: clean
 	rm -f $(TARGET) $(TEST_TARGET)
 	rm -rf $(COVERAGE_DIR)
 
 # Phony targets
-.PHONY: all clean clean_all install uninstall dvi dist test coverage
+.PHONY: all clean clean_all test coverage

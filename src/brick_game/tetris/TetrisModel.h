@@ -23,7 +23,7 @@ void getGameInfoTetris(GameInfo_t* gameInfo, Parameters_t *parameters_);
 
 void updateModelTetris(UserAction_t userAction, bool hold, bool *flagExit, Parameters_t *parameters_, FiniteStateMachine_t * fsm_);
 
-void gameLoopTetris(bool hold, bool *flagExit, Parameters_t *parameters_, FiniteStateMachine_t *fsm_);
+void updateModelTetrisByTimer(bool hold, bool *flagExit, Parameters_t *parameters_, FiniteStateMachine_t *fsm_);
 
 void getField(int*** pointer, Parameters_t *parameters_);
 

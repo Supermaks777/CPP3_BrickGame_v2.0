@@ -1,5 +1,5 @@
-#ifndef TETRIS_CONST
-#define TETRIS_CONST
+#ifndef CONST_H
+#define CONST_H
 
 #define BOARD_HEIGHT 20
 #define BOARD_WIDTH 10
@@ -23,4 +23,4 @@
 #define KEY_LEFT_DOUBLE 'a'
 #define KEY_RIGHT_DOUBLE 'd'
 
-#endif  // TETRIS_CONST
+#endif  // CONST_H

@@ -45,12 +45,12 @@ int initialiseMatrix(int*** pointer, int height, int width);
 void freeMatrixMemory(int*** pointer, int height);
 void initialScreen();
 void uninitialScreen();
-void mainLoop();
+void mainLoop(GameContext_t* gameContext);
 void printMainMenu(MainMenuParameters_t* parameters);
 void updateMainMenu(MainMenuParameters_t* parameters);
 void processinMainMenu(MainMenuParameters_t* parameters);
 void updateScreen(GameInfo_t *gameInfo);
-void GameLoop(GameInfo_t *gameInfo, MenuItem_t selectedGame);
+void GameLoop(GameInfo_t *gameInfo, MenuItem_t selectedGame, GameContext_t* gameContext);
 UserAction_t getDefaultAction(MenuItem_t selectedGame);
 
 #ifdef __cplusplus

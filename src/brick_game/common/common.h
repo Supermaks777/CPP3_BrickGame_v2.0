@@ -1,5 +1,6 @@
 #ifndef COMMON_H
 #define COMMON_H
+// #include "../snake/SnakeModel.h"
 #include "struct.h"
 
 enum class Direction {

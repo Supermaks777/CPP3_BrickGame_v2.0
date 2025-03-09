@@ -1,6 +1,3 @@
-#ifndef QTVIEWER_EVENTS_CPP
-#define QTVIEWER_EVENTS_CPP
-
 #include "qt_viewer.h"
 
 namespace s21 {
@@ -86,4 +83,3 @@ void QTViewer::gameLoop(){
 }
 
 } // namespace s21
-#endif // QTVIEWER_EVENTS_CPP

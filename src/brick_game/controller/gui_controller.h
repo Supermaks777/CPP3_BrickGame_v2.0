@@ -58,8 +58,8 @@ public:
     void gameLoop(int selectedMenuItem, bool* flagExit){
         // qDebug() << "game loop:" << selectedMenuItem << QTime::currentTime().toString("hh:mm:ss");
         switch (selectedMenuItem) {
-        case 0: modelSnake->gameLoop(flagExit); break;
-        case 1: modelTetris->gameLoop(flagExit); break;
+        case 0: modelSnake->updateModelByTimer(flagExit); break;
+        case 1: modelTetris->updateModelByTimer(flagExit); break;
         default: break;
         };
     };

@@ -1,5 +1,3 @@
-#ifndef GAME_LOOP_C
-#define GAME_LOOP_C
 #include "ui.h"
 
 // игровой цикл универсальный
@@ -7,7 +5,7 @@
 /// @brief игровой цикл
 /// @param gameInfo параметры игры
 /// @param selectedGame выбранная игра
-void GameLoop(GameInfo_t *gameInfo, MenuItem_t selectedGame) {
+void GameLoop(GameInfo_t *gameInfo, MenuItem_t selectedGame, GameContext_t* gameContext) {
   UserAction_t defaultAction = getDefaultAction(selectedGame); 
   bool flagExit = false;
   bool hold = false;
@@ -15,31 +13,29 @@ void GameLoop(GameInfo_t *gameInfo, MenuItem_t selectedGame) {
   struct timeval lastTime;
   gettimeofday(&lastTime, NULL);
   UserAction_t userAction = 0;
-  startGame(selectedGame);
+  startGame(selectedGame, gameContext);
   while (!flagExit) {
-    getGameInfo(gameInfo, selectedGame);
+    getGameInfo(gameInfo, selectedGame, gameContext);
     updateScreen(gameInfo);
     key = getch();
     if (key != ERR) {
       userAction = getAction(key);
       hold = getIsHold(key);
-      updateModel(userAction, hold, &flagExit, selectedGame);
+      updateModel(userAction, hold, &flagExit, selectedGame, gameContext);
       gettimeofday(&lastTime, NULL);
-    } else if (TimerAction(gameInfo->speed, &lastTime)) updateModel(defaultAction, hold, &flagExit, selectedGame);
+    } else if (TimerAction(gameInfo->speed, &lastTime)) updateModelByTimer(hold, &flagExit, selectedGame, gameContext);
   };
   clear();
   printFrames();
-  exitGame(selectedGame);
+  exitGame(selectedGame, gameContext);
 };
 
 
-/// @brief возвращает действие "по умолчанию" в зависимости от выбранной игры
-/// @param selectedGame выбранная игра
-/// @return возвращает действие для змейки, вниз для тетриса или ошибку в ином случае
-UserAction_t getDefaultAction(MenuItem_t selectedGame){
-  if (selectedGame == MENU_SNAKE) return Action;
-  if (selectedGame == MENU_TETRIS) return Down;
-  return NUM_ACTIONS;
-}
-
-#endif // GAME_LOOP_C
+// /// @brief возвращает действие "по умолчанию" в зависимости от выбранной игры
+// /// @param selectedGame выбранная игра
+// /// @return возвращает действие для змейки, вниз для тетриса или ошибку в ином случае
+// UserAction_t getDefaultAction(MenuItem_t selectedGame){
+//   if (selectedGame == MENU_SNAKE) return Action;
+//   if (selectedGame == MENU_TETRIS) return Down;
+//   return NUM_ACTIONS;
+// }

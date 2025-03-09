@@ -1,63 +1,57 @@
 #include "cli_controller.h"
 
-
-// Статический объект модели
-static s21::SnakeModel* modelSnake = nullptr;
-static Parameters_t* modelTetris = nullptr;
-static FiniteStateMachine_t fsm_;
-
-
 extern "C" {
     void mainLoop();
 }
 
-extern "C" void updateModel(UserAction_t userActionSource, bool hold, bool* flagExit, MenuItem_t selectedGame) {
+extern "C" void updateModel(UserAction_t userActionSource, bool hold, bool* flagExit, MenuItem_t selectedGame, GameContext_t* gameContext) {
     if (selectedGame == MENU_SNAKE){
-        if (modelSnake == nullptr) modelSnake = new s21::SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
-        UserAction userAction = modelSnake->convertUserAction(userActionSource);
-        modelSnake->updateModel(userAction, flagExit);
+        if (gameContext->snakeModel == nullptr) gameContext->snakeModel = new s21::SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
+        UserAction userAction = gameContext->snakeModel->convertUserAction(userActionSource);
+        gameContext->snakeModel->updateModel(userAction, flagExit);
     }
     if (selectedGame == MENU_TETRIS) {
-        updateModelTetris(userActionSource, hold, flagExit, modelTetris, &fsm_); 
+        updateModelTetris(userActionSource, hold, flagExit, gameContext->tetrisModel, &gameContext->fsm); 
     }
 }
 
-extern "C" void getGameInfo(GameInfo_t* gameInfo, MenuItem_t selectedGame) {
+extern "C" void getGameInfo(GameInfo_t* gameInfo, MenuItem_t selectedGame, GameContext_t* gameContext) {
     if (selectedGame == MENU_SNAKE){
-        if (modelSnake == nullptr) modelSnake = new s21::SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
-        modelSnake->getGameInfo(gameInfo);
+        if (gameContext->snakeModel == nullptr) gameContext->snakeModel = new s21::SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
+        gameContext->snakeModel->getGameInfo(gameInfo);
     }
-    if (selectedGame == MENU_TETRIS) getGameInfoTetris(gameInfo, modelTetris);
+    if (selectedGame == MENU_TETRIS) getGameInfoTetris(gameInfo, gameContext->tetrisModel);
 }
 
-extern "C" void startGame(MenuItem_t selectedGame){
+extern "C" void startGame(MenuItem_t selectedGame, GameContext_t* gameContext){
     if (selectedGame == MENU_SNAKE){
-        if (modelSnake == nullptr) modelSnake = new s21::SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
-        modelSnake->startGame();
+        if (gameContext->snakeModel == nullptr) gameContext->snakeModel = new s21::SnakeModel(BOARD_HEIGHT, BOARD_WIDTH);
+        gameContext->snakeModel->startGame();
     }
     if (selectedGame == MENU_TETRIS){
-        initModelTetris(&modelTetris);
-        initFSM(&fsm_);
-        startTetrisGame(modelTetris);
+        initModelTetris(&gameContext->tetrisModel);
+        initFSM(&gameContext->fsm);
+        startTetrisGame(gameContext->tetrisModel);
     }
 }
 
-extern "C" void  exitGame(MenuItem_t selectedGame){
+extern "C" void  exitGame(MenuItem_t selectedGame, GameContext_t* gameContext){
     if (selectedGame == MENU_SNAKE){
-        modelSnake->exitGame();
+        gameContext->snakeModel->exitGame();
     }
-    if (selectedGame == MENU_TETRIS) cleanupParameters(&modelTetris);
+    if (selectedGame == MENU_TETRIS) cleanupParameters(&gameContext->tetrisModel);
 }
 
-extern "C" void  gameLoop(bool hold, bool* flagExit, MenuItem_t selectedGame){
+extern "C" void  updateModelByTimer(bool hold, bool* flagExit, MenuItem_t selectedGame, GameContext_t* gameContext){
     if (selectedGame == MENU_SNAKE){
-        modelSnake->gameLoop(flagExit);
+        gameContext->snakeModel->updateModelByTimer(flagExit);
     }
-    if (selectedGame == MENU_TETRIS) gameLoopTetris(hold, flagExit, modelTetris, &fsm_);
+    if (selectedGame == MENU_TETRIS) updateModelTetrisByTimer(hold, flagExit, gameContext->tetrisModel, &gameContext->fsm);
 }
 
 extern "C" void startApp(){
-    mainLoop();
+    GameContext_t gameContext = {nullptr, nullptr, {}};
+    mainLoop(&gameContext);
 }
 
 

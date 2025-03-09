@@ -32,7 +32,7 @@ public:
         // nothing
     }
 
-    void gameLoop(bool* flagExit){
+    void updateModelByTimer(bool* flagExit){
         updateModel(UserAction_t::Down, flagExit);
     }
 };

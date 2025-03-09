@@ -1,5 +1,3 @@
-#ifndef UI_HELPERS_C
-#define UI_HELPERS_C
 //вспомогательные
 #include "ui.h"
 
@@ -50,7 +48,7 @@ int initialiseMatrix(int*** pointer, int height, int width){
   int errCode = 0;
   *pointer = calloc(height, sizeof(int *));
   if (*pointer != NULL) {
-    for (int i = 0; i < height; i++) {
+    for (int i = 0; i < height && !errCode; i++) {
       (*pointer)[i] = calloc(width, sizeof(int));
       if ((*pointer)[i] == NULL) {
           // при ошибке - освобождение ранее выделенной памяти
@@ -81,4 +79,3 @@ void freeMatrixMemory(int*** pointer, int height) {
 }
 
 
-#endif // UI_HELPERS_C

@@ -1,11 +1,16 @@
-#ifndef TETRIS_STRUCT
-#define TETRIS_STRUCT
+#ifndef STRUCT_H
+#define STRUCT_H
 
 #include <time.h>
-
+#include "../snake/SnakeModel.h"
 #include "const.h"
 
-//ПЕРЕЧИСЛЕНИЯ
+// #ifdef __cplusplus
+// namespace s21 {
+//     class SnakeModel; // Forward declaration для C++
+// }
+// #endif
+
 // состояния
 typedef enum {
   sStart,
@@ -82,7 +87,7 @@ typedef struct {
 } Player_t;
 
 
-// Параметры игры
+// Параметры игры Tetris
 typedef struct {
   PlayerState_t current_state_;
   Board_t board_;
@@ -104,7 +109,7 @@ typedef struct {
 
 
 
-// Глобальные переменные
+// матрица состояний фигурок (вращения)
 static const int block_collection_[NUM_BLOCK_TYPES][NUM_BLOCK_STATES] = {
     {0b0100010001000100, 0b0000000011110000, 0b0100010001000100,
      0b0000000011110000},  // I
@@ -122,6 +127,7 @@ static const int block_collection_[NUM_BLOCK_TYPES][NUM_BLOCK_STATES] = {
      0b0000001001100100},  // Z
 };
 
+//главное меню
 typedef enum {
     MENU_SNAKE,
     MENU_TETRIS,
@@ -130,10 +136,29 @@ typedef enum {
 } MenuItem_t;
 
 typedef struct {
+    s21::SnakeModel* snakeModel;
+    Parameters_t* tetrisModel;
+    FiniteStateMachine_t fsm;
+} GameContext_t;
+
+// typedef struct {
+// #ifdef __cplusplus
+//     s21::SnakeModel* snakeModel; // Только для C++
+// #else
+//     void* snakeModel; // Для C используем void*
+// #endif
+//     Parameters_t* tetrisModel;
+//     FiniteStateMachine_t fsm;
+// } GameContext_t;
+
+// параметры главного меню
+typedef struct {
   MenuItem_t selected;
   UserAction_t userAction;
   GameInfo_t* gameInfo;
   bool flagExit;
+  // GameContext_t gameContext;
 } MainMenuParameters_t;
 
-#endif  // TETRIS_STRUCT
+
+#endif  // STRUCT_H

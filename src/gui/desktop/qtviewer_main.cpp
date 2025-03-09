@@ -1,5 +1,3 @@
-#ifndef QTVIEWER_MAIN_CPP
-#define QTVIEWER_MAIN_CPP
 #include "qt_viewer.h"
 
 namespace s21 {
@@ -55,4 +53,4 @@ void QTViewer::freeGameInfo() {
 }
 
 } // namespace s21
-#endif // QTVIEWER_MAIN_CPP
+

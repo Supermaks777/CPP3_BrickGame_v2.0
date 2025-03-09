@@ -1,5 +1,3 @@
-#ifndef QTVIEWER_RENDER_CPP
-#define QTVIEWER_RENDER_CPP
 #include "qt_viewer.h"
 
 namespace s21 {
@@ -108,4 +106,3 @@ void QTViewer::drawStatus(QPainter &painter) {
 
 } // namespace s21
 
-#endif // QTVIEWER_RENDER_CPP

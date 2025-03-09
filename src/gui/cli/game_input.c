@@ -1,5 +1,3 @@
-#ifndef GAME_INPUT_C
-#define GAME_INPUT_C
 //игровой цикл и механика
 #include "ui.h"
 
@@ -56,4 +54,3 @@ UserAction_t getSignal(int key, bool *hold) {
   return getAction(key);
 }
 
-#endif // GAME_INPUT_C

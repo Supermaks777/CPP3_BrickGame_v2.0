@@ -1,6 +1,3 @@
-#ifndef GAME_RENDER_C
-#define GAME_RENDER_C
-
 #include "ui.h"
 
 
@@ -122,4 +119,3 @@ void uninitialScreen(){
     endwin();  
 }
 
-#endif // GAME_RENDER_C

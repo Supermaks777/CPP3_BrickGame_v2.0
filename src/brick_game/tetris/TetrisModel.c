@@ -140,7 +140,7 @@ void SetNextBoardToBlock(int matrix[BLOCK_HEIGHT][BLOCK_WIDTH],
                          int shift_y_) {
   int x, y;
   for (int i = 0; i < BLOCK_HEIGHT; i++) {
-    for (int j = 0; j < +BLOCK_WIDTH; j++) {
+    for (int j = 0; j < BLOCK_WIDTH; j++) {
       x = j + parameters_->current_player_.x_ + shift_x_;
       y = i + parameters_->current_player_.y_ + shift_y_;
       if (x < 0 || x >= BOARD_WIDTH || y < 0 || y >= BOARD_HEIGHT)
@@ -157,7 +157,7 @@ void SetNextBoardToBlock(int matrix[BLOCK_HEIGHT][BLOCK_WIDTH],
 bool CheckBlockMatrix(int matrix[BLOCK_HEIGHT][BLOCK_WIDTH]) {
   bool result = false;
   for (int i = 0; i < BLOCK_HEIGHT && !result; i++) {
-    for (int j = 0; j < +BLOCK_WIDTH && !result; j++) {
+    for (int j = 0; j < BLOCK_WIDTH && !result; j++) {
       if (matrix[i][j] > 1) result = true;
     };
   };
@@ -345,6 +345,8 @@ void SaveRecord(Parameters_t *parameters_) {
   };
 };
 
+/// @brief начать игру
+/// @param parameters_  текущие параметры 
 void startTetrisGame(Parameters_t *parameters_){
   LoadRecord(parameters_);
   setDefaultParameters(parameters_);

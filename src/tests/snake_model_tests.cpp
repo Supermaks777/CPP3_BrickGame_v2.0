@@ -18,7 +18,7 @@ TEST_F(SnakeModelTest, MoveSnake) {
 // Столкновение с границей
 TEST_F(SnakeModelTest, CollisionWithWall) {
     s21::SnakeModel model(20, 10);
-    model.setDirection(Direction::Left);
+    model.updateDirection(Direction::Left);
     for (int i = 0; i < 10; ++i) {
         model.updateSnake(Direction::Left);
     }
@@ -34,7 +34,7 @@ TEST_F(SnakeModelTest, EatFood) {
     std::pair<int, int> food = {head.first + 1, head.second};
     model.setFood(food);  // Добавьте метод setFood в класс SnakeModel
 
-    model.setDirection(Direction::Right);
+    model.updateDirection(Direction::Right);
     model.updateSnake(Direction::Right);
 
     EXPECT_EQ(model.getSnake().front(), food);  // Змейка должна съесть еду
@@ -52,7 +52,7 @@ TEST_F(SnakeModelTest, LevelIncrease) {
         model.setFood(food);  // Устанавливаем еду
 
         // Двигаем змейку вправо
-        model.setDirection(Direction::Right);
+        model.updateDirection(Direction::Right);
         model.updateSnake(Direction::Right);
 
         // Проверяем, что змейка съела еду
@@ -75,7 +75,7 @@ TEST_F(SnakeModelTest, HighScore) {
 
     // Увеличиваем счет до тех пор, пока он не превысит текущий рекорд
     while (model.getScore() <= initialHighScore) {
-        model.increaseScore();
+        model.updateScore();
     }
 
     // Проверяем, что рекорд обновился
@@ -129,7 +129,7 @@ TEST_F(SnakeModelTest, SpeedIncrease) {
         model.setFood(food);  // Устанавливаем еду
 
         // Двигаем змейку вправо
-        model.setDirection(Direction::Right);
+        model.updateDirection(Direction::Right);
         model.updateSnake(Direction::Right);
     }
 
@@ -211,7 +211,7 @@ TEST_F(SnakeModelTest, ExitGame) {
     // 2. Увеличиваем счет до тех пор, пока он не превысит загруженный из файла
     int initialHighScore = model.getHighScore();
     while (model.getScore() <= initialHighScore) {
-        model.increaseScore();
+        model.updateScore();
     }
 
     // 3. Записываем рекорд при помощи exitGame и сохраняем значение рекорда
@@ -226,7 +226,7 @@ TEST_F(SnakeModelTest, ExitGame) {
 //  получение направления
 TEST_F(SnakeModelTest, GetDirection) {
     s21::SnakeModel model(20, 10);
-    model.setDirection(Direction::Up);
+    model.updateDirection(Direction::Up);
     EXPECT_EQ(model.getDirection(), Direction::Up);
 }
 

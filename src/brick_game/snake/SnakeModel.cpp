@@ -1,14 +1,10 @@
-#ifndef SNAKE_MODEL_CPP
-#define SNAKE_MODEL_CPP
-
-
 #include "SnakeModel.h"
 
 namespace s21 {
 
     /// @brief устанавливает направление (только под прямым углом)
     /// @param newDirection новое направление
-    void SnakeModel::setDirection(Direction newDirection){
+    void SnakeModel::updateDirection(Direction newDirection){
         direction = static_cast<int>(direction) % 2 == static_cast<int>(newDirection) % 2 ? direction : newDirection;
     }
 
@@ -43,24 +39,24 @@ namespace s21 {
 
     /// @brief ушаем еду: обновляем счет и шаманим новую еду
     void SnakeModel::eatFood(){
-        increaseScore();
+        updateScore();
         addFood();
     }
 
     /// @brief обновляем счет: обновляем уровень и рекорд
-    void SnakeModel::increaseScore(){
+    void SnakeModel::updateScore(){
         score++;
-        increaseLevel();
-        increaseHighScore();
+        updateLevel();
+        updateHighScore();
     }
 
     /// @brief обновляем уровень
-    void SnakeModel::increaseLevel(){
+    void SnakeModel::updateLevel(){
         if (level < 10 && score % 5 == 0) level++;
     }
 
     /// @brief обновляем рекорд
-    void SnakeModel::increaseHighScore(){
+    void SnakeModel::updateHighScore(){
         if (score > highScore) highScore = score;
     }
 
@@ -126,7 +122,7 @@ namespace s21 {
     /// @brief обновляем модель
     /// @param newDirection новое направление
     void SnakeModel::updateSnake(Direction newDirection){
-        setDirection(newDirection);
+        updateDirection(newDirection);
         std::pair<int, int> newHead = getNewHead();
         if (!checkIsCollapse(newHead)){ 
             moveSnake(newHead);
@@ -238,7 +234,7 @@ namespace s21 {
     }
     /// @brief отрабатывает срабатывание по таймеру
     /// @param flagExit указатель на флаг выхода из игры
-    void SnakeModel::gameLoop(bool* flagExit){
+    void SnakeModel::updateModelByTimer(bool* flagExit){
         updateModel(UserAction::Action, flagExit);
     }
 
@@ -248,22 +244,29 @@ namespace s21 {
         return state;
     }
 
+    /// @brief возвращает текущий уровень
+    /// @return текущий уровнь (int)
     int SnakeModel::getLevel() const{
         return level;
     }
 
+    /// @brief возвращает текущий счет
+    /// @return текущий счет (int)
     int SnakeModel::getScore() const{
         return score;
     };
 
+    /// @brief возвращает рекорд
+    /// @return рекорд (int)
     int SnakeModel::getHighScore() const{
         return highScore;
     };
 
+    /// @brief добавить еду в указанном месте
+    /// @param newFood (pair<int, int> ) - место для расположения еды
     void SnakeModel::setFood(std::pair<int, int> newFood) {
     food = newFood;
-}
+    }
 
 } // namespace s21
 
-#endif // SNAKE_MODEL_CPP

@@ -1,12 +1,9 @@
-#ifndef MAIN_LOOP_C
-#define MAIN_LOOP_C
-
 #include "ui.h"
 
 /// @brief игровой цикл главного меню
-void mainLoop(){
+void mainLoop(GameContext_t* gameContext){
   GameInfo_t gameInfo = {0};
-  MainMenuParameters_t parameters = {MENU_SNAKE, NUM_ACTIONS, &gameInfo, false};
+  MainMenuParameters_t parameters = {MENU_SNAKE, NUM_ACTIONS, &gameInfo, false, gameContext};
   if (!initialiseMatrix(&gameInfo.field, BOARD_HEIGHT, BOARD_WIDTH) && !initialiseMatrix(&gameInfo.next, BLOCK_HEIGHT, BLOCK_WIDTH)){
     initialScreen();
     while (!parameters.flagExit){
@@ -57,10 +54,8 @@ void updateMainMenu(MainMenuParameters_t* parameters){
 void processinMainMenu(MainMenuParameters_t* parameters){
   switch (parameters->selected){
     case MENU_SNAKE:
-      GameLoop(parameters->gameInfo, MENU_SNAKE);
-      break;
     case MENU_TETRIS:
-      GameLoop(parameters->gameInfo, MENU_TETRIS);
+      GameLoop(parameters->gameInfo, parameters->selected, parameters->gameContext);
       break;
     case MENU_EXIT:
       parameters->flagExit = true;
@@ -69,5 +64,3 @@ void processinMainMenu(MainMenuParameters_t* parameters){
       break;
   }
 }
-
-#endif // MAIN_LOOP_C
