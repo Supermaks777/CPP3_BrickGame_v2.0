@@ -5,36 +5,36 @@
 /// @param start момент первого события
 /// @param end момент второго события
 /// @return промежуток времени
-double getTimevalDiff(struct timeval *start, struct timeval *end){
+double get_timeval_diff(struct timeval *start, struct timeval *end){
   return (end->tv_sec - start->tv_sec) + (end->tv_usec - end->tv_usec)*1e-6;
 }
 
 /// @brief определяет залипание по точному времени
 /// @param key нажатая клавиша
 /// @return 
-bool getIsHold(int key){
+bool get_is_hold(int key){
   bool result;
   static int lastKey = 0;
-  static struct timeval lastTime = {0,0};
+  static struct timeval last_time = {0,0};
   static struct timeval currentTime;
   gettimeofday(&currentTime, NULL);
-  result = (key == lastKey && getTimevalDiff(&lastTime, &currentTime) < 0.2) ? true : false;
+  result = (key == lastKey && get_timeval_diff(&last_time, &currentTime) < 0.2) ? true : false;
   lastKey = key;
-  lastTime = currentTime;
+  last_time = currentTime;
   return result;
 }
 
 /// @brief определяет срабатывание по таймеру, то есть истина при срабатывании таймера (превышении порога)
 /// @param speed скорость игры (задержка)
-/// @param lastTime последний момент времени
+/// @param last_time последний момент времени
 /// @return факт срабатывания
-bool TimerAction(int speed, struct timeval * lastTime) {
+bool timer_action(int speed, struct timeval * last_time) {
   bool result = {false};
   struct timeval currentTime;
   gettimeofday(&currentTime, NULL);
-  if (getTimevalDiff(lastTime, &currentTime) * 1000 > speed){
+  if (get_timeval_diff(last_time, &currentTime) * 1000 > speed){
     result = true;
-    *lastTime = currentTime;
+    *last_time = currentTime;
   } else usleep(1000);
   return result;
 }
@@ -44,7 +44,7 @@ bool TimerAction(int speed, struct timeval * lastTime) {
 /// @param height высота матрицы
 /// @param width ширина матрицы
 /// @return 
-int initialiseMatrix(int*** pointer, int height, int width){
+int initialise_matrix(int*** pointer, int height, int width){
   int errCode = 0;
   *pointer = calloc(height, sizeof(int *));
   if (*pointer != NULL) {
@@ -68,7 +68,7 @@ int initialiseMatrix(int*** pointer, int height, int width){
 /// @brief высвобожение памяти от динамической матрицы
 /// @param pointer указатель на матрицу
 /// @param height высота матрицы
-void freeMatrixMemory(int*** pointer, int height) {
+void free_matrix_memory(int*** pointer, int height) {
     if (*pointer != NULL) {
       for (int i = 0; i < height; i++) {
           if ((*pointer)[i] != NULL) free((*pointer)[i]);

@@ -11,8 +11,8 @@ void QTViewer::keyPressEvent(QKeyEvent *event) {
 void QTViewer::hadleKeyPressEventInMenu(QKeyEvent *event){
     // Обработка клавиш в меню
     switch (event->key()){
-    case Qt::Key_Up:        selectedMenuItem = (selectedMenuItem - 1 + menuSize) % menuSize; break;     // Переключение вверх
-    case Qt::Key_Down:      selectedMenuItem = (selectedMenuItem + 1) % menuSize; break;                // Переключение вниз
+    case Qt::Key_Up:        selected_menu_item = (selected_menu_item - 1 + menuSize) % menuSize; break;     // Переключение вверх
+    case Qt::Key_Down:      selected_menu_item = (selected_menu_item + 1) % menuSize; break;                // Переключение вниз
     case Qt::Key_Space:     emit handleMenuSelection(); break;                                          // Выбор пункта меню
     case Qt::Key_Escape:    QApplication::quit();
     default: break;
@@ -20,22 +20,22 @@ void QTViewer::hadleKeyPressEventInMenu(QKeyEvent *event){
 }
 
 void QTViewer::handleKeyPressEventInGame(QKeyEvent *event){
-    UserAction_t action = getAction(event->key());
+    UserAction_t action = get_action(event->key());
     if (action != NUM_ACTIONS){
-        controller->updateState(selectedMenuItem, action,&flagExit);
-        timer->start(gameInfo.speed);
-        if (flagExit) handleFlagExit();
-        else controller->getInfo(selectedMenuItem, &gameInfo);
+        controller->updateState(selected_menu_item, action,&flag_exit);
+        timer->start(game_info.speed);
+        if (flag_exit) handleFlagExit();
+        else controller->getInfo(selected_menu_item, &game_info);
     }
 }
 
 void QTViewer::handleFlagExit(){
-    controller->exitGame(selectedMenuItem);
+    controller->exit_game(selected_menu_item);
     isMenu = true;
     timer->stop();
 }
 
-UserAction_t QTViewer::getAction(int key) {
+UserAction_t QTViewer::get_action(int key) {
     switch (key) {
     case Qt::Key_Down: return Down;
     case Qt::Key_S: return Down;
@@ -56,29 +56,29 @@ UserAction_t QTViewer::getAction(int key) {
 
 
 void QTViewer::handleMenuSelection(){
-    // qDebug() << "selected game:" << selectedMenuItem;
-    switch (selectedMenuItem) {
-    case 0:  startGame(); break;
-    case 1:  startGame(); break;
+    // qDebug() << "selected game:" << selected_menu_item;
+    switch (selected_menu_item) {
+    case 0:  start_game(); break;
+    case 1:  start_game(); break;
     case 2:  QApplication::quit();; break;
 
     default: break;
     }
 }
 
-void QTViewer::startGame(){
+void QTViewer::start_game(){
     isMenu = false;
-    controller->startGame(selectedMenuItem);
-    controller->getInfo(selectedMenuItem, &gameInfo);
+    controller->start_game(selected_menu_item);
+    controller->getInfo(selected_menu_item, &game_info);
     update();
-    timer->start(gameInfo.speed);
+    timer->start(game_info.speed);
 }
 
 
 void QTViewer::gameLoop(){
-    controller->gameLoop(selectedMenuItem, &flagExit);
-    if (flagExit) handleFlagExit();
-    else controller->getInfo(selectedMenuItem, &gameInfo);
+    controller->gameLoop(selected_menu_item, &flag_exit);
+    if (flag_exit) handleFlagExit();
+    else controller->getInfo(selected_menu_item, &game_info);
     update();
 }
 

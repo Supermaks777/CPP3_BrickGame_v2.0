@@ -1,5 +1,5 @@
-#ifndef STRUCT_H
-#define STRUCT_H
+#ifndef CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_COMMON_STRUCT_H
+#define CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_COMMON_STRUCT_H
 
 #include <time.h>
 #include "const.h"
@@ -68,30 +68,30 @@ typedef struct {
 
 //доска
 typedef struct {
-  int cells_[BOARD_HEIGHT][BOARD_WIDTH];
+  int cells[BOARD_HEIGHT][BOARD_WIDTH];
 } Board_t;
 
 //фигурка
 typedef struct {
-  int x_;
-  int y_;
-  BlockType_t block_type_;
-  int block_rotation_;
+  int x;
+  int y;
+  BlockType_t block_type;
+  int block_rotation;
 } Player_t;
 
 
 // Параметры игры Tetris
 typedef struct {
-  PlayerState_t current_state_;
-  Board_t board_;
-  Player_t current_player_;
-  BlockType_t next_player_;
-  Board_t game_board_;
-  Board_t check_board_;
-  int current_score_;
-  int current_level_;
-  int current_speed_;
-  int max_score_;
+  PlayerState_t current_state;
+  Board_t board;
+  Player_t current_player;
+  BlockType_t next_player;
+  Board_t game_board;
+  Board_t check_board;
+  int current_score;
+  int current_level;
+  int current_speed;
+  int max_score;
 } Parameters_t;
 
 
@@ -129,19 +129,19 @@ typedef enum {
 } MenuItem_t;
 
 typedef struct {
-    void* snakeModelPtr;
-    Parameters_t* tetrisModel;
+    void* snake_model_ptr;
+    Parameters_t* tetris_model;
     FiniteStateMachine_t fsm;
 } GameContext_t;
 
 // параметры главного меню
 typedef struct {
   MenuItem_t selected;
-  UserAction_t userAction;
-  GameInfo_t* gameInfo;
-  bool flagExit;
-  GameContext_t* gameContext;
+  UserAction_t user_action;
+  GameInfo_t* game_info;
+  bool flag_exit;
+  GameContext_t* game_context;
 } MainMenuParameters_t;
 
 
-#endif  // STRUCT_H
+#endif  // CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_COMMON_STRUCT_H

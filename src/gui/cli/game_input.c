@@ -6,7 +6,7 @@
 /// @brief преобразует нажатие клавиши в команду пользователя
 /// @param key нажатая клавиша
 /// @return команда
-UserAction_t getAction(int key){
+UserAction_t get_action(int key){
   UserAction_t result;
   switch (key){
     case KEY_DOWN:

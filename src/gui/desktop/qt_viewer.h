@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_GUI_DESKTOP_QT_VIEWER_H
+#define CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_GUI_DESKTOP_QT_VIEWER_H
 
 #include <QMainWindow>
 #include <QPainter>
@@ -30,7 +30,7 @@ public:
     int height = BOARD_HEIGHT;
     int width = BOARD_WIDTH;
     int cellSize = 20;
-    bool flagExit = false;
+    bool flag_exit = false;
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -38,13 +38,13 @@ protected:
 
 private:
     Ui::QTViewer *ui;
-    UserAction_t getAction(int key);  
+    UserAction_t get_action(int key);  
     bool isMenu = true;
-    int selectedMenuItem = 0;
+    int selected_menu_item = 0;
     static constexpr int menuSize = 3;                      //  количество пунктов меню
     QStringList menuItems = {"Snake", "Tetris", "Exit"};    //  содержание меню
-    GameInfo_t gameInfo;                                    //  структура для отображения
-    guiController* controller;
+    GameInfo_t game_info;                                    //  структура для отображения
+    GuiController* controller;
 
     void drawGameBoard(QPainter &painter);
     void drawNextFigure(QPainter &painter);
@@ -55,7 +55,7 @@ private:
     void drawMenu(QPainter &painter);
     void drawGame(QPainter &painter);
     void handleMenuSelection();
-    void startGame();
+    void start_game();
     void initGameInfo();
     void freeGameInfo();
     QTimer *timer;
@@ -68,4 +68,4 @@ private:
 };
 
 } // namespace s21
-#endif // MAINWINDOW_H
+#endif // CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_GUI_DESKTOP_QT_VIEWER_H

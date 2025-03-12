@@ -15,7 +15,7 @@ void QTViewer::drawMenu(QPainter &painter) {
     painter.setFont(QFont("Arial", 24));
 
     for (int i = 0; i < menuItems.size(); ++i) {
-        if (i == selectedMenuItem) painter.setPen(Qt::red); // Выделение выбранного пункта
+        if (i == selected_menu_item) painter.setPen(Qt::red); // Выделение выбранного пункта
         else painter.setPen(Qt::black);
         painter.drawText(180, 100 + i * 50, menuItems[i]); // Отрисовка пунктов меню
     }
@@ -49,7 +49,7 @@ void QTViewer::drawGameBoard(QPainter &painter) {
     // Отрисовка игрового поля
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-            if (gameInfo.field[y][x]) {
+            if (game_info.field[y][x]) {
                 // Смещаем координаты на offsetX и offsetY
                 painter.fillRect(x * cellSize + offsetX, y * cellSize + offsetY, cellSize, cellSize, Qt::green);
             }
@@ -72,7 +72,7 @@ void QTViewer::drawNextFigure(QPainter &painter) {
 
     for (int y = 0; y < BLOCK_HEIGHT; y++) {
         for (int x = 0; x < BLOCK_WIDTH; x++) {
-            if (gameInfo.next[y][x]) {
+            if (game_info.next[y][x]) {
                 painter.fillRect(offsetX + x * QTViewer::cellSize, offsetY + y * QTViewer::cellSize, QTViewer::cellSize, QTViewer::cellSize, Qt::green); // Отрисовка следующей фигуры
             }
         }
@@ -81,19 +81,19 @@ void QTViewer::drawNextFigure(QPainter &painter) {
 
 
 void QTViewer::drawScore(QPainter &painter) {
-    painter.drawText(300, 200, QString("Score: %1").arg(gameInfo.score)); // Отрисовка счета
+    painter.drawText(300, 200, QString("Score: %1").arg(game_info.score)); // Отрисовка счета
 }
 
 void QTViewer::drawHighScore(QPainter &painter) {
-    painter.drawText(300, 220, QString("High Score: %1").arg(gameInfo.high_score)); // Отрисовка рекорда
+    painter.drawText(300, 220, QString("High Score: %1").arg(game_info.high_score)); // Отрисовка рекорда
 }
 
 void QTViewer::drawLevel(QPainter &painter) {
-    painter.drawText(300, 240, QString("Level: %1").arg(gameInfo.level)); // Отрисовка уровня
+    painter.drawText(300, 240, QString("Level: %1").arg(game_info.level)); // Отрисовка уровня
 }
 
 void QTViewer::drawStatus(QPainter &painter) {
-    if (gameInfo.pause) {
+    if (game_info.pause) {
         painter.save();
         QFont font = painter.font();
         font.setPointSize(15);

@@ -8,9 +8,9 @@ class SnakeModelTest : public ::testing::Test {
 // Движение
 TEST_F(SnakeModelTest, MoveSnake) {
     s21::SnakeModel model(20, 10);
-    auto initialHead = model.getSnake().front();
-    model.updateSnake(Direction::Right);
-    auto newHead = model.getSnake().front();
+    auto initialHead = model.get_snake().front();
+    model.update_snake(Direction::Right);
+    auto newHead = model.get_snake().front();
     EXPECT_EQ(newHead.first, initialHead.first + 1);
     EXPECT_EQ(newHead.second, initialHead.second);
 }
@@ -18,11 +18,11 @@ TEST_F(SnakeModelTest, MoveSnake) {
 // Столкновение с границей
 TEST_F(SnakeModelTest, CollisionWithWall) {
     s21::SnakeModel model(20, 10);
-    model.updateDirection(Direction::Left);
+    model.update_direction(Direction::Left);
     for (int i = 0; i < 10; ++i) {
-        model.updateSnake(Direction::Left);
+        model.update_snake(Direction::Left);
     }
-    EXPECT_EQ(model.getState(), GameState::GameOver);
+    EXPECT_EQ(model.get_state(), GameState::GameOver);
 }
 
 // Столкновение с едой (с фиксированным положением еды)
@@ -30,15 +30,15 @@ TEST_F(SnakeModelTest, EatFood) {
     s21::SnakeModel model(20, 10);
 
     // Фиксируем положение еды справа от змейки
-    auto head = model.getSnake().front();
+    auto head = model.get_snake().front();
     std::pair<int, int> food = {head.first + 1, head.second};
-    model.setFood(food);  // Добавьте метод setFood в класс SnakeModel
+    model.set_food(food);  // Добавьте метод set_food в класс SnakeModel
 
-    model.updateDirection(Direction::Right);
-    model.updateSnake(Direction::Right);
+    model.update_direction(Direction::Right);
+    model.update_snake(Direction::Right);
 
-    EXPECT_EQ(model.getSnake().front(), food);  // Змейка должна съесть еду
-    EXPECT_EQ(model.getScore(), 1);  // Счет должен увеличиться на 1
+    EXPECT_EQ(model.get_snake().front(), food);  // Змейка должна съесть еду
+    EXPECT_EQ(model.get_score(), 1);  // Счет должен увеличиться на 1
 }
 
 // переход на уровень после поедания 5ти порций
@@ -47,20 +47,20 @@ TEST_F(SnakeModelTest, LevelIncrease) {
 
     for (int i = 0; i < 5; ++i) {
         // Фиксируем положение еды строго перед головой змейки
-        auto head = model.getSnake().front();
+        auto head = model.get_snake().front();
         std::pair<int, int> food = {head.first + 1, head.second};  // Еда справа от головы
-        model.setFood(food);  // Устанавливаем еду
+        model.set_food(food);  // Устанавливаем еду
 
         // Двигаем змейку вправо
-        model.updateDirection(Direction::Right);
-        model.updateSnake(Direction::Right);
+        model.update_direction(Direction::Right);
+        model.update_snake(Direction::Right);
 
         // Проверяем, что змейка съела еду
-        EXPECT_EQ(model.getSnake().front(), food);
+        EXPECT_EQ(model.get_snake().front(), food);
     }
 
     // Проверяем, что уровень увеличился
-    EXPECT_EQ(model.getLevel(), 1);
+    EXPECT_EQ(model.get_level(), 1);
 }
 
 // High score
@@ -68,18 +68,18 @@ TEST_F(SnakeModelTest, HighScore) {
     s21::SnakeModel model(20, 10);
 
     // Инициализируем игру (сбрасываем состояние и загружаем рекорд)
-    model.startGame();
+    model.start_game();
 
     // Получаем текущий рекорд
-    int initialHighScore = model.getHighScore();
+    int initialHighScore = model.get_high_score();
 
     // Увеличиваем счет до тех пор, пока он не превысит текущий рекорд
-    while (model.getScore() <= initialHighScore) {
-        model.updateScore();
+    while (model.get_score() <= initialHighScore) {
+        model.update_score();
     }
 
     // Проверяем, что рекорд обновился
-    EXPECT_EQ(model.getHighScore(), model.getScore());
+    EXPECT_EQ(model.get_high_score(), model.get_score());
 }
 
 // Состояние игры (пауза)
@@ -87,29 +87,29 @@ TEST_F(SnakeModelTest, GameStatePause) {
     s21::SnakeModel model(20, 10);
 
     // 1. После инициализации игры состояние НЕ пауза
-    model.startGame();
-    EXPECT_NE(model.getState(), GameState::Paused);
+    model.start_game();
+    EXPECT_NE(model.get_state(), GameState::Paused);
 
     // 2. После команды паузы состояние РАВНО пауза
-    bool flagExit = false;
-    model.updateModel(UserAction::Pause, &flagExit);
-    EXPECT_EQ(model.getState(), GameState::Paused);
+    bool flag_exit = false;
+    model.update_model(UserAction::Pause, &flag_exit);
+    EXPECT_EQ(model.get_state(), GameState::Paused);
 
     // 3. После повторной команды паузы состояние НЕ пауза
-    model.updateModel(UserAction::Pause, &flagExit);
-    EXPECT_NE(model.getState(), GameState::Paused);
+    model.update_model(UserAction::Pause, &flag_exit);
+    EXPECT_NE(model.get_state(), GameState::Paused);
 }
 
 // Начальное состояние змейки
 TEST_F(SnakeModelTest, InitialSnakeLength) {
     s21::SnakeModel model(20, 10);
-    EXPECT_EQ(model.getSnake().size(), 4);
+    EXPECT_EQ(model.get_snake().size(), 4);
 }
 
 // Генерация еды
 TEST_F(SnakeModelTest, FoodGeneration) {
     s21::SnakeModel model(20, 10);
-    auto food = model.getFood();
+    auto food = model.get_food();
     EXPECT_GE(food.first, 0);
     EXPECT_LT(food.first, 10);
     EXPECT_GE(food.second, 0);
@@ -119,22 +119,22 @@ TEST_F(SnakeModelTest, FoodGeneration) {
 // Скорость
 TEST_F(SnakeModelTest, SpeedIncrease) {
     s21::SnakeModel model(20, 10);
-    EXPECT_EQ(model.getSpeed(), 400);
+    EXPECT_EQ(model.get_speed(), 400);
     // Увеличиваем уровень и проверяем скорость
 
     for (int i = 0; i < 5; ++i) {
         // Фиксируем положение еды строго перед головой змейки
-        auto head = model.getSnake().front();
+        auto head = model.get_snake().front();
         std::pair<int, int> food = {head.first + 1, head.second};  // Еда справа от головы
-        model.setFood(food);  // Устанавливаем еду
+        model.set_food(food);  // Устанавливаем еду
 
         // Двигаем змейку вправо
-        model.updateDirection(Direction::Right);
-        model.updateSnake(Direction::Right);
+        model.update_direction(Direction::Right);
+        model.update_snake(Direction::Right);
     }
 
     // Проверяем, что уровень увеличился
-    EXPECT_EQ(model.getSpeed(), 370);
+    EXPECT_EQ(model.get_speed(), 370);
 
 }
 
@@ -142,41 +142,41 @@ TEST_F(SnakeModelTest, SpeedIncrease) {
 TEST_F(SnakeModelTest, ConvertUserAction) {
     s21::SnakeModel model(20, 10);
 
-    EXPECT_EQ(model.convertUserAction(Start), UserAction::Start);
-    EXPECT_EQ(model.convertUserAction(Pause), UserAction::Pause);
-    EXPECT_EQ(model.convertUserAction(Terminate), UserAction::Terminate);
-    EXPECT_EQ(model.convertUserAction(Left), UserAction::Left);
-    EXPECT_EQ(model.convertUserAction(Right), UserAction::Right);
-    EXPECT_EQ(model.convertUserAction(Up), UserAction::Up);
-    EXPECT_EQ(model.convertUserAction(Down), UserAction::Down);
-    EXPECT_EQ(model.convertUserAction(Action), UserAction::Action);
-    EXPECT_EQ(model.convertUserAction(NUM_ACTIONS), UserAction::NUM_ACTIONS);
+    EXPECT_EQ(model.convert_user_action(Start), UserAction::Start);
+    EXPECT_EQ(model.convert_user_action(Pause), UserAction::Pause);
+    EXPECT_EQ(model.convert_user_action(Terminate), UserAction::Terminate);
+    EXPECT_EQ(model.convert_user_action(Left), UserAction::Left);
+    EXPECT_EQ(model.convert_user_action(Right), UserAction::Right);
+    EXPECT_EQ(model.convert_user_action(Up), UserAction::Up);
+    EXPECT_EQ(model.convert_user_action(Down), UserAction::Down);
+    EXPECT_EQ(model.convert_user_action(Action), UserAction::Action);
+    EXPECT_EQ(model.convert_user_action(NUM_ACTIONS), UserAction::NUM_ACTIONS);
 }
 
 //  разные направления движения
 TEST_F(SnakeModelTest, MoveSnakeUp) {
     s21::SnakeModel model(20, 10);
-    auto initialHead = model.getSnake().front();
-    model.updateSnake(Direction::Up);
-    auto newHead = model.getSnake().front();
+    auto initialHead = model.get_snake().front();
+    model.update_snake(Direction::Up);
+    auto newHead = model.get_snake().front();
     EXPECT_EQ(newHead.first, initialHead.first);
     EXPECT_EQ(newHead.second, initialHead.second - 1);
 }
 
 TEST_F(SnakeModelTest, MoveSnakeDown) {
     s21::SnakeModel model(20, 10);
-    auto initialHead = model.getSnake().front();
-    model.updateSnake(Direction::Down);
-    auto newHead = model.getSnake().front();
+    auto initialHead = model.get_snake().front();
+    model.update_snake(Direction::Down);
+    auto newHead = model.get_snake().front();
     EXPECT_EQ(newHead.first, initialHead.first);
     EXPECT_EQ(newHead.second, initialHead.second + 1);
 }
 
 // TEST_F(SnakeModelTest, MoveSnakeLeft) {
 //     s21::SnakeModel model(20, 10);
-//     auto initialHead = model.getSnake().front();
-//     model.updateSnake(Direction::Left);
-//     auto newHead = model.getSnake().front();
+//     auto initialHead = model.get_snake().front();
+//     model.update_snake(Direction::Left);
+//     auto newHead = model.get_snake().front();
 //     EXPECT_EQ(newHead.first, initialHead.first - 1);
 //     EXPECT_EQ(newHead.second, initialHead.second);
 // }
@@ -184,21 +184,21 @@ TEST_F(SnakeModelTest, MoveSnakeDown) {
 //  столкновение с собой
 TEST_F(SnakeModelTest, CollisionWithSelf) {
     s21::SnakeModel model(20, 10);
-    auto initialSnake = model.getSnake();
+    auto initialSnake = model.get_snake();
     // Заставляем змейку двигаться по кругу, чтобы она столкнулась с собой
-    model.updateSnake(Direction::Up);
-    model.updateSnake(Direction::Left);
-    model.updateSnake(Direction::Down);
-    model.updateSnake(Direction::Right);
-    EXPECT_EQ(model.getState(), GameState::GameOver);
+    model.update_snake(Direction::Up);
+    model.update_snake(Direction::Left);
+    model.update_snake(Direction::Down);
+    model.update_snake(Direction::Right);
+    EXPECT_EQ(model.get_state(), GameState::GameOver);
 }
 
 //  вспомогатаельная функция 
 TEST_F(SnakeModelTest, SetFood) {
     s21::SnakeModel model(20, 10);
     std::pair<int, int> newFood = {5, 5};
-    model.setFood(newFood);
-    EXPECT_EQ(model.getFood(), newFood);
+    model.set_food(newFood);
+    EXPECT_EQ(model.get_food(), newFood);
 }
 
 //  выход из игры и запись
@@ -206,35 +206,35 @@ TEST_F(SnakeModelTest, ExitGame) {
     s21::SnakeModel model(20, 10);
 
     // 1. Инициируем игру
-    model.startGame();
+    model.start_game();
 
     // 2. Увеличиваем счет до тех пор, пока он не превысит загруженный из файла
-    int initialHighScore = model.getHighScore();
-    while (model.getScore() <= initialHighScore) {
-        model.updateScore();
+    int initialHighScore = model.get_high_score();
+    while (model.get_score() <= initialHighScore) {
+        model.update_score();
     }
 
-    // 3. Записываем рекорд при помощи exitGame и сохраняем значение рекорда
-    int newHighScore = model.getScore();
-    model.exitGame();
+    // 3. Записываем рекорд при помощи exit_game и сохраняем значение рекорда
+    int newHighScore = model.get_score();
+    model.exit_game();
 
     // 4. Повторно инициируем игру и сравниваем загруженное значение с сохраненным
-    model.startGame();
-    EXPECT_EQ(model.getHighScore(), newHighScore);
+    model.start_game();
+    EXPECT_EQ(model.get_high_score(), newHighScore);
 }
 
 //  получение направления
 TEST_F(SnakeModelTest, GetDirection) {
     s21::SnakeModel model(20, 10);
-    model.updateDirection(Direction::Up);
-    EXPECT_EQ(model.getDirection(), Direction::Up);
+    model.update_direction(Direction::Up);
+    EXPECT_EQ(model.get_direction(), Direction::Up);
 }
 
 //  срабатывание по таймеру
-TEST_F(SnakeModelTest, GameLoop) {
+TEST_F(SnakeModelTest, game_loop) {
     s21::SnakeModel model(20, 10);
-    model.startGame();
-    bool flagExit = false;
-    model.updateModelByTimer(&flagExit);
-    EXPECT_EQ(model.getState(), GameState::Playing);
+    model.start_game();
+    bool flag_exit = false;
+    model.update_model_by_timer(&flag_exit);
+    EXPECT_EQ(model.get_state(), GameState::Playing);
 }

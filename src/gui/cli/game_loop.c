@@ -3,30 +3,30 @@
 // игровой цикл универсальный
 
 /// @brief игровой цикл
-/// @param gameInfo параметры игры
-/// @param selectedGame выбранная игра
-void GameLoop(GameInfo_t *gameInfo, MenuItem_t selectedGame, GameContext_t* gameContext) {
-  bool flagExit = false;
+/// @param game_info параметры игры
+/// @param selected_game выбранная игра
+void game_loop(GameInfo_t *game_info, MenuItem_t selected_game, GameContext_t* game_context) {
+  bool flag_exit = false;
   bool hold = false;
   int key = 0;
-  struct timeval lastTime;
-  gettimeofday(&lastTime, NULL);
-  UserAction_t userAction = 0;
-  startGame(selectedGame, gameContext);
-  while (!flagExit) {
-    getGameInfo(gameInfo, selectedGame, gameContext);
-    updateScreen(gameInfo);
+  struct timeval last_time;
+  gettimeofday(&last_time, NULL);
+  UserAction_t user_action = 0;
+  start_game(selected_game, game_context);
+  while (!flag_exit) {
+    get_game_info(game_info, selected_game, game_context);
+    update_screen(game_info);
     key = getch();
     if (key != ERR) {
-      userAction = getAction(key);
-      hold = getIsHold(key);
-      updateModel(userAction, &hold, &flagExit, selectedGame, gameContext);
-      gettimeofday(&lastTime, NULL);
-    } else if (TimerAction(gameInfo->speed, &lastTime)) updateModelByTimer(&hold, &flagExit, selectedGame, gameContext);
+      user_action = get_action(key);
+      hold = get_is_hold(key);
+      update_model(user_action, &hold, &flag_exit, selected_game, game_context);
+      gettimeofday(&last_time, NULL);
+    } else if (timer_action(game_info->speed, &last_time)) update_model_by_timer(&hold, &flag_exit, selected_game, game_context);
   };
   clear();
-  printFrames();
-  exitGame(selectedGame, gameContext);
+  print_frames();
+  exit_game(selected_game, game_context);
 };
 
 

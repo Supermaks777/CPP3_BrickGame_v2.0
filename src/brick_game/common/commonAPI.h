@@ -1,5 +1,5 @@
-#ifndef COMMON_API_H
-#define COMMON_API_H
+#ifndef CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_COMMON_COMMON_API_H
+#define CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_COMMON_COMMON_API_H
 
 enum class Direction {
     Up,
@@ -31,4 +31,4 @@ enum class GameState {
 
 
 
-#endif // COMMON_API_H
+#endif // CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_COMMON_COMMON_API_H

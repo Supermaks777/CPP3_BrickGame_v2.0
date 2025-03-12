@@ -1,5 +1,5 @@
-#ifndef TETRIS_FSM
-#define TETRIS_FSM
+#ifndef CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_TETRIS_FSM_H
+#define CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_TETRIS_FSM_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -12,38 +12,38 @@ extern "C" {
 #include "../common/struct.h"
 
 ;
-void initFSM(FiniteStateMachine_t* fsm_);
+void init_fsm(FiniteStateMachine_t* fsm);
 
-// void Action__Start_Start(Parameters_t *parameters_);
+// void Action__Start_Start(Parameters_t *parameters);
 
-// void Action__Start_Terminate(Parameters_t *parameters_) ;
+// void Action__Start_Terminate(Parameters_t *parameters) ;
 
-void Action__Pause_Pause(Parameters_t *parameters_) ;
+void action__pause_pause(Parameters_t *parameters) ;
 
-void Action__Pause_Terminate(Parameters_t *parameters_);
+void action__pause_terminate(Parameters_t *parameters);
 
-void Action__Moving_Terminate(Parameters_t *parameters_);
+void action__moving_terminate(Parameters_t *parameters);
 
-void Action__Moving_Left(Parameters_t *parameters_);
+void action__moving_left(Parameters_t *parameters);
 
-void Action__Moving_Right(Parameters_t *parameters_) ;
+void action__moving_right(Parameters_t *parameters) ;
 
-void Action__Moving_Down(Parameters_t *parameters_);
+void action__moving_down(Parameters_t *parameters);
 
-void Action__Moving_Action(Parameters_t *parameters_);
+void action__moving_action(Parameters_t *parameters);
 
-void Action__Moving_Pause(Parameters_t *parameters_);
+void action__moving_pause(Parameters_t *parameters);
 
-void setStateExit(Parameters_t *parameters_);
+void set_state_exit(Parameters_t *parameters);
 
-void setStateSpawn(Parameters_t *parameters_);
+void set_state_spawn(Parameters_t *parameters);
 
-void setStateAttaching(Parameters_t *parameters_);
+void set_state_attaching(Parameters_t *parameters);
 
-// void startTetrisGame(Parameters_t *parameters_);
+// void start_tetris_game(Parameters_t *parameters);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // TETRIS_FSM
+#endif  // CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_TETRIS_FSM_H

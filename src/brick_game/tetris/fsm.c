@@ -7,90 +7,90 @@
 #include "../common/struct.h"
 
 /// @brief инициализация автомата
-/// @param fsm_ ссылка на структуру автомата
-void initFSM(FiniteStateMachine_t *fsm_) {
-  fsm_->action_table_[sPause][Pause] = Action__Pause_Pause;
-  fsm_->action_table_[sPause][Terminate] = Action__Pause_Terminate;
-  fsm_->action_table_[sMoving][Pause] = Action__Moving_Pause;
-  fsm_->action_table_[sMoving][Terminate] = Action__Moving_Terminate;
-  fsm_->action_table_[sMoving][Pause] = Action__Moving_Pause;
-  fsm_->action_table_[sMoving][Left] = Action__Moving_Left;
-  fsm_->action_table_[sMoving][Right] = Action__Moving_Right;
-  fsm_->action_table_[sMoving][Down] = Action__Moving_Down;
-  fsm_->action_table_[sMoving][Action] = Action__Moving_Action;
+/// @param fsm ссылка на структуру автомата
+void init_fsm(FiniteStateMachine_t *fsm) {
+  fsm->action_table_[sPause][Pause] = action__pause_pause;
+  fsm->action_table_[sPause][Terminate] = action__pause_terminate;
+  fsm->action_table_[sMoving][Pause] = action__moving_pause;
+  fsm->action_table_[sMoving][Terminate] = action__moving_terminate;
+  fsm->action_table_[sMoving][Pause] = action__moving_pause;
+  fsm->action_table_[sMoving][Left] = action__moving_left;
+  fsm->action_table_[sMoving][Right] = action__moving_right;
+  fsm->action_table_[sMoving][Down] = action__moving_down;
+  fsm->action_table_[sMoving][Action] = action__moving_action;
 }
 
 /// @brief обработка действия Пауза для состояния Пауза
-/// @param parameters_ текущие параметры
-void Action__Pause_Pause(Parameters_t *parameters_) {
-  parameters_->current_state_ = sMoving;
+/// @param parameters текущие параметры
+void action__pause_pause(Parameters_t *parameters) {
+  parameters->current_state = sMoving;
 };
 
 /// @brief обработка действия Выход для состояния Пауза
-/// @param parameters_ текущие параметры
-void Action__Pause_Terminate(Parameters_t *parameters_) {
-  setStateExit(parameters_);
+/// @param parameters текущие параметры
+void action__pause_terminate(Parameters_t *parameters) {
+  set_state_exit(parameters);
 };
 
 /// @brief обработка действия Выход для состояния Движение
-/// @param parameters_ текущие параметры
-void Action__Moving_Terminate(Parameters_t *parameters_) {
-  setStateExit(parameters_);
+/// @param parameters текущие параметры
+void action__moving_terminate(Parameters_t *parameters) {
+  set_state_exit(parameters);
 };
 
 /// @brief обработка действия Влево для состояния Движение
-/// @param parameters_ текущие параметры
-void Action__Moving_Left(Parameters_t *parameters_) {
-  if (!CheckNextPlayerState(parameters_, -1, 0, 0)) SetNextPlayerStat(parameters_, -1, 0, 0);
+/// @param parameters текущие параметры
+void action__moving_left(Parameters_t *parameters) {
+  if (!check_next_player_state(parameters, -1, 0, 0)) set_next_player_stat(parameters, -1, 0, 0);
 };
 
 /// @brief обработка действия Вправо для состояния Движение
-/// @param parameters_ текущие параметры
-void Action__Moving_Right(Parameters_t *parameters_) {
-  if (!CheckNextPlayerState(parameters_, +1, 0, 0)) SetNextPlayerStat(parameters_, +1, 0, 0);
+/// @param parameters текущие параметры
+void action__moving_right(Parameters_t *parameters) {
+  if (!check_next_player_state(parameters, +1, 0, 0)) set_next_player_stat(parameters, +1, 0, 0);
 };
 
 /// @brief обработка действия Вниз для состояния Движение
-/// @param parameters_ текущие параметры
-void Action__Moving_Down(Parameters_t *parameters_) {
-  if (!CheckNextPlayerState(parameters_, 0, +1, 0)) SetNextPlayerStat(parameters_, 0, +1, 0);
-  else setStateAttaching(parameters_);
+/// @param parameters текущие параметры
+void action__moving_down(Parameters_t *parameters) {
+  if (!check_next_player_state(parameters, 0, +1, 0)) set_next_player_stat(parameters, 0, +1, 0);
+  else set_state_attaching(parameters);
 };
 
 /// @brief обработка действия Действие для состояния Движение
-/// @param parameters_ текущие параметры
-void Action__Moving_Action(Parameters_t *parameters_) {
-  if (CheckNextPlayerState(parameters_, 0, 0, +1) == false)
-    SetNextPlayerStat(parameters_, 0, 0, +1);
+/// @param parameters текущие параметры
+void action__moving_action(Parameters_t *parameters) {
+  if (check_next_player_state(parameters, 0, 0, +1) == false)
+    set_next_player_stat(parameters, 0, 0, +1);
 };
 
 /// @brief обработка действия Пауза для состояния Движение
-/// @param parameters_ текущие параметры
-void Action__Moving_Pause(Parameters_t *parameters_) {
-  parameters_->current_state_ = sPause;
+/// @param parameters текущие параметры
+void action__moving_pause(Parameters_t *parameters) {
+  parameters->current_state = sPause;
 };
 
 /// @brief установить статус выхода
-/// @param parameters_ параметры
-void setStateExit(Parameters_t *parameters_){
-  parameters_->current_state_ = sExitGame;
-  SaveRecord(parameters_);  
+/// @param parameters параметры
+void set_state_exit(Parameters_t *parameters){
+  parameters->current_state = sExitGame;
+  save_record(parameters);  
 }
 
 /// @brief установить статус рождения
-/// @param parameters_ параметры
-void setStateSpawn(Parameters_t *parameters_){
-    parameters_->current_state_ = sSpawn;
-    SetNewPlayer(parameters_);
-    if (!CheckNextPlayerState(parameters_, 0, 0, 0)) parameters_->current_state_ = sMoving;
-    else setStateExit(parameters_);  
+/// @param parameters параметры
+void set_state_spawn(Parameters_t *parameters){
+    parameters->current_state = sSpawn;
+    set_new_player(parameters);
+    if (!check_next_player_state(parameters, 0, 0, 0)) parameters->current_state = sMoving;
+    else set_state_exit(parameters);  
 }
 
 /// @brief установить статус слипания
-/// @param parameters_ параметры
-void setStateAttaching(Parameters_t *parameters_){
-    parameters_->current_state_ = sAttaching;
-    SetPlayerToGameBoard(parameters_->board_.cells_, parameters_);
-    CollapseLines(parameters_);
-    setStateSpawn(parameters_);
+/// @param parameters параметры
+void set_state_attaching(Parameters_t *parameters){
+    parameters->current_state = sAttaching;
+    set_player_to_game_board(parameters->board.cells, parameters);
+    handle_collapse_lines(parameters);
+    set_state_spawn(parameters);
 }

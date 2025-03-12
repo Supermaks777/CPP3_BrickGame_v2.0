@@ -1,10 +1,10 @@
-#include "SnakeModel.h"
+#include "snake_model.h"
 
 namespace s21 {
 
     /// @brief устанавливает направление (только под прямым углом)
     /// @param newDirection новое направление
-    void SnakeModel::updateDirection(Direction newDirection){
+    void SnakeModel::update_direction(Direction newDirection){
         direction = static_cast<int>(direction) % 2 == static_cast<int>(newDirection) % 2 ? direction : newDirection;
     }
 
@@ -33,18 +33,18 @@ namespace s21 {
     /// @param newHead новая голова (сегмент)
     void SnakeModel::moveSnake(std::pair<int, int>  newHead){
         snake.insert(snake.begin(), newHead);
-        if (newHead == food) eatFood();
+        if (newHead == food) eat_food();
         else snake.pop_back();
     }
 
     /// @brief ушаем еду: обновляем счет и шаманим новую еду
-    void SnakeModel::eatFood(){
-        updateScore();
+    void SnakeModel::eat_food(){
+        update_score();
         addFood();
     }
 
     /// @brief обновляем счет: обновляем уровень и рекорд
-    void SnakeModel::updateScore(){
+    void SnakeModel::update_score(){
         score++;
         updateLevel();
         updateHighScore();
@@ -61,27 +61,27 @@ namespace s21 {
     }
 
     /// @brief обновляем модель на с учетом команды пользователя (FSM)
-    /// @param userAction действие пользователя
-    void SnakeModel::updateModel(UserAction userAction, bool* flagExit) {
+    /// @param user_action действие пользователя
+    void SnakeModel::update_model(UserAction user_action, bool* flag_exit) {
         if (state == GameState::Paused){
-            if (userAction == UserAction::Pause) state = GameState::Playing;
-            if (userAction == UserAction::Terminate) state = GameState::GameOver;
+            if (user_action == UserAction::Pause) state = GameState::Playing;
+            if (user_action == UserAction::Terminate) state = GameState::GameOver;
         } else if (state == GameState::Playing){
-            if (userAction == UserAction::Pause) state = GameState::Paused;
-            if (userAction == UserAction::Terminate) state = GameState::GameOver;
-            if (userAction == UserAction::Up) updateSnake(Direction::Up);
-            if (userAction == UserAction::Right) updateSnake(Direction::Right);
-            if (userAction == UserAction::Down) updateSnake(Direction::Down);
-            if (userAction == UserAction::Left) updateSnake(Direction::Left);
-            if (userAction == UserAction::Action) updateSnake(direction);
+            if (user_action == UserAction::Pause) state = GameState::Paused;
+            if (user_action == UserAction::Terminate) state = GameState::GameOver;
+            if (user_action == UserAction::Up) update_snake(Direction::Up);
+            if (user_action == UserAction::Right) update_snake(Direction::Right);
+            if (user_action == UserAction::Down) update_snake(Direction::Down);
+            if (user_action == UserAction::Left) update_snake(Direction::Left);
+            if (user_action == UserAction::Action) update_snake(direction);
         }
-        *flagExit = (state == GameState::GameOver || state == GameState::Win);
+        *flag_exit = (state == GameState::GameOver || state == GameState::Win);
     }
 
     /// @brief конвертирует сишное перечисление команды пользователя в перечисление-класс
     /// @param src сишное значение
     /// @return перечисление-класс
-    UserAction SnakeModel::convertUserAction(UserAction_t src) {
+    UserAction SnakeModel::convert_user_action(UserAction_t src) {
         switch (src) {
             case Start: return UserAction::Start;
             case Pause: return UserAction::Pause;
@@ -108,21 +108,21 @@ namespace s21 {
     }
 
     /// @brief начинаем игру: инициализируем параметы, загружаем рекорд
-    void SnakeModel::startGame(){
+    void SnakeModel::start_game(){
         loadRecord();
         initGame();
     }
 
     /// @brief заканчиваем игру: записываем рекорд
-    void SnakeModel::exitGame(){
+    void SnakeModel::exit_game(){
         saveRecord();
         state = GameState::GameOver;
     }
 
     /// @brief обновляем модель
     /// @param newDirection новое направление
-    void SnakeModel::updateSnake(Direction newDirection){
-        updateDirection(newDirection);
+    void SnakeModel::update_snake(Direction newDirection){
+        update_direction(newDirection);
         std::pair<int, int> newHead = getNewHead();
         if (!checkIsCollapse(newHead)){ 
             moveSnake(newHead);
@@ -150,19 +150,19 @@ namespace s21 {
 
     /// @brief возвращает текущее направление
     /// @return текущее направление
-    Direction SnakeModel::getDirection() const {
+    Direction SnakeModel::get_direction() const {
         return direction;
     }
 
     /// @brief возвращает вектор со змеей
     /// @return вектор
-    const std::vector<std::pair<int, int>>& SnakeModel::getSnake() const {
+    const std::vector<std::pair<int, int>>& SnakeModel::get_snake() const {
         return snake;
     }
 
     /// @brief возвращает координаты еды
     /// @return пара координат
-    std::pair<int, int> SnakeModel::getFood() const {
+    std::pair<int, int> SnakeModel::get_food() const {
         return food;
     }
 
@@ -191,80 +191,80 @@ namespace s21 {
 
 
     /// @brief обновляет структуру для отображения
-    /// @param gameInfo указатель на структуру
-    void SnakeModel::getGameInfo(GameInfo_t* gameInfo){
-        clearField(gameInfo);
-        saveSnake(gameInfo);
-        saveFood(gameInfo);
-        gameInfo->score = score;
-        gameInfo->high_score = highScore;
-        gameInfo->level = level;
-        gameInfo->pause = state == GameState::Paused;
-        gameInfo->speed = getSpeed();
+    /// @param game_info указатель на структуру
+    void SnakeModel::get_game_info(GameInfo_t* game_info){
+        clearField(game_info);
+        saveSnake(game_info);
+        saveFood(game_info);
+        game_info->score = score;
+        game_info->high_score = highScore;
+        game_info->level = level;
+        game_info->pause = state == GameState::Paused;
+        game_info->speed = get_speed();
     }
 
     /// @brief возвращает значение скорости (задержка в миллисекундах)
     /// @return задержка в миллисекундах
-    int SnakeModel::getSpeed(){
+    int SnakeModel::get_speed(){
         return 400 - level * 30;
     }
 
     /// @brief обновляет игровое поле (field) в структуре для отображения 
-    /// @param gameInfo указатель на структуру
-    void SnakeModel::saveSnake(GameInfo_t* gameInfo){
+    /// @param game_info указатель на структуру
+    void SnakeModel::saveSnake(GameInfo_t* game_info){
         for (const std::pair<int, int>& segment : snake) {
-            gameInfo->field[segment.second][segment.first] = 1;
+            game_info->field[segment.second][segment.first] = 1;
         }
     }
 
     /// @brief обновляет поле next в структуре для отображения (для отображения еды)
-    /// @param gameInfo указатель на структуру
-    void SnakeModel::saveFood(GameInfo_t* gameInfo){
-        gameInfo->field[food.second][food.first] = 1;
+    /// @param game_info указатель на структуру
+    void SnakeModel::saveFood(GameInfo_t* game_info){
+        game_info->field[food.second][food.first] = 1;
     }
 
     /// @brief очищает игровое поле (field) в структуре на отображение
-    /// @param gameInfo указатель на структуру
-    void SnakeModel::clearField(GameInfo_t* gameInfo){
+    /// @param game_info указатель на структуру
+    void SnakeModel::clearField(GameInfo_t* game_info){
         for (int y = 0; y < BOARD_HEIGHT; y++){
             for (int x = 0; x < BOARD_WIDTH; x++){
-                gameInfo->field[y][x] = 0;
+                game_info->field[y][x] = 0;
             }
         }
     }
     /// @brief отрабатывает срабатывание по таймеру
-    /// @param flagExit указатель на флаг выхода из игры
-    void SnakeModel::updateModelByTimer(bool* flagExit){
-        updateModel(UserAction::Action, flagExit);
+    /// @param flag_exit указатель на флаг выхода из игры
+    void SnakeModel::update_model_by_timer(bool* flag_exit){
+        update_model(UserAction::Action, flag_exit);
     }
 
     /// @brief возвращает текущее состояние игры
     /// @return state - текущее состояние (GameState)
-    GameState SnakeModel::getState() const {
+    GameState SnakeModel::get_state() const {
         return state;
     }
 
     /// @brief возвращает текущий уровень
     /// @return текущий уровнь (int)
-    int SnakeModel::getLevel() const{
+    int SnakeModel::get_level() const{
         return level;
     }
 
     /// @brief возвращает текущий счет
     /// @return текущий счет (int)
-    int SnakeModel::getScore() const{
+    int SnakeModel::get_score() const{
         return score;
     };
 
     /// @brief возвращает рекорд
     /// @return рекорд (int)
-    int SnakeModel::getHighScore() const{
+    int SnakeModel::get_high_score() const{
         return highScore;
     };
 
     /// @brief добавить еду в указанном месте
     /// @param newFood (pair<int, int> ) - место для расположения еды
-    void SnakeModel::setFood(std::pair<int, int> newFood) {
+    void SnakeModel::set_food(std::pair<int, int> newFood) {
     food = newFood;
     }
 

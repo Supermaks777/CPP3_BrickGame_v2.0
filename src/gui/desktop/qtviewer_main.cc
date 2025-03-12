@@ -15,7 +15,7 @@ QTViewer::QTViewer(QWidget *parent)
     setFixedSize(450, 465);
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &QTViewer::gameLoop);
-    controller = new guiController(BOARD_HEIGHT,BOARD_WIDTH);
+    controller = new GuiController(BOARD_HEIGHT,BOARD_WIDTH);
 }
 
 QTViewer::~QTViewer()
@@ -26,30 +26,30 @@ QTViewer::~QTViewer()
 
 void QTViewer::initGameInfo() {
     // Выделяем память для field
-    gameInfo.field = new int*[height];
+    game_info.field = new int*[height];
     for (int i = 0; i < height; ++i) {
-        gameInfo.field[i] = new int[width]();  // Инициализируем нулями
+        game_info.field[i] = new int[width]();  // Инициализируем нулями
     }
 
     // Выделяем память для next
-    gameInfo.next = new int*[height];
+    game_info.next = new int*[height];
     for (int i = 0; i < height; ++i) {
-        gameInfo.next[i] = new int[width]();  // Инициализируем нулями
+        game_info.next[i] = new int[width]();  // Инициализируем нулями
     }
 }
 
 void QTViewer::freeGameInfo() {
     // Освобождаем память для field
     for (int i = 0; i < height; ++i) {
-        delete[] gameInfo.field[i];
+        delete[] game_info.field[i];
     }
-    delete[] gameInfo.field;
+    delete[] game_info.field;
 
     // Освобождаем память для next
     for (int i = 0; i < height; ++i) {
-        delete[] gameInfo.next[i];
+        delete[] game_info.next[i];
     }
-    delete[] gameInfo.next;
+    delete[] game_info.next;
 }
 
 } // namespace s21

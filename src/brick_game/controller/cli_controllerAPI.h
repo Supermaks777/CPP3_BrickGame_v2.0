@@ -1,5 +1,5 @@
-#ifndef CONTROLLER_API_H
-#define CONTROLLER_API_H
+#ifndef CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_CONTROLLER_CLI_CONTROLLER_API_H
+#define CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_CONTROLLER_CLI_CONTROLLER_API_H
 
 #include "../common/struct.h"
 #include "../tetris/TetrisModel.h"
@@ -8,11 +8,11 @@
 extern "C" {
 #endif
 
-void updateModel(UserAction_t userAction, bool* hold, bool* flagExit, MenuItem_t selectedGame, GameContext_t* gameContext);
-void getGameInfo(GameInfo_t* gameInfo, MenuItem_t selectedGame, GameContext_t* gameContext);
-void startGame(MenuItem_t selectedGame, GameContext_t* gameContext);
-void exitGame(MenuItem_t selectedGame, GameContext_t* gameContext);
-void updateModelByTimer(bool* hold, bool* flagExit, MenuItem_t selectedGame, GameContext_t* gameContext);
+void update_model(UserAction_t user_action, bool* hold, bool* flag_exit, MenuItem_t selected_game, GameContext_t* game_context);
+void get_game_info(GameInfo_t* game_info, MenuItem_t selected_game, GameContext_t* game_context);
+void start_game(MenuItem_t selected_game, GameContext_t* game_context);
+void exit_game(MenuItem_t selected_game, GameContext_t* game_context);
+void update_model_by_timer(bool* hold, bool* flag_exit, MenuItem_t selected_game, GameContext_t* game_context);
 
 void startApp();
 
@@ -20,7 +20,7 @@ void startApp();
 }
 #endif
 
-#endif // CONTROLLER_API_H
+#endif // CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_CONTROLLER_CLI_CONTROLLER_API_H
 
 
 
