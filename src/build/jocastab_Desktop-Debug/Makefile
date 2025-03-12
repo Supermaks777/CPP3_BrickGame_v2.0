@@ -52,13 +52,13 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../../brick_game/snake/SnakeModel.cpp \
-		../../gui/desktop/main_qt.cpp \
+SOURCES       = ../../brick_game/snake/SnakeModel.cc \
+		../../gui/desktop/main_qt.cc \
 		../../brick_game/tetris/TetrisModel.c \
 		../../brick_game/tetris/fsm.c \
-		../../gui/desktop/qtviewer_events.cpp \
-		../../gui/desktop/qtviewer_main.cpp \
-		../../gui/desktop/qtviewer_render.cpp moc_qt_viewer.cpp
+		../../gui/desktop/qtviewer_events.cc \
+		../../gui/desktop/qtviewer_main.cc \
+		../../gui/desktop/qtviewer_render.cc moc_qt_viewer.cpp
 OBJECTS       = SnakeModel.o \
 		main_qt.o \
 		TetrisModel.o \
@@ -380,13 +380,13 @@ DIST          = /usr/local/Qt-6.6.2/mkspecs/features/spec_pre.prf \
 		../../gui/desktop/qt_viewer.h \
 		../../brick_game/tetris/TetrisGame.h \
 		../../brick_game/tetris/fsm.h \
-		../../brick_game/tetris/TetrisModel.h ../../brick_game/snake/SnakeModel.cpp \
-		../../gui/desktop/main_qt.cpp \
+		../../brick_game/tetris/TetrisModel.h ../../brick_game/snake/SnakeModel.cc \
+		../../gui/desktop/main_qt.cc \
 		../../brick_game/tetris/TetrisModel.c \
 		../../brick_game/tetris/fsm.c \
-		../../gui/desktop/qtviewer_events.cpp \
-		../../gui/desktop/qtviewer_main.cpp \
-		../../gui/desktop/qtviewer_render.cpp
+		../../gui/desktop/qtviewer_events.cc \
+		../../gui/desktop/qtviewer_main.cc \
+		../../gui/desktop/qtviewer_render.cc
 QMAKE_TARGET  = CPP3_BrickGame_v2_0
 DESTDIR       = 
 TARGET        = CPP3_BrickGame_v2_0.app/Contents/MacOS/CPP3_BrickGame_v2_0
@@ -1054,7 +1054,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/local/Qt-6.6.2/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../../brick_game/snake/SnakeModel.h ../../brick_game/common/common.h ../../brick_game/common/commonAPI.h ../../brick_game/common/const.h ../../brick_game/common/struct.h ../../brick_game/controller/gui_controller.h ../../gui/desktop/qt_viewer.h ../../brick_game/tetris/TetrisGame.h ../../brick_game/tetris/fsm.h ../../brick_game/tetris/TetrisModel.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../brick_game/snake/SnakeModel.cpp ../../gui/desktop/main_qt.cpp ../../brick_game/tetris/TetrisModel.c ../../brick_game/tetris/fsm.c ../../gui/desktop/qtviewer_events.cpp ../../gui/desktop/qtviewer_main.cpp ../../gui/desktop/qtviewer_render.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../brick_game/snake/SnakeModel.cc ../../gui/desktop/main_qt.cc ../../brick_game/tetris/TetrisModel.c ../../brick_game/tetris/fsm.c ../../gui/desktop/qtviewer_events.cc ../../gui/desktop/qtviewer_main.cc ../../gui/desktop/qtviewer_render.cc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../gui/desktop/qtviewer.ui $(DISTDIR)/
 
 
@@ -1306,13 +1306,13 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
-SnakeModel.o: ../../brick_game/snake/SnakeModel.cpp ../../brick_game/snake/SnakeModel.h \
+SnakeModel.o: ../../brick_game/snake/SnakeModel.cc ../../brick_game/snake/SnakeModel.h \
 		../../brick_game/common/common.h \
 		../../brick_game/common/struct.h \
 		../../brick_game/common/const.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SnakeModel.o ../../brick_game/snake/SnakeModel.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SnakeModel.o ../../brick_game/snake/SnakeModel.cc
 
-main_qt.o: ../../gui/desktop/main_qt.cpp ../../gui/desktop/qt_viewer.h \
+main_qt.o: ../../gui/desktop/main_qt.cc ../../gui/desktop/qt_viewer.h \
 		/usr/local/Qt-6.6.2/include/QtWidgets/QMainWindow \
 		/usr/local/Qt-6.6.2/include/QtWidgets/qmainwindow.h \
 		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgetsglobal.h \
@@ -1519,7 +1519,7 @@ main_qt.o: ../../gui/desktop/main_qt.cpp ../../gui/desktop/qt_viewer.h \
 		/usr/local/Qt-6.6.2/include/QtGui/qguiapplication.h \
 		/usr/local/Qt-6.6.2/include/QtGui/qinputmethod.h \
 		/usr/local/Qt-6.6.2/include/QtGui/qguiapplication_platform.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main_qt.o ../../gui/desktop/main_qt.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main_qt.o ../../gui/desktop/main_qt.cc
 
 TetrisModel.o: ../../brick_game/tetris/TetrisModel.c ../../brick_game/tetris/TetrisModel.h \
 		../../brick_game/common/const.h \
@@ -1533,7 +1533,7 @@ fsm.o: ../../brick_game/tetris/fsm.c ../../brick_game/tetris/fsm.h \
 		../../brick_game/tetris/TetrisModel.h
 	$(CC) -c $(CFLAGS) $(INCPATH) -o fsm.o ../../brick_game/tetris/fsm.c
 
-qtviewer_events.o: ../../gui/desktop/qtviewer_events.cpp ../../gui/desktop/qt_viewer.h \
+qtviewer_events.o: ../../gui/desktop/qtviewer_events.cc ../../gui/desktop/qt_viewer.h \
 		/usr/local/Qt-6.6.2/include/QtWidgets/QMainWindow \
 		/usr/local/Qt-6.6.2/include/QtWidgets/qmainwindow.h \
 		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgetsglobal.h \
@@ -1719,9 +1719,9 @@ qtviewer_events.o: ../../gui/desktop/qtviewer_events.cpp ../../gui/desktop/qt_vi
 		/usr/local/Qt-6.6.2/include/QtCore/qcalendar.h \
 		/usr/local/Qt-6.6.2/include/QtCore/qlocale.h \
 		ui_qtviewer.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qtviewer_events.o ../../gui/desktop/qtviewer_events.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qtviewer_events.o ../../gui/desktop/qtviewer_events.cc
 
-qtviewer_main.o: ../../gui/desktop/qtviewer_main.cpp ../../gui/desktop/qt_viewer.h \
+qtviewer_main.o: ../../gui/desktop/qtviewer_main.cc ../../gui/desktop/qt_viewer.h \
 		/usr/local/Qt-6.6.2/include/QtWidgets/QMainWindow \
 		/usr/local/Qt-6.6.2/include/QtWidgets/qmainwindow.h \
 		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgetsglobal.h \
@@ -1907,9 +1907,9 @@ qtviewer_main.o: ../../gui/desktop/qtviewer_main.cpp ../../gui/desktop/qt_viewer
 		/usr/local/Qt-6.6.2/include/QtCore/qcalendar.h \
 		/usr/local/Qt-6.6.2/include/QtCore/qlocale.h \
 		ui_qtviewer.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qtviewer_main.o ../../gui/desktop/qtviewer_main.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qtviewer_main.o ../../gui/desktop/qtviewer_main.cc
 
-qtviewer_render.o: ../../gui/desktop/qtviewer_render.cpp ../../gui/desktop/qt_viewer.h \
+qtviewer_render.o: ../../gui/desktop/qtviewer_render.cc ../../gui/desktop/qt_viewer.h \
 		/usr/local/Qt-6.6.2/include/QtWidgets/QMainWindow \
 		/usr/local/Qt-6.6.2/include/QtWidgets/qmainwindow.h \
 		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgetsglobal.h \
@@ -2095,7 +2095,7 @@ qtviewer_render.o: ../../gui/desktop/qtviewer_render.cpp ../../gui/desktop/qt_vi
 		/usr/local/Qt-6.6.2/include/QtCore/qcalendar.h \
 		/usr/local/Qt-6.6.2/include/QtCore/qlocale.h \
 		ui_qtviewer.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qtviewer_render.o ../../gui/desktop/qtviewer_render.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qtviewer_render.o ../../gui/desktop/qtviewer_render.cc
 
 moc_qt_viewer.o: moc_qt_viewer.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_qt_viewer.o moc_qt_viewer.cpp

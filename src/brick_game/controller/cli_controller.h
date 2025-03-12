@@ -12,11 +12,11 @@ extern "C" {
 
 
 // Функции, доступные для вызова из C
-void updateModel(UserAction_t userAction, bool hold, bool* flagExit, MenuItem_t selectedGame, GameContext_t* gameContext);
+void updateModel(UserAction_t userAction, bool* hold, bool* flagExit, MenuItem_t selectedGame, GameContext_t* gameContext);
 void getGameInfo(GameInfo_t* gameInfo, MenuItem_t selectedGame, GameContext_t* gameContext);
 void startGame(MenuItem_t selectedGame, GameContext_t* gameContext);
 void exitGame(MenuItem_t selectedGame, GameContext_t* gameContext);
-void updateModelByTimer(bool hold, bool* flagExit, MenuItem_t selectedGame, GameContext_t* gameContext);
+void updateModelByTimer(bool* hold, bool* flagExit, MenuItem_t selectedGame, GameContext_t* gameContext);
 void startApp();
 
 #ifdef __cplusplus

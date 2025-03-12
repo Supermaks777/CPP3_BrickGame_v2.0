@@ -9,13 +9,13 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    brick_game/snake/SnakeModel.cpp \
-    gui/desktop/main_qt.cpp \
+    brick_game/snake/SnakeModel.cc \
+    gui/desktop/main_qt.cc \
     brick_game/tetris/TetrisModel.c \
     brick_game/tetris/fsm.c \
-    gui/desktop/qtviewer_events.cpp \
-    gui/desktop/qtviewer_main.cpp \
-    gui/desktop/qtviewer_render.cpp
+    gui/desktop/qtviewer_events.cc \
+    gui/desktop/qtviewer_main.cc \
+    gui/desktop/qtviewer_render.cc
 
 HEADERS += \
     brick_game/snake/SnakeModel.h \

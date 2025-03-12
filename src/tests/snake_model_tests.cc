@@ -235,6 +235,6 @@ TEST_F(SnakeModelTest, GameLoop) {
     s21::SnakeModel model(20, 10);
     model.startGame();
     bool flagExit = false;
-    model.gameLoop(&flagExit);
+    model.updateModelByTimer(&flagExit);
     EXPECT_EQ(model.getState(), GameState::Playing);
 }

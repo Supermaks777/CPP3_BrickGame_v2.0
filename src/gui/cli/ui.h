@@ -20,12 +20,9 @@ extern "C" {
 #include "../../brick_game/controller/cli_controllerAPI.h"
 #include "../../brick_game/controller/cli_controllerAPI.h"
 
-bool getIsHoldByTick(int key);
 double getTimevalDiff(struct timeval *start, struct timeval *end);
 bool getIsHold(int key);
 UserAction_t getAction(int key);
-UserAction_t getSignal(int key, bool *hold);
-// void printFood(GameInfo_t *gameInfo);
 void printGameBoard(GameInfo_t *gameInfo);
 void printCell(int y, int x, chtype symbol);
 void printFrames();
@@ -35,8 +32,6 @@ void printHighScore(GameInfo_t *gameInfo);
 void printLevel(GameInfo_t *gameInfo);
 void printNextPlayer(GameInfo_t *gameInfo);
 void printFood(GameInfo_t *gameInfo);
-void updateScreenTetris(GameInfo_t *gameInfo);
-void updateScreenSnake(GameInfo_t *gameInfo);
 void printStatus(GameInfo_t *gameInfo);
 bool TimerAction(int speed, struct timeval * lastTime);
 void tetrisGameLoop(GameInfo_t *gameInfo);
@@ -51,7 +46,6 @@ void updateMainMenu(MainMenuParameters_t* parameters);
 void processinMainMenu(MainMenuParameters_t* parameters);
 void updateScreen(GameInfo_t *gameInfo);
 void GameLoop(GameInfo_t *gameInfo, MenuItem_t selectedGame, GameContext_t* gameContext);
-UserAction_t getDefaultAction(MenuItem_t selectedGame);
 
 #ifdef __cplusplus
 }

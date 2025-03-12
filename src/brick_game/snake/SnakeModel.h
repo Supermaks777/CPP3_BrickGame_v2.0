@@ -17,8 +17,7 @@ class SnakeModelTest;
 
 class SnakeModel {
 public:
-    friend class SnakeModelTest;    
-    // SnakeModel(int width, int height) : width(width), height(height){ startGame(); }
+    // friend class SnakeModelTest;    
     SnakeModel(int height, int width) : width(width), height(height){ startGame(); }
     int width, height;
     UserAction convertUserAction(UserAction_t src);

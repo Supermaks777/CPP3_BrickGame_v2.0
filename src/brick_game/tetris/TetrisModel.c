@@ -45,24 +45,30 @@ void getGameInfoTetris(GameInfo_t* gameInfo, Parameters_t *parameters_){
 
 /// @brief обработка сигнала от пользователя
 /// @param signal_ сигнал, полученный от пользователя
-/// @param hold удержание (не используется)
-/// @param parameters_ текущие параметры
-void updateModelTetris(UserAction_t userAction, bool hold, bool *flagExit, Parameters_t *parameters_, FiniteStateMachine_t *fsm_) {
+/// @param hold удержание 
+/// @param flagExit указатель на флаг на выход из игрового цикла 
+/// @param parameters_ указатель на структура с текущими параметрами
+/// @param fsm_ указатель на структуру с конечным автоматом
+void updateModelTetris(UserAction_t userAction, bool* hold, bool *flagExit, Parameters_t *parameters_, FiniteStateMachine_t *fsm_) {
   if (parameters_->current_state_ >= NUM_STATES && userAction >= NUM_ACTIONS) return;
   ActionCallback action = fsm_->action_table_[parameters_->current_state_][userAction];
   if (action != NULL) action(parameters_);
-  hold = !hold;
+  *hold = !*hold;
   *flagExit = parameters_->current_state_  == sExitGame;
 }
 
-/// @brief обработка сигнала от пользователя
-/// @param signal_ сигнал, полученный от пользователя
-/// @param hold удержание (не используется)
-/// @param parameters_ текущие параметры
-void gameLoopTetris(bool hold, bool *flagExit, Parameters_t *parameters_, FiniteStateMachine_t *fsm_) {
-  updateModelTetris(Action, hold, flagExit, parameters_, fsm_);
+/// @brief обработка срабатывания по таймеру
+/// @param hold удержание 
+/// @param flagExit указатель на флаг на выход из игрового цикла 
+/// @param parameters_ указатель на структура с текущими параметрами
+/// @param fsm_ указатель на структуру с конечным автоматом
+void updateModelTetrisByTimer(bool *hold, bool *flagExit, Parameters_t *parameters_, FiniteStateMachine_t *fsm_) {
+  updateModelTetris(Down, hold, flagExit, parameters_, fsm_);
 }
 
+/// @brief заполняет массив (заданный указателем pointer) содержанием игрового поля (обертка для загрузки по указателю)
+/// @param pointer указатель на двумерный динамический массив
+/// @param parameters_ стуктура с параметрами модели
 void getField(int*** pointer, Parameters_t *parameters_){
   int tempMatrix[BOARD_HEIGHT][BOARD_WIDTH];
   SetGameBoard(tempMatrix, parameters_);
@@ -73,6 +79,9 @@ void getField(int*** pointer, Parameters_t *parameters_){
   };
 }
 
+/// @brief заполняет массив (заданный указателем pointer) содержанием игрового поля (обертка для загрузки по указателю)
+/// @param pointer указатель на двумерный динамический массив
+/// @param parameters_ стуктура с параметрами модели
 void getNext(int*** pointer, Parameters_t *parameters_) {
   int bit_mask_ = block_collection_[parameters_->next_player_][0];
   for (int i = 0; i < BLOCK_HEIGHT; i++) {
@@ -126,7 +135,7 @@ void SetPlayerToBlock(int matrix[BLOCK_HEIGHT][BLOCK_WIDTH],
   int bit_mask_ = block_collection_[block_type_][block_rotation_];
   for (int i = 0; i < BLOCK_HEIGHT; i++) {
     for (int j = 0; j < BLOCK_WIDTH; j++) {
-      matrix[i][j] = matrix[i][j] + (bit_mask_ & (1 << (i * 4 + j))) ? 1 : 0;
+      matrix[i][j] = (matrix[i][j] + ((bit_mask_ & (1 << (i * 4 + j))) ? 1 : 0));
     };
   };
 };
@@ -304,9 +313,10 @@ void UpdateRecord(Parameters_t *parameters_) {
 /// @param num_collapsed_lines количество схплопнувшихся линий
 /// @param parameters_  текущие параметры
 void UpdateScore(int num_collapsed_lines, Parameters_t *parameters_) {
-  int points[] = {0, 100, 300, 700, 1500};
-  if (num_collapsed_lines >= 1 && num_collapsed_lines <= 4)
+  if (num_collapsed_lines >= 1 && num_collapsed_lines <= 4){
+    const int points[] = {0, 100, 300, 700, 1500};
     parameters_->current_score_ += points[num_collapsed_lines];
+  }
 };
 
 /// @brief обновляет значение текущего уровня в зависимости от текущего счета

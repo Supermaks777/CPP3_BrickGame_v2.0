@@ -45,12 +45,5 @@ UserAction_t getAction(int key){
   return result;
 }
 
-/// @brief определяет сигнал на основании нажатой клавиши
-/// @param key нажатая клавиша
-/// @param hold указатель на переменную удержание
-/// @return команда пользователя
-UserAction_t getSignal(int key, bool *hold) {
-  *hold = getIsHold(key);
-  return getAction(key);
-}
+
 

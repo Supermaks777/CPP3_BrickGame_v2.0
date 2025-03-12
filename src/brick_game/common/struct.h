@@ -2,14 +2,7 @@
 #define STRUCT_H
 
 #include <time.h>
-#include "../snake/SnakeModel.h"
 #include "const.h"
-
-// #ifdef __cplusplus
-// namespace s21 {
-//     class SnakeModel; // Forward declaration для C++
-// }
-// #endif
 
 // состояния
 typedef enum {
@@ -136,20 +129,10 @@ typedef enum {
 } MenuItem_t;
 
 typedef struct {
-    s21::SnakeModel* snakeModel;
+    void* snakeModelPtr;
     Parameters_t* tetrisModel;
     FiniteStateMachine_t fsm;
 } GameContext_t;
-
-// typedef struct {
-// #ifdef __cplusplus
-//     s21::SnakeModel* snakeModel; // Только для C++
-// #else
-//     void* snakeModel; // Для C используем void*
-// #endif
-//     Parameters_t* tetrisModel;
-//     FiniteStateMachine_t fsm;
-// } GameContext_t;
 
 // параметры главного меню
 typedef struct {
@@ -157,7 +140,7 @@ typedef struct {
   UserAction_t userAction;
   GameInfo_t* gameInfo;
   bool flagExit;
-  // GameContext_t gameContext;
+  GameContext_t* gameContext;
 } MainMenuParameters_t;
 
 
