@@ -10,21 +10,21 @@ QTViewer::QTViewer(QWidget *parent)
     : QMainWindow(parent),
         ui(new Ui::QTViewer)
 {
-    initGameInfo();
+    init_game_info();
     ui->setupUi(this);
     setFixedSize(450, 465);
     timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &QTViewer::gameLoop);
+    connect(timer, &QTimer::timeout, this, &QTViewer::game_loop);
     controller = new GuiController(BOARD_HEIGHT,BOARD_WIDTH);
 }
 
 QTViewer::~QTViewer()
 {
-    freeGameInfo();
+    free_game_info();
     delete ui;
 }
 
-void QTViewer::initGameInfo() {
+void QTViewer::init_game_info() {
     // Выделяем память для field
     game_info.field = new int*[height];
     for (int i = 0; i < height; ++i) {
@@ -38,7 +38,7 @@ void QTViewer::initGameInfo() {
     }
 }
 
-void QTViewer::freeGameInfo() {
+void QTViewer::free_game_info() {
     // Освобождаем память для field
     for (int i = 0; i < height; ++i) {
         delete[] game_info.field[i];

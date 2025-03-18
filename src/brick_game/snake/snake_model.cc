@@ -10,54 +10,54 @@ namespace s21 {
 
     /// @brief опредляет новое положение головы на следующем шаге как шах от текущего
     /// @return новый сегмент (пара координат)
-    std::pair<int, int>  SnakeModel::getNewHead(){
-        std::pair<int, int>  newHead = snake.front();
+    std::pair<int, int>  SnakeModel::calculate_new_head(){
+        std::pair<int, int>  new_head = snake.front();
         switch (direction) {
-            case Direction::Up:    newHead.second--; break;
-            case Direction::Down:  newHead.second++; break;
-            case Direction::Left:  newHead.first--;  break;
-            case Direction::Right: newHead.first++;  break;
+            case Direction::Up:    new_head.second--; break;
+            case Direction::Down:  new_head.second++; break;
+            case Direction::Left:  new_head.first--;  break;
+            case Direction::Right: new_head.first++;  break;
         }    
-        return newHead;    
+        return new_head;    
     }
 
     /// @brief проверяет столкновение с собой или стенками
-    /// @param newHead новая голова (сегмент)
+    /// @param new_head новая голова (сегмент)
     /// @return истина - столкновение неизбежно
-    bool SnakeModel::checkIsCollapse(std::pair<int, int>  newHead){
-        return (newHead.first < 0 || newHead.first >= width || newHead.second < 0 || newHead.second >= height ||
-            std::find(snake.begin(), snake.end(), newHead) != snake.end());
+    bool SnakeModel::check_is_collapse(std::pair<int, int>  new_head){
+        return (new_head.first < 0 || new_head.first >= width || new_head.second < 0 || new_head.second >= height ||
+            std::find(snake.begin(), snake.end(), new_head) != snake.end());
     }
 
     /// @brief движение змеи: без еды отрезаем хвост
-    /// @param newHead новая голова (сегмент)
-    void SnakeModel::moveSnake(std::pair<int, int>  newHead){
-        snake.insert(snake.begin(), newHead);
-        if (newHead == food) eat_food();
+    /// @param new_head новая голова (сегмент)
+    void SnakeModel::move_snake(std::pair<int, int>  new_head){
+        snake.insert(snake.begin(), new_head);
+        if (new_head == food) eat_food();
         else snake.pop_back();
     }
 
     /// @brief ушаем еду: обновляем счет и шаманим новую еду
     void SnakeModel::eat_food(){
         update_score();
-        addFood();
+        add_food();
     }
 
     /// @brief обновляем счет: обновляем уровень и рекорд
     void SnakeModel::update_score(){
         score++;
-        updateLevel();
-        updateHighScore();
+        update_level();
+        update_high_score();
     }
 
     /// @brief обновляем уровень
-    void SnakeModel::updateLevel(){
+    void SnakeModel::update_level(){
         if (level < 10 && score % 5 == 0) level++;
     }
 
     /// @brief обновляем рекорд
-    void SnakeModel::updateHighScore(){
-        if (score > highScore) highScore = score;
+    void SnakeModel::update_high_score(){
+        if (score > high_score) high_score = score;
     }
 
     /// @brief обновляем модель на с учетом команды пользователя (FSM)
@@ -97,25 +97,25 @@ namespace s21 {
     }
 
     /// @brief сбрасывает до начального состояния параметры модели
-    void SnakeModel::initGame(){
+    void SnakeModel::init_game(){
         snake.clear();
         level = 0;
         score = 0;
         state = GameState::Playing;
         direction = Direction::Right;
-        initSnake();
-        addFood();
+        init_snake();
+        add_food();
     }
 
     /// @brief начинаем игру: инициализируем параметы, загружаем рекорд
     void SnakeModel::start_game(){
-        loadRecord();
-        initGame();
+        load_record();
+        init_game();
     }
 
     /// @brief заканчиваем игру: записываем рекорд
     void SnakeModel::exit_game(){
-        saveRecord();
+        save_record();
         state = GameState::GameOver;
     }
 
@@ -123,27 +123,27 @@ namespace s21 {
     /// @param newDirection новое направление
     void SnakeModel::update_snake(Direction newDirection){
         update_direction(newDirection);
-        std::pair<int, int> newHead = getNewHead();
-        if (!checkIsCollapse(newHead)){ 
-            moveSnake(newHead);
+        std::pair<int, int> new_head = calculate_new_head();
+        if (!check_is_collapse(new_head)){ 
+            move_snake(new_head);
             if (score == height * width) state = GameState::Win;
         } else state = GameState::GameOver;
     }
 
     /// @brief загружаем рекорд из файла
-    void SnakeModel::loadRecord() {
+    void SnakeModel::load_record() {
     FILE *p_file = fopen(RECORD_SNAKE_FILE_NAME, "rb");
     if (!!p_file) {
-        fread(&highScore, sizeof(int), 1, p_file);
+        fread(&high_score, sizeof(int), 1, p_file);
         fclose(p_file);
-    } else highScore = 0;
+    } else high_score = 0;
     };
 
     /// @brief записываем рекород в файл
-    void SnakeModel::saveRecord() {
+    void SnakeModel::save_record() {
     FILE *p_file = fopen(RECORD_SNAKE_FILE_NAME, "wb");
     if (!!p_file) {
-        fwrite(&highScore, sizeof(int), 1, p_file);
+        fwrite(&high_score, sizeof(int), 1, p_file);
         fclose(p_file);
     };
     };  
@@ -168,7 +168,7 @@ namespace s21 {
 
 
     /// @brief добавляет еду (случайно)
-    void SnakeModel::addFood() {
+    void SnakeModel::add_food() {
         if (score < height * width){
             std::random_device rd;
             std::mt19937 gen(rd());
@@ -182,7 +182,7 @@ namespace s21 {
     }
 
     /// @brief возвращает начальное состояние змейки
-    void SnakeModel::initSnake(){
+    void SnakeModel::init_snake(){
         snake.push_back({3, height / 2});
         snake.push_back({2, height / 2});
         snake.push_back({1, height / 2});
@@ -193,11 +193,11 @@ namespace s21 {
     /// @brief обновляет структуру для отображения
     /// @param game_info указатель на структуру
     void SnakeModel::get_game_info(GameInfo_t* game_info){
-        clearField(game_info);
-        saveSnake(game_info);
-        saveFood(game_info);
+        clear_field(game_info);
+        save_snake(game_info);
+        save_food(game_info);
         game_info->score = score;
-        game_info->high_score = highScore;
+        game_info->high_score = high_score;
         game_info->level = level;
         game_info->pause = state == GameState::Paused;
         game_info->speed = get_speed();
@@ -211,7 +211,7 @@ namespace s21 {
 
     /// @brief обновляет игровое поле (field) в структуре для отображения 
     /// @param game_info указатель на структуру
-    void SnakeModel::saveSnake(GameInfo_t* game_info){
+    void SnakeModel::save_snake(GameInfo_t* game_info){
         for (const std::pair<int, int>& segment : snake) {
             game_info->field[segment.second][segment.first] = 1;
         }
@@ -219,13 +219,13 @@ namespace s21 {
 
     /// @brief обновляет поле next в структуре для отображения (для отображения еды)
     /// @param game_info указатель на структуру
-    void SnakeModel::saveFood(GameInfo_t* game_info){
+    void SnakeModel::save_food(GameInfo_t* game_info){
         game_info->field[food.second][food.first] = 1;
     }
 
     /// @brief очищает игровое поле (field) в структуре на отображение
     /// @param game_info указатель на структуру
-    void SnakeModel::clearField(GameInfo_t* game_info){
+    void SnakeModel::clear_field(GameInfo_t* game_info){
         for (int y = 0; y < BOARD_HEIGHT; y++){
             for (int x = 0; x < BOARD_WIDTH; x++){
                 game_info->field[y][x] = 0;
@@ -259,7 +259,7 @@ namespace s21 {
     /// @brief возвращает рекорд
     /// @return рекорд (int)
     int SnakeModel::get_high_score() const{
-        return highScore;
+        return high_score;
     };
 
     /// @brief добавить еду в указанном месте

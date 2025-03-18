@@ -29,7 +29,7 @@ void print_frames(){
     print_rectangle(0, 2 * BOARD_WIDTH + 1, 0, 2 * BOARD_WIDTH + 1);     //gameboard
     print_rectangle(1, 3, 2 * BOARD_WIDTH + 4, 2 * BOARD_WIDTH + 18);    //score
     mvprintw(1, 2 * BOARD_WIDTH + 5, " Score ");
-    print_rectangle(5, 7, 2 * BOARD_WIDTH + 4, 2 * BOARD_WIDTH + 18);    //highscore
+    print_rectangle(5, 7, 2 * BOARD_WIDTH + 4, 2 * BOARD_WIDTH + 18);    //high_score
     mvprintw(5, 2 * BOARD_WIDTH + 5, " High score ");
     print_rectangle(9, 11, 2 * BOARD_WIDTH + 4, 2 * BOARD_WIDTH + 18);   //level
     mvprintw(9, 2 * BOARD_WIDTH + 5, " Level ");

@@ -21,10 +21,11 @@ public:
     }
 
     void update_model(UserAction_t user_action, bool* flag_exit){
-        update_model_tetris(user_action, false, flag_exit, &parameters, &fsm);
+        bool hold_flag = false;
+        update_model_tetris(user_action, &hold_flag, flag_exit, &parameters, &fsm);
     }
 
-    void getInfo(GameInfo_t* game_info){
+    void get_info(GameInfo_t* game_info){
         get_game_info_tetris(game_info, &parameters);
     }
 

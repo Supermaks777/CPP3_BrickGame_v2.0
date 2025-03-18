@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = /Applications/Xcode.app/Contents/Developer/usr/bin/gcc
 CXX           = /Applications/Xcode.app/Contents/Developer/usr/bin/g++
-DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_QML_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=11.0 -Wall -Wextra -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++1z $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=11.0 -Wall -Wextra -fPIC $(DEFINES)
-INCPATH       = -I../../../src -I. -I/usr/local/Qt-6.6.2/include -I/usr/local/Qt-6.6.2/include/QtWidgets -I/usr/local/Qt-6.6.2/include/QtGui -I/usr/local/Qt-6.6.2/include/QtCore -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/AGL.framework/Headers -I/usr/local/Qt-6.6.2/mkspecs/macx-g++
+INCPATH       = -I../../../src -I. -I/usr/local/Qt-6.6.2/include -I/usr/local/Qt-6.6.2/include/QtGui -I/usr/local/Qt-6.6.2/include/QtCore -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/AGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/AGL.framework/Headers -I/usr/local/Qt-6.6.2/mkspecs/macx-g++
 QMAKE         = /usr/local/Qt-6.6.2/bin/qmake6
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = CPP3_BrickGame_v2_01.0.0
 DISTDIR = /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/build/jocastab_Desktop-Debug/.tmp/CPP3_BrickGame_v2_01.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/usr/bin/g++
 LFLAGS        = -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=11.0 -Wl,-rpath,@executable_path/../Frameworks -Wl,-rpath,/usr/local/Qt-6.6.2/lib
-LIBS          = $(SUBLIBS) /usr/local/Qt-6.6.2/lib/libQt6Widgets.dylib /usr/local/Qt-6.6.2/lib/libQt6Gui.dylib -framework AppKit -framework ImageIO -framework Metal /usr/local/Qt-6.6.2/lib/libQt6Core.dylib -framework IOKit -framework DiskArbitration -framework AGL -framework OpenGL   
+LIBS          = $(SUBLIBS) /usr/local/Qt-6.6.2/lib/libQt6Gui.dylib -framework AppKit -framework ImageIO -framework Metal /usr/local/Qt-6.6.2/lib/libQt6Core.dylib -framework IOKit -framework DiskArbitration -framework AGL -framework OpenGL   
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
 RANLIB        = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib -s
 SED           = sed
@@ -52,21 +52,8 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../../brick_game/snake/SnakeModel.cc \
-		../../gui/desktop/main_qt.cc \
-		../../brick_game/tetris/TetrisModel.c \
-		../../brick_game/tetris/fsm.c \
-		../../gui/desktop/qtviewer_events.cc \
-		../../gui/desktop/qtviewer_main.cc \
-		../../gui/desktop/qtviewer_render.cc moc_qt_viewer.cpp
-OBJECTS       = SnakeModel.o \
-		main_qt.o \
-		TetrisModel.o \
-		fsm.o \
-		qtviewer_events.o \
-		qtviewer_main.o \
-		qtviewer_render.o \
-		moc_qt_viewer.o
+SOURCES       =  
+OBJECTS       = 
 DIST          = /usr/local/Qt-6.6.2/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-6.6.2/mkspecs/features/device_config.prf \
 		/usr/local/Qt-6.6.2/mkspecs/common/unix.conf \
@@ -361,7 +348,6 @@ DIST          = /usr/local/Qt-6.6.2/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-6.6.2/mkspecs/features/resources.prf \
 		/usr/local/Qt-6.6.2/mkspecs/features/moc.prf \
 		/usr/local/Qt-6.6.2/mkspecs/features/unix/opengl.prf \
-		/usr/local/Qt-6.6.2/mkspecs/features/uic.prf \
 		/usr/local/Qt-6.6.2/mkspecs/features/unix/thread.prf \
 		/usr/local/Qt-6.6.2/mkspecs/features/qmake_use.prf \
 		/usr/local/Qt-6.6.2/mkspecs/features/file_copies.prf \
@@ -371,22 +357,7 @@ DIST          = /usr/local/Qt-6.6.2/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-6.6.2/mkspecs/features/exceptions.prf \
 		/usr/local/Qt-6.6.2/mkspecs/features/yacc.prf \
 		/usr/local/Qt-6.6.2/mkspecs/features/lex.prf \
-		../../../../CPP3_BrickGame_v2_0.pro ../../brick_game/snake/SnakeModel.h \
-		../../brick_game/common/common.h \
-		../../brick_game/common/commonAPI.h \
-		../../brick_game/common/const.h \
-		../../brick_game/common/struct.h \
-		../../brick_game/controller/gui_controller.h \
-		../../gui/desktop/qt_viewer.h \
-		../../brick_game/tetris/TetrisGame.h \
-		../../brick_game/tetris/fsm.h \
-		../../brick_game/tetris/TetrisModel.h ../../brick_game/snake/SnakeModel.cc \
-		../../gui/desktop/main_qt.cc \
-		../../brick_game/tetris/TetrisModel.c \
-		../../brick_game/tetris/fsm.c \
-		../../gui/desktop/qtviewer_events.cc \
-		../../gui/desktop/qtviewer_main.cc \
-		../../gui/desktop/qtviewer_render.cc
+		../../../../CPP3_BrickGame_v2_0.pro  
 QMAKE_TARGET  = CPP3_BrickGame_v2_0
 DESTDIR       = 
 TARGET        = CPP3_BrickGame_v2_0.app/Contents/MacOS/CPP3_BrickGame_v2_0
@@ -407,7 +378,7 @@ include /usr/local/Qt-6.6.2/mkspecs/features/mac/sdk.mk
 first: all
 ####### Build rules
 
-CPP3_BrickGame_v2_0.app/Contents/MacOS/CPP3_BrickGame_v2_0: ui_qtviewer.h $(OBJECTS)  
+CPP3_BrickGame_v2_0.app/Contents/MacOS/CPP3_BrickGame_v2_0:  $(OBJECTS)  
 	@test -d CPP3_BrickGame_v2_0.app/Contents/MacOS/ || mkdir -p CPP3_BrickGame_v2_0.app/Contents/MacOS/
 	$(LINK) $(LFLAGS) -o $(TARGET)  $(OBJECTS) $(OBJCOMP) $(LIBS)
 
@@ -705,7 +676,6 @@ Makefile: ../../CPP3_BrickGame_v2_0.pro /usr/local/Qt-6.6.2/mkspecs/macx-g++/qma
 		/usr/local/Qt-6.6.2/mkspecs/features/resources.prf \
 		/usr/local/Qt-6.6.2/mkspecs/features/moc.prf \
 		/usr/local/Qt-6.6.2/mkspecs/features/unix/opengl.prf \
-		/usr/local/Qt-6.6.2/mkspecs/features/uic.prf \
 		/usr/local/Qt-6.6.2/mkspecs/features/unix/thread.prf \
 		/usr/local/Qt-6.6.2/mkspecs/features/qmake_use.prf \
 		/usr/local/Qt-6.6.2/mkspecs/features/file_copies.prf \
@@ -716,7 +686,6 @@ Makefile: ../../CPP3_BrickGame_v2_0.pro /usr/local/Qt-6.6.2/mkspecs/macx-g++/qma
 		/usr/local/Qt-6.6.2/mkspecs/features/yacc.prf \
 		/usr/local/Qt-6.6.2/mkspecs/features/lex.prf \
 		../../CPP3_BrickGame_v2_0.pro \
-		/usr/local/Qt-6.6.2/lib/libQt6Widgets.prl \
 		/usr/local/Qt-6.6.2/lib/libQt6Gui.prl \
 		/usr/local/Qt-6.6.2/lib/libQt6Core.prl
 	$(QMAKE) -o Makefile ../../CPP3_BrickGame_v2_0.pro -spec macx-g++ CONFIG+=debug CONFIG+=qml_debug
@@ -1014,7 +983,6 @@ Makefile: ../../CPP3_BrickGame_v2_0.pro /usr/local/Qt-6.6.2/mkspecs/macx-g++/qma
 /usr/local/Qt-6.6.2/mkspecs/features/resources.prf:
 /usr/local/Qt-6.6.2/mkspecs/features/moc.prf:
 /usr/local/Qt-6.6.2/mkspecs/features/unix/opengl.prf:
-/usr/local/Qt-6.6.2/mkspecs/features/uic.prf:
 /usr/local/Qt-6.6.2/mkspecs/features/unix/thread.prf:
 /usr/local/Qt-6.6.2/mkspecs/features/qmake_use.prf:
 /usr/local/Qt-6.6.2/mkspecs/features/file_copies.prf:
@@ -1025,7 +993,6 @@ Makefile: ../../CPP3_BrickGame_v2_0.pro /usr/local/Qt-6.6.2/mkspecs/macx-g++/qma
 /usr/local/Qt-6.6.2/mkspecs/features/yacc.prf:
 /usr/local/Qt-6.6.2/mkspecs/features/lex.prf:
 ../../CPP3_BrickGame_v2_0.pro:
-/usr/local/Qt-6.6.2/lib/libQt6Widgets.prl:
 /usr/local/Qt-6.6.2/lib/libQt6Gui.prl:
 /usr/local/Qt-6.6.2/lib/libQt6Core.prl:
 qmake: FORCE
@@ -1053,13 +1020,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/local/Qt-6.6.2/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../brick_game/snake/SnakeModel.h ../../brick_game/common/common.h ../../brick_game/common/commonAPI.h ../../brick_game/common/const.h ../../brick_game/common/struct.h ../../brick_game/controller/gui_controller.h ../../gui/desktop/qt_viewer.h ../../brick_game/tetris/TetrisGame.h ../../brick_game/tetris/fsm.h ../../brick_game/tetris/TetrisModel.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../brick_game/snake/SnakeModel.cc ../../gui/desktop/main_qt.cc ../../brick_game/tetris/TetrisModel.c ../../brick_game/tetris/fsm.c ../../gui/desktop/qtviewer_events.cc ../../gui/desktop/qtviewer_main.cc ../../gui/desktop/qtviewer_render.cc $(DISTDIR)/
-	$(COPY_FILE) --parents ../../gui/desktop/qtviewer.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
-	-$(DEL_FILE) $(OBJECTS)
 	-$(DEL_FILE) *~ core *.core
 
 
@@ -1090,210 +1053,12 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/local/Qt-6.6.2/mkspecs/features/data/dummy.cpp
 	/Applications/Xcode.app/Contents/Developer/usr/bin/g++ -pipe -g -std=gnu++1z $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=11.0 -Wall -Wextra -fPIC -dM -E -o moc_predefs.h /usr/local/Qt-6.6.2/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_qt_viewer.cpp
+compiler_moc_header_make_all:
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_qt_viewer.cpp
-moc_qt_viewer.cpp: ../../gui/desktop/qt_viewer.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/QMainWindow \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qmainwindow.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgetsglobal.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtguiglobal.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qglobal.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtversionchecks.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtconfiginclude.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qconfig.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtcore-config.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtconfigmacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtcoreexports.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcompilerdetection.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsystemdetection.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qprocessordetection.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtdeprecationmarkers.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtpreprocessorsupport.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qassert.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtnoop.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtypes.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtversion.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtclasshelpermacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtypeinfo.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontainerfwd.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsysinfo.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlogging.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qflags.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcompare_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qatomic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbasicatomic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qatomic_cxx11.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qgenericatomic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qconstructormacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qdarwinhelpers.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qexceptionhandling.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qforeach.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qttypetraits.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qfunctionpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qglobalstatic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmalloc.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qminmax.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qnumeric.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qoverload.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qswap.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtenvironmentvariables.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtresource.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qttranslation.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qversiontagging.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtgui-config.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtguiexports.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgets-config.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgetsexports.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qwidget.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qwindowdefs.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobjectdefs.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qnamespace.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtmetamacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobjectdefs_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qfunctionaltools_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobject.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstring.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qchar.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearray.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qrefcount.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qarraydata.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qpair.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qarraydatapointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qarraydataops.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontainertools_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qxptype_traits.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q20functional.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q20memory.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearrayalgorithms.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearrayview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringfwd.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q20type_traits.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringliteral.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringalgorithms.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlatin1stringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qanystringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qutf8stringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringtokenizer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringbuilder.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlist.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qhashfunctions.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiterator.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearraylist.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringlist.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qalgorithms.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringmatcher.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcoreevent.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qscopedpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmetatype.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcompare.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qdatastream.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiodevicebase.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qfloat16.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmath.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiterable.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmetacontainer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontainerinfo.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtaggedpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qscopeguard.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobject_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbindingstorage.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmargins.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q23utility.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qaction.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qkeysequence.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qicon.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsize.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpixmap.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qrect.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qpoint.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qcolor.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qrgb.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qrgba64.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qshareddata.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qimage.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpixelformat.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtransform.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpolygon.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qregion.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qline.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qvariant.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qdebug.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtextstream.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringconverter_base.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontiguouscache.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsharedpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsharedpointer_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmap.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qshareddata_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qset.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qhash.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qvarlengtharray.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpalette.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qbrush.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qfont.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qfontmetrics.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qfontinfo.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qsizepolicy.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qcursor.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qbitmap.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qevent.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiodevice.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qurl.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qeventpoint.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qvector2d.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qvectornd.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpointingdevice.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qinputdevice.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qscreen.h \
-		/usr/local/Qt-6.6.2/include/QtCore/QList \
-		/usr/local/Qt-6.6.2/include/QtCore/QObject \
-		/usr/local/Qt-6.6.2/include/QtCore/QRect \
-		/usr/local/Qt-6.6.2/include/QtCore/QSize \
-		/usr/local/Qt-6.6.2/include/QtCore/QSizeF \
-		/usr/local/Qt-6.6.2/include/QtGui/QTransform \
-		/usr/local/Qt-6.6.2/include/QtCore/qnativeinterface.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtabwidget.h \
-		/usr/local/Qt-6.6.2/include/QtGui/QPainter \
-		/usr/local/Qt-6.6.2/include/QtGui/qpainter.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtextoption.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpen.h \
-		/usr/local/Qt-6.6.2/include/QtCore/QTimer \
-		/usr/local/Qt-6.6.2/include/QtCore/qtimer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbasictimer.h \
-		/usr/local/Qt-6.6.2/include/QtGui/QKeyEvent \
-		/usr/local/Qt-6.6.2/include/QtCore/QDebug \
-		../../brick_game/common/struct.h \
-		../../brick_game/common/const.h \
-		../../brick_game/common/common.h \
-		../../brick_game/controller/gui_controller.h \
-		../../brick_game/snake/SnakeModel.h \
-		../../brick_game/tetris/TetrisGame.h \
-		../../brick_game/tetris/TetrisModel.h \
-		../../brick_game/tetris/fsm.h \
-		/usr/local/Qt-6.6.2/include/QtCore/QTime \
-		/usr/local/Qt-6.6.2/include/QtCore/qdatetime.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcalendar.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlocale.h \
-		ui_qtviewer.h \
-		moc_predefs.h \
-		/usr/local/Qt-6.6.2/libexec/moc
-	/usr/local/Qt-6.6.2/libexec/moc $(DEFINES) --include /Users/jocastab/Projects/CPP3_BrickGame_v2.0/src/build/jocastab_Desktop-Debug/moc_predefs.h -I/usr/local/Qt-6.6.2/mkspecs/macx-g++ -I/Users/jocastab/Projects/CPP3_BrickGame_v2.0/src -I/usr/local/Qt-6.6.2/include -I/usr/local/Qt-6.6.2/include/QtWidgets -I/usr/local/Qt-6.6.2/include/QtGui -I/usr/local/Qt-6.6.2/include/QtCore -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include ../../gui/desktop/qt_viewer.h -o moc_qt_viewer.cpp
-
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_qtviewer.h
-compiler_uic_clean:
-	-$(DEL_FILE) ui_qtviewer.h
-ui_qtviewer.h: ../../gui/desktop/qtviewer.ui \
-		/usr/local/Qt-6.6.2/libexec/uic
-	/usr/local/Qt-6.6.2/libexec/uic ../../gui/desktop/qtviewer.ui -o ui_qtviewer.h
-
 compiler_rez_source_make_all:
 compiler_rez_source_clean:
 compiler_yacc_decl_make_all:
@@ -1302,820 +1067,15 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_moc_predefs_clean 
 
 ####### Compile
 
-SnakeModel.o: ../../brick_game/snake/SnakeModel.cc ../../brick_game/snake/SnakeModel.h \
-		../../brick_game/common/common.h \
-		../../brick_game/common/struct.h \
-		../../brick_game/common/const.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SnakeModel.o ../../brick_game/snake/SnakeModel.cc
-
-main_qt.o: ../../gui/desktop/main_qt.cc ../../gui/desktop/qt_viewer.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/QMainWindow \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qmainwindow.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgetsglobal.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtguiglobal.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qglobal.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtversionchecks.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtconfiginclude.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qconfig.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtcore-config.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtconfigmacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtcoreexports.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcompilerdetection.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsystemdetection.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qprocessordetection.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtdeprecationmarkers.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtpreprocessorsupport.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qassert.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtnoop.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtypes.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtversion.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtclasshelpermacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtypeinfo.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontainerfwd.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsysinfo.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlogging.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qflags.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcompare_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qatomic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbasicatomic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qatomic_cxx11.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qgenericatomic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qconstructormacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qdarwinhelpers.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qexceptionhandling.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qforeach.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qttypetraits.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qfunctionpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qglobalstatic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmalloc.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qminmax.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qnumeric.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qoverload.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qswap.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtenvironmentvariables.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtresource.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qttranslation.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qversiontagging.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtgui-config.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtguiexports.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgets-config.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgetsexports.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qwidget.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qwindowdefs.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobjectdefs.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qnamespace.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtmetamacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobjectdefs_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qfunctionaltools_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobject.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstring.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qchar.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearray.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qrefcount.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qarraydata.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qpair.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qarraydatapointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qarraydataops.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontainertools_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qxptype_traits.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q20functional.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q20memory.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearrayalgorithms.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearrayview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringfwd.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q20type_traits.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringliteral.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringalgorithms.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlatin1stringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qanystringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qutf8stringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringtokenizer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringbuilder.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlist.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qhashfunctions.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiterator.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearraylist.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringlist.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qalgorithms.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringmatcher.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcoreevent.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qscopedpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmetatype.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcompare.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qdatastream.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiodevicebase.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qfloat16.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmath.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiterable.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmetacontainer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontainerinfo.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtaggedpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qscopeguard.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobject_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbindingstorage.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmargins.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q23utility.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qaction.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qkeysequence.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qicon.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsize.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpixmap.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qrect.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qpoint.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qcolor.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qrgb.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qrgba64.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qshareddata.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qimage.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpixelformat.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtransform.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpolygon.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qregion.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qline.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qvariant.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qdebug.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtextstream.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringconverter_base.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontiguouscache.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsharedpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsharedpointer_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmap.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qshareddata_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qset.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qhash.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qvarlengtharray.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpalette.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qbrush.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qfont.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qfontmetrics.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qfontinfo.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qsizepolicy.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qcursor.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qbitmap.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qevent.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiodevice.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qurl.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qeventpoint.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qvector2d.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qvectornd.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpointingdevice.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qinputdevice.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qscreen.h \
-		/usr/local/Qt-6.6.2/include/QtCore/QList \
-		/usr/local/Qt-6.6.2/include/QtCore/QObject \
-		/usr/local/Qt-6.6.2/include/QtCore/QRect \
-		/usr/local/Qt-6.6.2/include/QtCore/QSize \
-		/usr/local/Qt-6.6.2/include/QtCore/QSizeF \
-		/usr/local/Qt-6.6.2/include/QtGui/QTransform \
-		/usr/local/Qt-6.6.2/include/QtCore/qnativeinterface.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtabwidget.h \
-		/usr/local/Qt-6.6.2/include/QtGui/QPainter \
-		/usr/local/Qt-6.6.2/include/QtGui/qpainter.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtextoption.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpen.h \
-		/usr/local/Qt-6.6.2/include/QtCore/QTimer \
-		/usr/local/Qt-6.6.2/include/QtCore/qtimer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbasictimer.h \
-		/usr/local/Qt-6.6.2/include/QtGui/QKeyEvent \
-		/usr/local/Qt-6.6.2/include/QtCore/QDebug \
-		../../brick_game/common/struct.h \
-		../../brick_game/common/const.h \
-		../../brick_game/common/common.h \
-		../../brick_game/controller/gui_controller.h \
-		../../brick_game/snake/SnakeModel.h \
-		../../brick_game/tetris/TetrisGame.h \
-		../../brick_game/tetris/TetrisModel.h \
-		../../brick_game/tetris/fsm.h \
-		/usr/local/Qt-6.6.2/include/QtCore/QTime \
-		/usr/local/Qt-6.6.2/include/QtCore/qdatetime.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcalendar.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlocale.h \
-		ui_qtviewer.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/QApplication \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qapplication.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcoreapplication.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qeventloop.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcoreapplication_platform.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qfuture.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qfutureinterface.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmutex.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qdeadlinetimer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qelapsedtimer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtsan_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qresultstore.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qfuture_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qthreadpool.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qthread.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qrunnable.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qexception.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qpromise.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qguiapplication.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qinputmethod.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qguiapplication_platform.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main_qt.o ../../gui/desktop/main_qt.cc
-
-TetrisModel.o: ../../brick_game/tetris/TetrisModel.c ../../brick_game/tetris/TetrisModel.h \
-		../../brick_game/common/const.h \
-		../../brick_game/common/struct.h \
-		../../brick_game/tetris/fsm.h
-	$(CC) -c $(CFLAGS) $(INCPATH) -o TetrisModel.o ../../brick_game/tetris/TetrisModel.c
-
-fsm.o: ../../brick_game/tetris/fsm.c ../../brick_game/tetris/fsm.h \
-		../../brick_game/common/struct.h \
-		../../brick_game/common/const.h \
-		../../brick_game/tetris/TetrisModel.h
-	$(CC) -c $(CFLAGS) $(INCPATH) -o fsm.o ../../brick_game/tetris/fsm.c
-
-qtviewer_events.o: ../../gui/desktop/qtviewer_events.cc ../../gui/desktop/qt_viewer.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/QMainWindow \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qmainwindow.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgetsglobal.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtguiglobal.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qglobal.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtversionchecks.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtconfiginclude.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qconfig.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtcore-config.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtconfigmacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtcoreexports.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcompilerdetection.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsystemdetection.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qprocessordetection.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtdeprecationmarkers.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtpreprocessorsupport.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qassert.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtnoop.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtypes.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtversion.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtclasshelpermacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtypeinfo.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontainerfwd.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsysinfo.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlogging.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qflags.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcompare_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qatomic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbasicatomic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qatomic_cxx11.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qgenericatomic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qconstructormacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qdarwinhelpers.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qexceptionhandling.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qforeach.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qttypetraits.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qfunctionpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qglobalstatic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmalloc.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qminmax.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qnumeric.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qoverload.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qswap.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtenvironmentvariables.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtresource.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qttranslation.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qversiontagging.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtgui-config.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtguiexports.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgets-config.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgetsexports.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qwidget.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qwindowdefs.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobjectdefs.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qnamespace.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtmetamacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobjectdefs_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qfunctionaltools_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobject.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstring.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qchar.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearray.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qrefcount.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qarraydata.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qpair.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qarraydatapointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qarraydataops.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontainertools_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qxptype_traits.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q20functional.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q20memory.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearrayalgorithms.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearrayview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringfwd.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q20type_traits.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringliteral.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringalgorithms.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlatin1stringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qanystringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qutf8stringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringtokenizer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringbuilder.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlist.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qhashfunctions.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiterator.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearraylist.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringlist.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qalgorithms.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringmatcher.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcoreevent.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qscopedpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmetatype.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcompare.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qdatastream.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiodevicebase.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qfloat16.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmath.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiterable.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmetacontainer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontainerinfo.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtaggedpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qscopeguard.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobject_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbindingstorage.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmargins.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q23utility.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qaction.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qkeysequence.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qicon.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsize.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpixmap.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qrect.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qpoint.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qcolor.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qrgb.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qrgba64.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qshareddata.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qimage.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpixelformat.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtransform.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpolygon.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qregion.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qline.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qvariant.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qdebug.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtextstream.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringconverter_base.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontiguouscache.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsharedpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsharedpointer_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmap.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qshareddata_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qset.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qhash.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qvarlengtharray.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpalette.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qbrush.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qfont.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qfontmetrics.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qfontinfo.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qsizepolicy.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qcursor.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qbitmap.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qevent.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiodevice.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qurl.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qeventpoint.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qvector2d.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qvectornd.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpointingdevice.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qinputdevice.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qscreen.h \
-		/usr/local/Qt-6.6.2/include/QtCore/QList \
-		/usr/local/Qt-6.6.2/include/QtCore/QObject \
-		/usr/local/Qt-6.6.2/include/QtCore/QRect \
-		/usr/local/Qt-6.6.2/include/QtCore/QSize \
-		/usr/local/Qt-6.6.2/include/QtCore/QSizeF \
-		/usr/local/Qt-6.6.2/include/QtGui/QTransform \
-		/usr/local/Qt-6.6.2/include/QtCore/qnativeinterface.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtabwidget.h \
-		/usr/local/Qt-6.6.2/include/QtGui/QPainter \
-		/usr/local/Qt-6.6.2/include/QtGui/qpainter.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtextoption.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpen.h \
-		/usr/local/Qt-6.6.2/include/QtCore/QTimer \
-		/usr/local/Qt-6.6.2/include/QtCore/qtimer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbasictimer.h \
-		/usr/local/Qt-6.6.2/include/QtGui/QKeyEvent \
-		/usr/local/Qt-6.6.2/include/QtCore/QDebug \
-		../../brick_game/common/struct.h \
-		../../brick_game/common/const.h \
-		../../brick_game/common/common.h \
-		../../brick_game/controller/gui_controller.h \
-		../../brick_game/snake/SnakeModel.h \
-		../../brick_game/tetris/TetrisGame.h \
-		../../brick_game/tetris/TetrisModel.h \
-		../../brick_game/tetris/fsm.h \
-		/usr/local/Qt-6.6.2/include/QtCore/QTime \
-		/usr/local/Qt-6.6.2/include/QtCore/qdatetime.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcalendar.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlocale.h \
-		ui_qtviewer.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qtviewer_events.o ../../gui/desktop/qtviewer_events.cc
-
-qtviewer_main.o: ../../gui/desktop/qtviewer_main.cc ../../gui/desktop/qt_viewer.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/QMainWindow \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qmainwindow.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgetsglobal.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtguiglobal.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qglobal.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtversionchecks.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtconfiginclude.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qconfig.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtcore-config.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtconfigmacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtcoreexports.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcompilerdetection.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsystemdetection.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qprocessordetection.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtdeprecationmarkers.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtpreprocessorsupport.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qassert.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtnoop.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtypes.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtversion.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtclasshelpermacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtypeinfo.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontainerfwd.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsysinfo.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlogging.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qflags.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcompare_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qatomic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbasicatomic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qatomic_cxx11.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qgenericatomic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qconstructormacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qdarwinhelpers.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qexceptionhandling.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qforeach.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qttypetraits.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qfunctionpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qglobalstatic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmalloc.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qminmax.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qnumeric.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qoverload.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qswap.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtenvironmentvariables.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtresource.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qttranslation.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qversiontagging.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtgui-config.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtguiexports.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgets-config.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgetsexports.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qwidget.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qwindowdefs.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobjectdefs.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qnamespace.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtmetamacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobjectdefs_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qfunctionaltools_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobject.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstring.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qchar.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearray.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qrefcount.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qarraydata.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qpair.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qarraydatapointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qarraydataops.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontainertools_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qxptype_traits.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q20functional.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q20memory.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearrayalgorithms.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearrayview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringfwd.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q20type_traits.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringliteral.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringalgorithms.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlatin1stringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qanystringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qutf8stringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringtokenizer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringbuilder.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlist.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qhashfunctions.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiterator.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearraylist.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringlist.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qalgorithms.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringmatcher.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcoreevent.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qscopedpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmetatype.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcompare.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qdatastream.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiodevicebase.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qfloat16.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmath.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiterable.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmetacontainer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontainerinfo.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtaggedpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qscopeguard.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobject_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbindingstorage.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmargins.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q23utility.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qaction.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qkeysequence.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qicon.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsize.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpixmap.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qrect.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qpoint.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qcolor.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qrgb.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qrgba64.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qshareddata.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qimage.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpixelformat.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtransform.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpolygon.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qregion.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qline.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qvariant.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qdebug.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtextstream.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringconverter_base.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontiguouscache.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsharedpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsharedpointer_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmap.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qshareddata_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qset.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qhash.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qvarlengtharray.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpalette.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qbrush.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qfont.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qfontmetrics.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qfontinfo.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qsizepolicy.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qcursor.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qbitmap.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qevent.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiodevice.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qurl.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qeventpoint.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qvector2d.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qvectornd.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpointingdevice.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qinputdevice.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qscreen.h \
-		/usr/local/Qt-6.6.2/include/QtCore/QList \
-		/usr/local/Qt-6.6.2/include/QtCore/QObject \
-		/usr/local/Qt-6.6.2/include/QtCore/QRect \
-		/usr/local/Qt-6.6.2/include/QtCore/QSize \
-		/usr/local/Qt-6.6.2/include/QtCore/QSizeF \
-		/usr/local/Qt-6.6.2/include/QtGui/QTransform \
-		/usr/local/Qt-6.6.2/include/QtCore/qnativeinterface.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtabwidget.h \
-		/usr/local/Qt-6.6.2/include/QtGui/QPainter \
-		/usr/local/Qt-6.6.2/include/QtGui/qpainter.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtextoption.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpen.h \
-		/usr/local/Qt-6.6.2/include/QtCore/QTimer \
-		/usr/local/Qt-6.6.2/include/QtCore/qtimer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbasictimer.h \
-		/usr/local/Qt-6.6.2/include/QtGui/QKeyEvent \
-		/usr/local/Qt-6.6.2/include/QtCore/QDebug \
-		../../brick_game/common/struct.h \
-		../../brick_game/common/const.h \
-		../../brick_game/common/common.h \
-		../../brick_game/controller/gui_controller.h \
-		../../brick_game/snake/SnakeModel.h \
-		../../brick_game/tetris/TetrisGame.h \
-		../../brick_game/tetris/TetrisModel.h \
-		../../brick_game/tetris/fsm.h \
-		/usr/local/Qt-6.6.2/include/QtCore/QTime \
-		/usr/local/Qt-6.6.2/include/QtCore/qdatetime.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcalendar.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlocale.h \
-		ui_qtviewer.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qtviewer_main.o ../../gui/desktop/qtviewer_main.cc
-
-qtviewer_render.o: ../../gui/desktop/qtviewer_render.cc ../../gui/desktop/qt_viewer.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/QMainWindow \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qmainwindow.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgetsglobal.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtguiglobal.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qglobal.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtversionchecks.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtconfiginclude.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qconfig.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtcore-config.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtconfigmacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtcoreexports.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcompilerdetection.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsystemdetection.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qprocessordetection.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtdeprecationmarkers.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtpreprocessorsupport.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qassert.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtnoop.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtypes.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtversion.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtclasshelpermacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtypeinfo.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontainerfwd.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsysinfo.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlogging.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qflags.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcompare_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qatomic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbasicatomic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qatomic_cxx11.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qgenericatomic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qconstructormacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qdarwinhelpers.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qexceptionhandling.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qforeach.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qttypetraits.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qfunctionpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qglobalstatic.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmalloc.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qminmax.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qnumeric.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qoverload.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qswap.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtenvironmentvariables.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtresource.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qttranslation.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qversiontagging.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtgui-config.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtguiexports.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgets-config.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtwidgetsexports.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qwidget.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qwindowdefs.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobjectdefs.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qnamespace.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtmetamacros.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobjectdefs_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qfunctionaltools_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobject.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstring.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qchar.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearray.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qrefcount.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qarraydata.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qpair.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qarraydatapointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qarraydataops.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontainertools_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qxptype_traits.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q20functional.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q20memory.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearrayalgorithms.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearrayview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringfwd.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q20type_traits.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringliteral.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringalgorithms.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlatin1stringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qanystringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qutf8stringview.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringtokenizer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringbuilder.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlist.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qhashfunctions.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiterator.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbytearraylist.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringlist.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qalgorithms.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringmatcher.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcoreevent.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qscopedpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmetatype.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcompare.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qdatastream.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiodevicebase.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qfloat16.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmath.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiterable.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmetacontainer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontainerinfo.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtaggedpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qscopeguard.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qobject_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbindingstorage.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmargins.h \
-		/usr/local/Qt-6.6.2/include/QtCore/q23utility.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qaction.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qkeysequence.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qicon.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsize.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpixmap.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qrect.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qpoint.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qcolor.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qrgb.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qrgba64.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qshareddata.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qimage.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpixelformat.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtransform.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpolygon.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qregion.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qline.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qvariant.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qdebug.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qtextstream.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qstringconverter_base.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcontiguouscache.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsharedpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qsharedpointer_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qmap.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qshareddata_impl.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qset.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qhash.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qvarlengtharray.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpalette.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qbrush.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qfont.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qfontmetrics.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qfontinfo.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qsizepolicy.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qcursor.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qbitmap.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qevent.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qiodevice.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qpointer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qurl.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qeventpoint.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qvector2d.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qvectornd.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpointingdevice.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qinputdevice.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qscreen.h \
-		/usr/local/Qt-6.6.2/include/QtCore/QList \
-		/usr/local/Qt-6.6.2/include/QtCore/QObject \
-		/usr/local/Qt-6.6.2/include/QtCore/QRect \
-		/usr/local/Qt-6.6.2/include/QtCore/QSize \
-		/usr/local/Qt-6.6.2/include/QtCore/QSizeF \
-		/usr/local/Qt-6.6.2/include/QtGui/QTransform \
-		/usr/local/Qt-6.6.2/include/QtCore/qnativeinterface.h \
-		/usr/local/Qt-6.6.2/include/QtWidgets/qtabwidget.h \
-		/usr/local/Qt-6.6.2/include/QtGui/QPainter \
-		/usr/local/Qt-6.6.2/include/QtGui/qpainter.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qtextoption.h \
-		/usr/local/Qt-6.6.2/include/QtGui/qpen.h \
-		/usr/local/Qt-6.6.2/include/QtCore/QTimer \
-		/usr/local/Qt-6.6.2/include/QtCore/qtimer.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qbasictimer.h \
-		/usr/local/Qt-6.6.2/include/QtGui/QKeyEvent \
-		/usr/local/Qt-6.6.2/include/QtCore/QDebug \
-		../../brick_game/common/struct.h \
-		../../brick_game/common/const.h \
-		../../brick_game/common/common.h \
-		../../brick_game/controller/gui_controller.h \
-		../../brick_game/snake/SnakeModel.h \
-		../../brick_game/tetris/TetrisGame.h \
-		../../brick_game/tetris/TetrisModel.h \
-		../../brick_game/tetris/fsm.h \
-		/usr/local/Qt-6.6.2/include/QtCore/QTime \
-		/usr/local/Qt-6.6.2/include/QtCore/qdatetime.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qcalendar.h \
-		/usr/local/Qt-6.6.2/include/QtCore/qlocale.h \
-		ui_qtviewer.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qtviewer_render.o ../../gui/desktop/qtviewer_render.cc
-
-moc_qt_viewer.o: moc_qt_viewer.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_qt_viewer.o moc_qt_viewer.cpp
-
 ####### Install
 
-install_target: first FORCE
-	@test -d $(INSTALL_ROOT)/opt/CPP3_BrickGame_v2_0/bin || mkdir -p $(INSTALL_ROOT)/opt/CPP3_BrickGame_v2_0/bin
-	$(DEL_FILE) -r $(INSTALL_ROOT)/opt/CPP3_BrickGame_v2_0/bin/CPP3_BrickGame_v2_0.app
-	
-	$(QINSTALL) CPP3_BrickGame_v2_0.app $(INSTALL_ROOT)/opt/CPP3_BrickGame_v2_0/bin/CPP3_BrickGame_v2_0.app
+install:  FORCE
 
-uninstall_target: FORCE
-	-$(DEL_FILE) -r $(INSTALL_ROOT)/opt/CPP3_BrickGame_v2_0/bin/CPP3_BrickGame_v2_0.app
-	-$(DEL_DIR) $(INSTALL_ROOT)/opt/CPP3_BrickGame_v2_0/bin/ 
-
-
-install: install_target  FORCE
-
-uninstall: uninstall_target  FORCE
+uninstall:  FORCE
 
 FORCE:
 

@@ -42,7 +42,7 @@ void initial_screen();
 void uninitial_screen();
 void main_loop(GameContext_t* game_context);
 void print_main_menu(MainMenuParameters_t* parameters);
-void update_main_m,enu(MainMenuParameters_t* parameters);
+void update_main_menu(MainMenuParameters_t* parameters);
 void processin_main_menu(MainMenuParameters_t* parameters);
 void update_screen(GameInfo_t *game_info);
 void game_loop(GameInfo_t *game_info, MenuItem_t selected_game, GameContext_t* game_context);

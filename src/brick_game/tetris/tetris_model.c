@@ -25,7 +25,7 @@ void set_default_parameters(Parameters_t *parameters) {
   clear_board(parameters->game_board.cells);
   clear_board(parameters->check_board.cells);
   parameters->current_score = 0;
-  parameters>current_level = 0;
+  parameters->current_level = 0;
   parameters->current_speed = 500;
   load_record(parameters);
 };

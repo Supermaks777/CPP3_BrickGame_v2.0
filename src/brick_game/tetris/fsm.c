@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "TetrisModel.h"
+#include "tetris_model.h"
 #include "../common/struct.h"
 
 /// @brief инициализация автомата

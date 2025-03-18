@@ -54,7 +54,7 @@ extern "C" void  update_model_by_timer(bool* hold, bool* flag_exit, MenuItem_t s
     if (selected_game == MENU_TETRIS) update_model_tetris_by_timer(hold, flag_exit, game_context->tetris_model, &game_context->fsm);
 }
 
-extern "C" void startApp(){
+extern "C" void start_app(){
     GameContext_t game_context = {nullptr, nullptr, {}};
     main_loop(&game_context);
 }

@@ -6,13 +6,13 @@ class SnakeModelTest : public ::testing::Test {
 };
 
 // Движение
-TEST_F(SnakeModelTest, MoveSnake) {
+TEST_F(SnakeModelTest, move_snake) {
     s21::SnakeModel model(20, 10);
     auto initialHead = model.get_snake().front();
     model.update_snake(Direction::Right);
-    auto newHead = model.get_snake().front();
-    EXPECT_EQ(newHead.first, initialHead.first + 1);
-    EXPECT_EQ(newHead.second, initialHead.second);
+    auto new_head = model.get_snake().front();
+    EXPECT_EQ(new_head.first, initialHead.first + 1);
+    EXPECT_EQ(new_head.second, initialHead.second);
 }
 
 // Столкновение с границей
@@ -64,17 +64,17 @@ TEST_F(SnakeModelTest, LevelIncrease) {
 }
 
 // High score
-TEST_F(SnakeModelTest, HighScore) {
+TEST_F(SnakeModelTest, high_score) {
     s21::SnakeModel model(20, 10);
 
     // Инициализируем игру (сбрасываем состояние и загружаем рекорд)
     model.start_game();
 
     // Получаем текущий рекорд
-    int initialHighScore = model.get_high_score();
+    int initialhigh_score = model.get_high_score();
 
     // Увеличиваем счет до тех пор, пока он не превысит текущий рекорд
-    while (model.get_score() <= initialHighScore) {
+    while (model.get_score() <= initialhigh_score) {
         model.update_score();
     }
 
@@ -154,31 +154,31 @@ TEST_F(SnakeModelTest, ConvertUserAction) {
 }
 
 //  разные направления движения
-TEST_F(SnakeModelTest, MoveSnakeUp) {
+TEST_F(SnakeModelTest, move_snakeUp) {
     s21::SnakeModel model(20, 10);
     auto initialHead = model.get_snake().front();
     model.update_snake(Direction::Up);
-    auto newHead = model.get_snake().front();
-    EXPECT_EQ(newHead.first, initialHead.first);
-    EXPECT_EQ(newHead.second, initialHead.second - 1);
+    auto new_head = model.get_snake().front();
+    EXPECT_EQ(new_head.first, initialHead.first);
+    EXPECT_EQ(new_head.second, initialHead.second - 1);
 }
 
-TEST_F(SnakeModelTest, MoveSnakeDown) {
+TEST_F(SnakeModelTest, move_snakeDown) {
     s21::SnakeModel model(20, 10);
     auto initialHead = model.get_snake().front();
     model.update_snake(Direction::Down);
-    auto newHead = model.get_snake().front();
-    EXPECT_EQ(newHead.first, initialHead.first);
-    EXPECT_EQ(newHead.second, initialHead.second + 1);
+    auto new_head = model.get_snake().front();
+    EXPECT_EQ(new_head.first, initialHead.first);
+    EXPECT_EQ(new_head.second, initialHead.second + 1);
 }
 
-// TEST_F(SnakeModelTest, MoveSnakeLeft) {
+// TEST_F(SnakeModelTest, move_snakeLeft) {
 //     s21::SnakeModel model(20, 10);
 //     auto initialHead = model.get_snake().front();
 //     model.update_snake(Direction::Left);
-//     auto newHead = model.get_snake().front();
-//     EXPECT_EQ(newHead.first, initialHead.first - 1);
-//     EXPECT_EQ(newHead.second, initialHead.second);
+//     auto new_head = model.get_snake().front();
+//     EXPECT_EQ(new_head.first, initialHead.first - 1);
+//     EXPECT_EQ(new_head.second, initialHead.second);
 // }
 
 //  столкновение с собой
@@ -209,18 +209,18 @@ TEST_F(SnakeModelTest, ExitGame) {
     model.start_game();
 
     // 2. Увеличиваем счет до тех пор, пока он не превысит загруженный из файла
-    int initialHighScore = model.get_high_score();
-    while (model.get_score() <= initialHighScore) {
+    int initialhigh_score = model.get_high_score();
+    while (model.get_score() <= initialhigh_score) {
         model.update_score();
     }
 
     // 3. Записываем рекорд при помощи exit_game и сохраняем значение рекорда
-    int newHighScore = model.get_score();
+    int newhigh_score = model.get_score();
     model.exit_game();
 
     // 4. Повторно инициируем игру и сравниваем загруженное значение с сохраненным
     model.start_game();
-    EXPECT_EQ(model.get_high_score(), newHighScore);
+    EXPECT_EQ(model.get_high_score(), newhigh_score);
 }
 
 //  получение направления

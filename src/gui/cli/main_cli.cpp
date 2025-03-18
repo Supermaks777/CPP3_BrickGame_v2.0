@@ -3,7 +3,7 @@
 
 
     int main() {
-        startApp();
+        start_app();
         return 0;
     }
 

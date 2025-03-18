@@ -1,4 +1,4 @@
-#ifndef CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_SNAKE_SNAKE_MODEL_H
+ #ifndef CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_SNAKE_SNAKE_MODEL_H
 #define CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_SNAKE_SNAKE_MODEL_H
 
 #include <vector>
@@ -52,23 +52,23 @@ private:
     Direction direction = Direction::Right;
     int level;
     int score;
-    int highScore;
+    int high_score;
     GameState state;
 
-    std::pair<int, int>  getNewHead();
-    bool checkIsCollapse(std::pair<int, int>  newHead);
-    void moveSnake(std::pair<int, int>  newHead);
-    void updateLevel();
-    void updateHighScore();
-    void initGame();
-    void loadRecord();
-    void saveRecord();
-    void addFood();
-    void initSnake();
-    void saveSnake(GameInfo_t* game_info);
-    void saveFood(GameInfo_t* game_info);
-    void clearField(GameInfo_t* game_info);
-    void clearNext(GameInfo_t* game_info);
+    std::pair<int, int>  calculate_new_head();
+    bool check_is_collapse(std::pair<int, int>  new_head);
+    void move_snake(std::pair<int, int>  new_head);
+    void update_level();
+    void update_high_score();
+    void init_game();
+    void load_record();
+    void save_record();
+    void add_food();
+    void init_snake();
+    void save_snake(GameInfo_t* game_info);
+    void save_food(GameInfo_t* game_info);
+    void clear_field(GameInfo_t* game_info);
+    // void clearNext(GameInfo_t* game_info);
 
 };
 

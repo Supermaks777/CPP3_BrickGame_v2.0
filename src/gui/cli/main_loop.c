@@ -10,7 +10,7 @@ void main_loop(GameContext_t* game_context){
       print_main_menu(&parameters);
       int key = getch();
       parameters.user_action = get_action(key);
-      update_main_m,enu(&parameters);
+      update_main_menu(&parameters);
     }   
     uninitial_screen(); 
   }
@@ -33,7 +33,7 @@ void print_main_menu(MainMenuParameters_t* parameters){
 
 /// @brief обработка действия пользователя
 /// @param parameters параметры
-void update_main_m,enu(MainMenuParameters_t* parameters){
+void update_main_menu(MainMenuParameters_t* parameters){
   switch (parameters->user_action){
     case Up:
       if (parameters->selected > 0) parameters->selected--;

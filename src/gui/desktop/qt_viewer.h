@@ -39,30 +39,30 @@ protected:
 private:
     Ui::QTViewer *ui;
     UserAction_t get_action(int key);  
-    bool isMenu = true;
+    bool is_menu = true;
     int selected_menu_item = 0;
     static constexpr int menuSize = 3;                      //  количество пунктов меню
     QStringList menuItems = {"Snake", "Tetris", "Exit"};    //  содержание меню
     GameInfo_t game_info;                                    //  структура для отображения
     GuiController* controller;
 
-    void drawGameBoard(QPainter &painter);
-    void drawNextFigure(QPainter &painter);
-    void drawScore(QPainter &painter);
-    void drawHighScore(QPainter &painter);
-    void drawLevel(QPainter &painter);
-    void drawStatus(QPainter &painter);
-    void drawMenu(QPainter &painter);
-    void drawGame(QPainter &painter);
-    void handleMenuSelection();
+    void draw_game_board(QPainter &painter);
+    void draw_next_figure(QPainter &painter);
+    void draw_score(QPainter &painter);
+    void drawhigh_score(QPainter &painter);
+    void draw_level(QPainter &painter);
+    void draw_status(QPainter &painter);
+    void draw_menu(QPainter &painter);
+    void draw_game(QPainter &painter);
+    void handle_menu_selection();
     void start_game();
-    void initGameInfo();
-    void freeGameInfo();
+    void init_game_info();
+    void free_game_info();
     QTimer *timer;
-    void gameLoop();
-    void hadleKeyPressEventInMenu(QKeyEvent *event);
-    void handleKeyPressEventInGame(QKeyEvent *event);
-    void handleFlagExit();
+    void game_loop();
+    void hadle_key_press_event_in_menu(QKeyEvent *event);
+    void handle_key_press_event_in_game(QKeyEvent *event);
+    void handle_flag_exit();
 
 
 };

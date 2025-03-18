@@ -16,11 +16,11 @@ bool get_is_hold(int key){
   bool result;
   static int lastKey = 0;
   static struct timeval last_time = {0,0};
-  static struct timeval currentTime;
-  gettimeofday(&currentTime, NULL);
-  result = (key == lastKey && get_timeval_diff(&last_time, &currentTime) < 0.2) ? true : false;
+  static struct timeval current_time;
+  gettimeofday(&current_time, NULL);
+  result = (key == lastKey && get_timeval_diff(&last_time, &current_time) < 0.2) ? true : false;
   lastKey = key;
-  last_time = currentTime;
+  last_time = current_time;
   return result;
 }
 
@@ -30,11 +30,11 @@ bool get_is_hold(int key){
 /// @return факт срабатывания
 bool timer_action(int speed, struct timeval * last_time) {
   bool result = {false};
-  struct timeval currentTime;
-  gettimeofday(&currentTime, NULL);
-  if (get_timeval_diff(last_time, &currentTime) * 1000 > speed){
+  struct timeval current_time;
+  gettimeofday(&current_time, NULL);
+  if (get_timeval_diff(last_time, &current_time) * 1000 > speed){
     result = true;
-    *last_time = currentTime;
+    *last_time = current_time;
   } else usleep(1000);
   return result;
 }

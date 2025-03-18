@@ -1,5 +1,5 @@
-CXX = g++
 CC = gcc
+CXX = g++
 
 # Compiler flags
 CXXFLAGS = -std=c++17 -Wall -Werror -Wreturn-type
@@ -20,8 +20,8 @@ SRCS_CC = gui/cli/main_cli.cc brick_game/controller/cli_controller.cc
 SRCS_C = gui/cli/game_input.c gui/cli/game_loop.c gui/cli/game_render.c gui/cli/main_loop.c gui/cli/ui_helpers.c
 
 # Model source files
-MODEL_SRCS_CC = brick_game/snake/SnakeModel.cc
-MODEL_SRCS_C = brick_game/tetris/TetrisModel.c brick_game/tetris/fsm.c
+MODEL_SRCS_CC = brick_game/snake/snake_model.cc
+MODEL_SRCS_C = brick_game/tetris/tetris_model.c brick_game/tetris/fsm.c
 
 # Test source files
 TEST_SRCS_CC = tests/snake_model_tests.cc
@@ -42,7 +42,7 @@ MODEL_LIB_CPP = libmodel_cpp.a
 MODEL_LIB_C = libmodel_c.a
 
 # Executable name
-TARGET = snake_game
+TARGET = brick_game_app
 
 # Test executable name
 TEST_TARGET = snake_game_tests
@@ -50,16 +50,24 @@ TEST_TARGET = snake_game_tests
 # Coverage report directory
 COVERAGE_DIR = coverage_report
 
-DIST_DIR :=archive
+DIST_DIR := archive
 
 # Default target
-all: clean_all $(MODEL_LIB_CPP) $(MODEL_LIB_C) $(TARGET)
-	make clean
-	./$(TARGET)
+all: install run_cli
+
+install: uninstall install_cli install_qt
+
+uninstall:
+	@rm -f $(TARGET)
+	@rm -rf gui/desktop/build
+	@echo "Uninstallation is finished"
+
+install_cli: $(MODEL_LIB_CPP) $(MODEL_LIB_C) $(TARGET)
+	@echo "Installation of CLI version is finished"
 
 # Link object files to create executable
 $(TARGET): $(OBJS_CPP) $(OBJS_C) $(MODEL_LIB_CPP) $(MODEL_LIB_C)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS_CPP) $(OBJS_C) -L. -lmodel_cpp -lmodel_c $(LDFLAGS) $(COVERAGE_FLAGS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS_CPP) $(OBJS_C) -L. -lmodel_cpp -lmodel_c $(LDFLAGS)
 
 # Create C++ model library
 $(MODEL_LIB_CPP): $(MODEL_OBJS_CPP)
@@ -73,65 +81,37 @@ $(MODEL_LIB_C): $(MODEL_OBJS_C)
 %.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Compile C++ SnakeModel with coverage
-brick_game/snake/SnakeModel.o: brick_game/snake/SnakeModel.cc
-	$(CXX) $(CXXFLAGS) $(COVERAGE_FLAGS) -c $< -o $@
-
 # Compile C source files to object files
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Build and run tests
-test: $(TEST_TARGET)
-	./$(TEST_TARGET)
-	make coverage
+install_qt:
+	cd gui/desktop && qmake CPP3_BrickGame_v2_0.pro && make
 
-# Link test object files to create test executable
-$(TEST_TARGET): $(TEST_OBJS_CPP) $(MODEL_LIB_CPP)
-	$(CXX) $(CXXFLAGS) $(COVERAGE_FLAGS) -o $(TEST_TARGET) $(TEST_OBJS_CPP) -L. -lmodel_cpp $(GTEST_LIBS)
+run_cli:
+	./$(TARGET)
 
-# Generate coverage report
-coverage:
-	@echo "Generating coverage report for SnakeModel..."
-	@mkdir -p $(COVERAGE_DIR)
-	@lcov --capture --directory brick_game/snake --output-file $(COVERAGE_DIR)/coverage.info --ignore-errors inconsistent,usage
-	@lcov --extract $(COVERAGE_DIR)/coverage.info '*/brick_game/snake/SnakeModel.cc' --output-file $(COVERAGE_DIR)/filtered_coverage.info
-	@genhtml $(COVERAGE_DIR)/filtered_coverage.info --output-directory $(COVERAGE_DIR)/html
-	@echo "Coverage report generated in $(COVERAGE_DIR)/html/index.html"
-	@open $(COVERAGE_DIR)/html/index.html
-
-# Clean up build files
-clean:
-	rm -f $(OBJS_CPP) $(OBJS_C) $(MODEL_OBJS_CPP) $(MODEL_OBJS_C) $(MODEL_LIB_CPP) $(MODEL_LIB_C) $(TEST_OBJS_CPP)
-	rm -f brick_game/snake/*.gcda brick_game/snake/*.gcno brick_game/snake/*.gcov
-
-clean_all: clean
-	rm -f $(TARGET) $(TEST_TARGET)
-	rm -rf $(COVERAGE_DIR)
+run_qt:
+	./gui/desktop/build/brickgame_desktop
 
 dvi:
 	${OPEN_COMMAND} ../dvi/README.md
 
-clang_i:
-	cp ../materials/linters/.clang-format .
-	@find .. -type f -name "*.c" -exec clang-format -i -style=Google {} \;
-	@find .. -type f -name "*.h" -exec clang-format -i -style=Google {} \;
-	@echo "Clang format style apply is finished"
-
-
-clang_n:
-	cp ../materials/linters/.clang-format .
-	@find .. -type f -name "*.c" -exec clang-format -n -style=Google {} \;
-	@find .. -type f -name "*.h" -exec clang-format -n -style=Google {} \;
-	@echo "Clang format style check is finished"
+clean:
+	rm -f $(OBJS_CPP) $(OBJS_C) $(MODEL_OBJS_CPP) $(MODEL_OBJS_C) $(MODEL_LIB_CPP) $(MODEL_LIB_C) $(TEST_OBJS_CPP)
+	rm -f brick_game/snake/*.gcda brick_game/snake/*.gcno brick_game/snake/*.gcov
+	rm -f $(TARGET) $(TEST_TARGET)
+	rm -rf $(COVERAGE_DIR)
+	rm -rf gui/desktop/build
 
 dist: clean_dist
 	cd ../ && mkdir -p ${DIST_DIR}
-	cd ../ && cp -rf src/brick_game ${DIST_DIR}/brick_game`§
+	cd ../ && cp -rf src/brick_game ${DIST_DIR}/brick_game
 	cd ../ && cp -rf src/gui ${DIST_DIR}/gui
 	cd ../ && cp -rf src/Makefile ${DIST_DIR}/
 	cd ../ && tar -czvf archive.tar.gz ${DIST_DIR}
 	cd ../ && rm -rf ${DIST_DIR}
+
 dist_unpack:
 	cd ../ && tar -xzvf archive.tar.gz
 
@@ -145,5 +125,4 @@ cppcheck:
 	@find .. -type f -name "*.h" -exec cppcheck --enable=all --suppress=missingIncludeSystem {} \;
 	@echo "Cppcheck is finished"
 
-# Phony targets
-.PHONY: all clean clean_all test coverage
+.PHONY: all clean clean_dist dist dist_unpack cppcheck
