@@ -2,8 +2,8 @@
 #define CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_CONTROLLER_GUI_CONTROLLER_H
 
 
-#include "brick_game/snake/snake_model.h"
-#include "brick_game/tetris/tetris_game.h"
+#include "../../brick_game/snake/snake_model.h"
+#include "../../brick_game/tetris/tetris_game.h"
 #include <QDebug>
 #include <QTime>
 

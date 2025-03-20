@@ -1,4 +1,4 @@
-#include "gui/desktop/qt_viewer.h"
+#include "qt_viewer.h"
 
 #include <QApplication>
 

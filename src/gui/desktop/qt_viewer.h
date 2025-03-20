@@ -6,10 +6,10 @@
 #include <QTimer>
 #include <QKeyEvent>
 #include <QDebug>
-#include "brick_game/common/struct.h"
-#include "brick_game/common/common.h"
-#include "brick_game/common/const.h"
-#include "brick_game/controller/gui_controller.h"
+#include "../../brick_game/common/struct.h"
+#include "../../brick_game/common/common.h"
+#include "../../brick_game/common/const.h"
+#include "../../brick_game/controller/gui_controller.h"
 #include "ui_qtviewer.h"
 
 

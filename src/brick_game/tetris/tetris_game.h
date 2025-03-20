@@ -2,7 +2,7 @@
 #define CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_TETRIS_TETRIS_GAME_H
 
 extern "C" {
-#include "brick_game/tetris/tetris_model.h"
+#include "../../brick_game/tetris/tetris_model.h"
 }
 
 namespace s21 {
