@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../brick_game/snake/SnakeModel.h"
+#include "../brick_game/snake/snake_model.h"
 
 // Тестовый класс
 class SnakeModelTest : public ::testing::Test {

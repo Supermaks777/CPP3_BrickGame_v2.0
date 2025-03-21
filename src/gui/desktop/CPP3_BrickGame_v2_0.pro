@@ -39,7 +39,7 @@ INCLUDEPATH += $$BRICK_GAME_PATH $$BRICK_GAME_PATH/snake $$BRICK_GAME_PATH/tetri
 
 # Deployment rules
 qnx: DESTDIR = /tmp/$${TARGET}/bin
-else: unix:!android: DESTDIR = $$PWD/../../../build
+else: unix:!android: DESTDIR = $$PWD/../../build
 INSTALLS += target
 
 # Set the target name

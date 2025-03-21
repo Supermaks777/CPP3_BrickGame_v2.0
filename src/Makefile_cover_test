@@ -84,7 +84,7 @@ brick_game/snake/SnakeModel.o: brick_game/snake/SnakeModel.cc
 # Build and run tests
 test: $(TEST_TARGET)
 	./$(TEST_TARGET)
-	make coverage
+	# make coverage
 
 # Link test object files to create test executable
 $(TEST_TARGET): $(TEST_OBJS_CPP) $(MODEL_LIB_CPP)
@@ -93,12 +93,12 @@ $(TEST_TARGET): $(TEST_OBJS_CPP) $(MODEL_LIB_CPP)
 # Generate coverage report
 coverage:
 	@echo "Generating coverage report for SnakeModel..."
-	@mkdir -p $(COVERAGE_DIR)
-	@lcov --capture --directory brick_game/snake --output-file $(COVERAGE_DIR)/coverage.info --ignore-errors inconsistent,usage
+	@[ -d $(COVERAGE_DIR) ] || mkdir -p $(COVERAGE_DIR)
+	@lcov --capture --directory ./ --output-file $(COVERAGE_DIR)/coverage.info --ignore-errors inconsistent,usage
 	@lcov --extract $(COVERAGE_DIR)/coverage.info '*/brick_game/snake/SnakeModel.cc' --output-file $(COVERAGE_DIR)/filtered_coverage.info
 	@genhtml $(COVERAGE_DIR)/filtered_coverage.info --output-directory $(COVERAGE_DIR)/html
 	@echo "Coverage report generated in $(COVERAGE_DIR)/html/index.html"
-	@open $(COVERAGE_DIR)/html/index.html
+	@$(OPEN_COMMAND) $(COVERAGE_DIR)/html/index.html
 
 # Clean up build files
 clean:
