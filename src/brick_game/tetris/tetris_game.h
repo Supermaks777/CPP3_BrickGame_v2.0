@@ -8,10 +8,9 @@ extern "C" {
 namespace s21 {
 class TetrisModel {
 public:
-    TetrisModel() {
+    TetrisModel() : parameters() {
         init_fsm(&fsm);
     }
-
 
     Parameters_t parameters;
     FiniteStateMachine_t fsm;

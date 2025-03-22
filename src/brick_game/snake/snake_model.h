@@ -26,14 +26,11 @@ public:
     void start_game();
     void exit_game();
     void update_model_by_timer(bool* flag_exit);
-
     Direction get_direction() const;
     GameState get_state() const;
     void update_direction(Direction newDirection);
     std::pair<int, int> get_food() const;
     void update_score();
-
-public:
     void update_snake(Direction newDirection);
     const std::vector<std::pair<int, int>>& get_snake() const;
     void eat_food();
@@ -42,9 +39,6 @@ public:
     int get_high_score() const;
     int get_speed();
     void set_food(std::pair<int, int> newFood);
-
-
-
 
 private:
     std::vector<std::pair<int, int>> snake;
@@ -68,8 +62,6 @@ private:
     void save_snake(GameInfo_t* game_info);
     void save_food(GameInfo_t* game_info);
     void clear_field(GameInfo_t* game_info);
-    // void clearNext(GameInfo_t* game_info);
-
 };
 
 } // namespace s21

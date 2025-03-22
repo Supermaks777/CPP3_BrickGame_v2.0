@@ -4,7 +4,6 @@
 
 #include "../../brick_game/snake/snake_model.h"
 #include "../../brick_game/tetris/tetris_game.h"
-#include <QDebug>
 #include <QTime>
 
 namespace s21 {
@@ -27,7 +26,6 @@ public:
      * @param selected_menu_item - выбранная игра (пункт меню)
      */
     void start_game(int selected_menu_item){
-        // qDebug() << "start game:" << selected_menu_item << QTime::current_time().toString("hh:mm:ss");
         switch (selected_menu_item) {
         case 0: model_snake->start_game(); break;
         case 1: model_tetris->start_game(); break;
@@ -42,7 +40,6 @@ public:
      * @param flag_exit - флаг выхода из игры
      */
     void update_state(int selected_menu_item, UserAction_t user_action, bool* flag_exit){
-        // qDebug() << "update model game:" << selected_menu_item << QTime::current_time().toString("hh:mm:ss");
         switch (selected_menu_item) {
         case 0: model_snake->update_model(model_snake->convert_user_action(user_action), flag_exit); break;
         case 1: model_tetris->update_model(user_action, flag_exit); break;
@@ -56,7 +53,6 @@ public:
      * @param flag_exit - флаг выхода из игры
      */
     void game_loop(int selected_menu_item, bool* flag_exit){
-        // qDebug() << "game loop:" << selected_menu_item << QTime::current_time().toString("hh:mm:ss");
         switch (selected_menu_item) {
         case 0: model_snake->update_model_by_timer(flag_exit); break;
         case 1: model_tetris->update_model_by_timer(flag_exit); break;
@@ -70,7 +66,6 @@ public:
      * @param game_info
      */
     void get_info(int selected_menu_item, GameInfo_t* game_info){
-        // qDebug() << "get Info:" << selected_menu_item << QTime::current_time().toString("hh:mm:ss");
         switch (selected_menu_item) {
         case 0: model_snake->get_game_info(game_info); break;
         case 1: model_tetris->get_info(game_info); break;

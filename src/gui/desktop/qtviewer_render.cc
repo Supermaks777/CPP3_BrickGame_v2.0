@@ -34,13 +34,13 @@ void QTViewer::draw_game(QPainter &painter){
 void QTViewer::draw_game_board(QPainter &painter) {
     int offsetX = 20; // Отступ по X
     int offsetY = 20; // Отступ по Y
-    int cellSize = 20; // Размер ячейки
+    // int cell_size_ = 20; // Размер ячейки
 
     // Рисуем рамку вокруг игрового поля
     int borderX = offsetX; // Начальная координата X рамки
     int borderY = offsetY; // Начальная координата Y рамки
-    int borderWidth = width * cellSize; // Ширина рамки
-    int borderHeight = height * cellSize; // Высота рамки
+    int borderWidth = width * cell_size_; // Ширина рамки
+    int borderHeight = height * cell_size_; // Высота рамки
 
     // Рисуем прямоугольник (рамку)
     painter.setPen(Qt::black); // Цвет рамки
@@ -51,20 +51,20 @@ void QTViewer::draw_game_board(QPainter &painter) {
         for (int x = 0; x < width; x++) {
             if (game_info.field[y][x]) {
                 // Смещаем координаты на offsetX и offsetY
-                painter.fillRect(x * cellSize + offsetX, y * cellSize + offsetY, cellSize, cellSize, Qt::green);
+                painter.fillRect(x * cell_size_ + offsetX, y * cell_size_ + offsetY, cell_size_, cell_size_, Qt::green);
             }
         }
     }
 }
 
 void QTViewer::draw_next_figure(QPainter &painter) {
-    int offsetX = QTViewer::width * QTViewer::cellSize + 100; // Отступ по X
+    int offsetX = QTViewer::width * QTViewer::cell_size_ + 100; // Отступ по X
     int offsetY = 50; // Отступ по Y
     // Рисуем рамку вокруг игрового поля
     int borderX = offsetX; // Начальная координата X рамки
     int borderY = offsetY; // Начальная координата Y рамки
-    int borderWidth = BLOCK_WIDTH * QTViewer::cellSize; // Ширина рамки
-    int borderHeight = BLOCK_HEIGHT * QTViewer::cellSize; // Высота рамки
+    int borderWidth = BLOCK_WIDTH * QTViewer::cell_size_; // Ширина рамки
+    int borderHeight = BLOCK_HEIGHT * QTViewer::cell_size_; // Высота рамки
 
     // Рисуем прямоугольник (рамку)
     painter.setPen(Qt::black); // Цвет рамки
@@ -73,7 +73,7 @@ void QTViewer::draw_next_figure(QPainter &painter) {
     for (int y = 0; y < BLOCK_HEIGHT; y++) {
         for (int x = 0; x < BLOCK_WIDTH; x++) {
             if (game_info.next[y][x]) {
-                painter.fillRect(offsetX + x * QTViewer::cellSize, offsetY + y * QTViewer::cellSize, QTViewer::cellSize, QTViewer::cellSize, Qt::green); // Отрисовка следующей фигуры
+                painter.fillRect(offsetX + x * QTViewer::cell_size_, offsetY + y * QTViewer::cell_size_, QTViewer::cell_size_, QTViewer::cell_size_, Qt::green); // Отрисовка следующей фигуры
             }
         }
     }

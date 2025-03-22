@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-03-22 10:48:56</td>
+            <td class="headerValue">2025-03-22 22:43:23</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
@@ -136,8 +136,8 @@
 <span id="L74"><span class="lineNum">      74</span> <span class="tlaGNC">           1 :     int initialhigh_score = model.get_high_score();</span></span>
 <span id="L75"><span class="lineNum">      75</span>              : </span>
 <span id="L76"><span class="lineNum">      76</span>              :     // Увеличиваем счет до тех пор, пока он не превысит текущий рекорд</span>
-<span id="L77"><span class="lineNum">      77</span> <span class="tlaGNC">           7 :     while (model.get_score() &lt;= initialhigh_score) {</span></span>
-<span id="L78"><span class="lineNum">      78</span> <span class="tlaGNC">           6 :         model.update_score();</span></span>
+<span id="L77"><span class="lineNum">      77</span> <span class="tlaGNC">          15 :     while (model.get_score() &lt;= initialhigh_score) {</span></span>
+<span id="L78"><span class="lineNum">      78</span> <span class="tlaGNC">          14 :         model.update_score();</span></span>
 <span id="L79"><span class="lineNum">      79</span>              :     }</span>
 <span id="L80"><span class="lineNum">      80</span>              : </span>
 <span id="L81"><span class="lineNum">      81</span>              :     // Проверяем, что рекорд обновился</span>
@@ -272,8 +272,8 @@
 <span id="L210"><span class="lineNum">     210</span>              : </span>
 <span id="L211"><span class="lineNum">     211</span>              :     // 2. Увеличиваем счет до тех пор, пока он не превысит загруженный из файла</span>
 <span id="L212"><span class="lineNum">     212</span> <span class="tlaGNC">           1 :     int initialhigh_score = model.get_high_score();</span></span>
-<span id="L213"><span class="lineNum">     213</span> <span class="tlaGNC">           7 :     while (model.get_score() &lt;= initialhigh_score) {</span></span>
-<span id="L214"><span class="lineNum">     214</span> <span class="tlaGNC">           6 :         model.update_score();</span></span>
+<span id="L213"><span class="lineNum">     213</span> <span class="tlaGNC">          15 :     while (model.get_score() &lt;= initialhigh_score) {</span></span>
+<span id="L214"><span class="lineNum">     214</span> <span class="tlaGNC">          14 :         model.update_score();</span></span>
 <span id="L215"><span class="lineNum">     215</span>              :     }</span>
 <span id="L216"><span class="lineNum">     216</span>              : </span>
 <span id="L217"><span class="lineNum">     217</span>              :     // 3. Записываем рекорд при помощи exit_game и сохраняем значение рекорда</span>

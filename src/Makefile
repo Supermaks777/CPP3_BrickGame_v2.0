@@ -115,7 +115,7 @@ run_desktop:
 	../brick_game/brick_game_desktop
 
 dvi:
-	${OPEN_COMMAND} ../dvi/README.html
+	${OPEN_COMMAND} ../dvi/README.md
 
 dist: clean_dist
 	cd ../ && mkdir -p ${DIST_DIR}
@@ -138,9 +138,14 @@ test_valgrind:
 	@${CC} ${CXXFLAGS} ${CXXCOV} $(SOURCES_FOR_TESTS) -lgtest -lstdc++ -lm  -o test.out
 	@valgrind ${VALGRIND_FLAGS} ./test.out
 
-gcov_report:
+gcov_report: clean
 	${CXX} ${CXXFLAGS} ${GCOV_FLAGS} -c $(SNAKE_CCX) $(TESTS)
 	${CXX} ${CXXFLAGS} ${GCOV_FLAGS} $(SNAKE_CCX) $(TESTS) $(GTEST_LIBS) -o gcov_report.out
+	./gcov_report.out
+	lcov --ignore-errors inconsistent -t "gcov_report" --ignore-errors mismatch --no-external -c -d . -o report.info > /dev/null 2>&1
+	genhtml report.info -o report
+	open report/index.html
+
 
 	# ${CXX} ${CXXFLAGS} ${GCOV_FLAGS} $(TESTS) $(SNAKE_CCX)  $(GTEST_LIBS) -o gcov_report.out
 	# ./gcov_report.out
@@ -151,7 +156,7 @@ gcov_report:
 	# @make clean_lcov
 
 cppcheck:
-	@find .. -type f -name "*.cc" -exec cppcheck --enable=all --suppress=missingIncludeSystem {} \;
+	@find .. -type f -name "*.cc" -exec cppcheck --enable=all --suppress=missingIncludeSystem --std=c++17 --language=c++ {} \;
 	@find .. -type f -name "*.c" -exec cppcheck --enable=all --suppress=missingIncludeSystem {} \;
 	@find .. -type f -name "*.h" -exec cppcheck --enable=all --suppress=missingIncludeSystem {} \;
 	@echo "Cppcheck is finished"

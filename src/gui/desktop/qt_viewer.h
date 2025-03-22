@@ -29,7 +29,7 @@ public:
     ~QTViewer();
     int height = BOARD_HEIGHT;
     int width = BOARD_WIDTH;
-    int cellSize = 20;
+    int cell_size_ = 20;
     bool flag_exit = false;
 
 protected:

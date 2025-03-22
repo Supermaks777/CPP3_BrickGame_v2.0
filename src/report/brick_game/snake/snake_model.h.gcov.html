@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-03-22 10:48:56</td>
+            <td class="headerValue">2025-03-22 22:43:23</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
@@ -88,55 +88,47 @@
 <span id="L26"><span class="lineNum">      26</span>              :     void start_game();</span>
 <span id="L27"><span class="lineNum">      27</span>              :     void exit_game();</span>
 <span id="L28"><span class="lineNum">      28</span>              :     void update_model_by_timer(bool* flag_exit);</span>
-<span id="L29"><span class="lineNum">      29</span>              : </span>
-<span id="L30"><span class="lineNum">      30</span>              :     Direction get_direction() const;</span>
-<span id="L31"><span class="lineNum">      31</span>              :     GameState get_state() const;</span>
-<span id="L32"><span class="lineNum">      32</span>              :     void update_direction(Direction newDirection);</span>
-<span id="L33"><span class="lineNum">      33</span>              :     std::pair&lt;int, int&gt; get_food() const;</span>
-<span id="L34"><span class="lineNum">      34</span>              :     void update_score();</span>
-<span id="L35"><span class="lineNum">      35</span>              : </span>
-<span id="L36"><span class="lineNum">      36</span>              : public:</span>
-<span id="L37"><span class="lineNum">      37</span>              :     void update_snake(Direction newDirection);</span>
-<span id="L38"><span class="lineNum">      38</span>              :     const std::vector&lt;std::pair&lt;int, int&gt;&gt;&amp; get_snake() const;</span>
-<span id="L39"><span class="lineNum">      39</span>              :     void eat_food();</span>
-<span id="L40"><span class="lineNum">      40</span>              :     int get_level() const;</span>
-<span id="L41"><span class="lineNum">      41</span>              :     int get_score() const;</span>
-<span id="L42"><span class="lineNum">      42</span>              :     int get_high_score() const;</span>
-<span id="L43"><span class="lineNum">      43</span>              :     int get_speed();</span>
-<span id="L44"><span class="lineNum">      44</span>              :     void set_food(std::pair&lt;int, int&gt; newFood);</span>
-<span id="L45"><span class="lineNum">      45</span>              : </span>
-<span id="L46"><span class="lineNum">      46</span>              : </span>
-<span id="L47"><span class="lineNum">      47</span>              : </span>
-<span id="L48"><span class="lineNum">      48</span>              : </span>
-<span id="L49"><span class="lineNum">      49</span>              : private:</span>
-<span id="L50"><span class="lineNum">      50</span>              :     std::vector&lt;std::pair&lt;int, int&gt;&gt; snake;</span>
-<span id="L51"><span class="lineNum">      51</span>              :     std::pair&lt;int, int&gt; food;</span>
-<span id="L52"><span class="lineNum">      52</span>              :     Direction direction = Direction::Right;</span>
-<span id="L53"><span class="lineNum">      53</span>              :     int level;</span>
-<span id="L54"><span class="lineNum">      54</span>              :     int score;</span>
-<span id="L55"><span class="lineNum">      55</span>              :     int high_score;</span>
-<span id="L56"><span class="lineNum">      56</span>              :     GameState state;</span>
-<span id="L57"><span class="lineNum">      57</span>              : </span>
-<span id="L58"><span class="lineNum">      58</span>              :     std::pair&lt;int, int&gt;  calculate_new_head();</span>
-<span id="L59"><span class="lineNum">      59</span>              :     bool check_is_collapse(std::pair&lt;int, int&gt;  new_head);</span>
-<span id="L60"><span class="lineNum">      60</span>              :     void move_snake(std::pair&lt;int, int&gt;  new_head);</span>
-<span id="L61"><span class="lineNum">      61</span>              :     void update_level();</span>
-<span id="L62"><span class="lineNum">      62</span>              :     void update_high_score();</span>
-<span id="L63"><span class="lineNum">      63</span>              :     void init_game();</span>
-<span id="L64"><span class="lineNum">      64</span>              :     void load_record();</span>
-<span id="L65"><span class="lineNum">      65</span>              :     void save_record();</span>
-<span id="L66"><span class="lineNum">      66</span>              :     void add_food();</span>
-<span id="L67"><span class="lineNum">      67</span>              :     void init_snake();</span>
-<span id="L68"><span class="lineNum">      68</span>              :     void save_snake(GameInfo_t* game_info);</span>
-<span id="L69"><span class="lineNum">      69</span>              :     void save_food(GameInfo_t* game_info);</span>
-<span id="L70"><span class="lineNum">      70</span>              :     void clear_field(GameInfo_t* game_info);</span>
-<span id="L71"><span class="lineNum">      71</span>              :     // void clearNext(GameInfo_t* game_info);</span>
-<span id="L72"><span class="lineNum">      72</span>              : </span>
-<span id="L73"><span class="lineNum">      73</span>              : };</span>
-<span id="L74"><span class="lineNum">      74</span>              : </span>
-<span id="L75"><span class="lineNum">      75</span>              : } // namespace s21</span>
-<span id="L76"><span class="lineNum">      76</span>              : </span>
-<span id="L77"><span class="lineNum">      77</span>              : #endif // CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_SNAKE_SNAKE_MODEL_H</span>
+<span id="L29"><span class="lineNum">      29</span>              :     Direction get_direction() const;</span>
+<span id="L30"><span class="lineNum">      30</span>              :     GameState get_state() const;</span>
+<span id="L31"><span class="lineNum">      31</span>              :     void update_direction(Direction newDirection);</span>
+<span id="L32"><span class="lineNum">      32</span>              :     std::pair&lt;int, int&gt; get_food() const;</span>
+<span id="L33"><span class="lineNum">      33</span>              :     void update_score();</span>
+<span id="L34"><span class="lineNum">      34</span>              :     void update_snake(Direction newDirection);</span>
+<span id="L35"><span class="lineNum">      35</span>              :     const std::vector&lt;std::pair&lt;int, int&gt;&gt;&amp; get_snake() const;</span>
+<span id="L36"><span class="lineNum">      36</span>              :     void eat_food();</span>
+<span id="L37"><span class="lineNum">      37</span>              :     int get_level() const;</span>
+<span id="L38"><span class="lineNum">      38</span>              :     int get_score() const;</span>
+<span id="L39"><span class="lineNum">      39</span>              :     int get_high_score() const;</span>
+<span id="L40"><span class="lineNum">      40</span>              :     int get_speed();</span>
+<span id="L41"><span class="lineNum">      41</span>              :     void set_food(std::pair&lt;int, int&gt; newFood);</span>
+<span id="L42"><span class="lineNum">      42</span>              : </span>
+<span id="L43"><span class="lineNum">      43</span>              : private:</span>
+<span id="L44"><span class="lineNum">      44</span>              :     std::vector&lt;std::pair&lt;int, int&gt;&gt; snake;</span>
+<span id="L45"><span class="lineNum">      45</span>              :     std::pair&lt;int, int&gt; food;</span>
+<span id="L46"><span class="lineNum">      46</span>              :     Direction direction = Direction::Right;</span>
+<span id="L47"><span class="lineNum">      47</span>              :     int level;</span>
+<span id="L48"><span class="lineNum">      48</span>              :     int score;</span>
+<span id="L49"><span class="lineNum">      49</span>              :     int high_score;</span>
+<span id="L50"><span class="lineNum">      50</span>              :     GameState state;</span>
+<span id="L51"><span class="lineNum">      51</span>              : </span>
+<span id="L52"><span class="lineNum">      52</span>              :     std::pair&lt;int, int&gt;  calculate_new_head();</span>
+<span id="L53"><span class="lineNum">      53</span>              :     bool check_is_collapse(std::pair&lt;int, int&gt;  new_head);</span>
+<span id="L54"><span class="lineNum">      54</span>              :     void move_snake(std::pair&lt;int, int&gt;  new_head);</span>
+<span id="L55"><span class="lineNum">      55</span>              :     void update_level();</span>
+<span id="L56"><span class="lineNum">      56</span>              :     void update_high_score();</span>
+<span id="L57"><span class="lineNum">      57</span>              :     void init_game();</span>
+<span id="L58"><span class="lineNum">      58</span>              :     void load_record();</span>
+<span id="L59"><span class="lineNum">      59</span>              :     void save_record();</span>
+<span id="L60"><span class="lineNum">      60</span>              :     void add_food();</span>
+<span id="L61"><span class="lineNum">      61</span>              :     void init_snake();</span>
+<span id="L62"><span class="lineNum">      62</span>              :     void save_snake(GameInfo_t* game_info);</span>
+<span id="L63"><span class="lineNum">      63</span>              :     void save_food(GameInfo_t* game_info);</span>
+<span id="L64"><span class="lineNum">      64</span>              :     void clear_field(GameInfo_t* game_info);</span>
+<span id="L65"><span class="lineNum">      65</span>              : };</span>
+<span id="L66"><span class="lineNum">      66</span>              : </span>
+<span id="L67"><span class="lineNum">      67</span>              : } // namespace s21</span>
+<span id="L68"><span class="lineNum">      68</span>              : </span>
+<span id="L69"><span class="lineNum">      69</span>              : #endif // CPP3_BRICK_GAME_V_2_0_1_BRICK_GAME_SNAKE_SNAKE_MODEL_H</span>
         </pre>
               </td>
             </tr>

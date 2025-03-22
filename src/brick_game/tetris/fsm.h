@@ -14,10 +14,6 @@ extern "C" {
 ;
 void init_fsm(FiniteStateMachine_t* fsm);
 
-// void Action__Start_Start(Parameters_t *parameters);
-
-// void Action__Start_Terminate(Parameters_t *parameters) ;
-
 void action__pause_pause(Parameters_t *parameters) ;
 
 void action__pause_terminate(Parameters_t *parameters);
@@ -39,8 +35,6 @@ void set_state_exit(Parameters_t *parameters);
 void set_state_spawn(Parameters_t *parameters);
 
 void set_state_attaching(Parameters_t *parameters);
-
-// void start_tetris_game(Parameters_t *parameters);
 
 #ifdef __cplusplus
 }
