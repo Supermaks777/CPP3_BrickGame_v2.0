@@ -24,7 +24,7 @@ void print_main_menu(MainMenuParameters_t* parameters){
   print_frames();
   const char *menuItems[] = {"Snake", "Tetris", "Exit"};
   for (int i = 0; i < MENU_SIZE; i++){
-    if (i == parameters->selected) attron(A_REVERSE);
+    if (i == (int)parameters->selected) attron(A_REVERSE);
     mvprintw(i + 5, 10, "%s", menuItems[i]);
     attroff(A_REVERSE);
   }

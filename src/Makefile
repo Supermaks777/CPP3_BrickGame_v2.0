@@ -1,84 +1,95 @@
-CXX = g++
 CC = gcc
-
-# Compiler flags
-CXXFLAGS = -std=c++17 -Wall -Werror -Wreturn-type
-CFLAGS = -std=c11 -Wall -Werror -Wimplicit-function-declaration -Wreturn-type
-
-# Coverage flags (только для SnakeModel)
-COVERAGE_FLAGS = -fprofile-arcs -ftest-coverage -lgcov --coverage
-
-# Coverage report directory
-COVERAGE_DIR = coverage_report
-
+CXX = g++
+CFLAGS = -Werror -Wall -Wextra -Wimplicit-function-declaration -Wreturn-type
+CXXFLAGS = -Werror -Wall -Wextra -std=c++17 -Wreturn-type
+LDFLAGS = -lncurses
+LIBRARIES = -lncurses
+TEST_FLAGS      := -lcheck -lm -lpthread
+GCOV_FLAGS      := -fprofile-arcs -ftest-coverage --coverage
+VALGRIND_FLAGS := --leak-check=full --show-leak-kinds=all --track-origins=yes --log-file=valgrind.log
+CXXCOV 			:=  --coverage
+DESKTOP_BUILD := build
+TARGET_DIR := ../brick_game
+CLI_TARGET = ../brick_game/brick_game_cli
+# Library names
+LIB_TETRIS = libtetris.a
+LIB_SNAKE = libsnake.a
+LIB_TETRIS_FLAG = -ltetris
+LIB_SNAKE_FLAG = -lsnake
+TEST_TARGET = snake_model_tests
 # Google Test flags
 GTEST_DIR = /Users/jocastab/.brew/opt/googletest
 GTEST_LIBS = -lgtest -lgtest_main -pthread
 
-# ncurses library
-LDFLAGS = -lncurses
-
-# Source files
-SRCS_CC = gui/cli/main_cli.cc brick_game/controller/cli_controller.cc
-SRCS_C = gui/cli/game_input.c gui/cli/game_loop.c gui/cli/game_render.c gui/cli/main_loop.c gui/cli/ui_helpers.c
-
-# Model source files
-MODEL_SRCS_CC = brick_game/snake/snake_model.cc
-MODEL_SRCS_C = brick_game/tetris/tetris_model.c brick_game/tetris/fsm.c
-
-# Object files
-OBJS_CPP = $(SRCS_CC:.cc=.o)
-OBJS_C = $(SRCS_C:.c=.o)
-
-# Model object files
-MODEL_OBJS_CPP = $(MODEL_SRCS_CC:.cc=.o)
-MODEL_OBJS_C = $(MODEL_SRCS_C:.c=.o)
-
-# Library names
-MODEL_LIB_CPP = libmodel_cpp.a
-MODEL_LIB_C = libmodel_c.a
-
-# Executable names
-CLI_TARGET = ../brick_game/brick_game_cli
-GUI_TARGET = brick_game_gui
-
-# Archive directory
 DIST_DIR :=archive
 
-# Test executable name
-TEST_TARGET = snake_game_tests
+# DEBUGGER := brick_game/tetris/debugger/debugger.c
+	SNAKE_CCX := brick_game/snake/snake_model.cc
 
-# Test source files
-TEST_SRCS_CC = tests/snake_model_tests.cc
+	TETRIS :=	brick_game/tetris/fsm.c \
+				brick_game/tetris/tetris_model.c
 
-# Test object files
-TEST_OBJS_CPP = $(TEST_SRCS_CC:.cc=.o)
+	CLI :=   	gui/cli/game_input.c \
+				gui/cli/game_loop.c \
+				gui/cli/game_render.c \
+				gui/cli/main_loop.c \
+				gui/cli/ui_helpers.c
+				
+	CLI_CCX :=	brick_game/controller/cli_controller.cc \
+				gui/cli/main_cli.cc
 
-# # Object files for tests (собираются с флагами покрытия)
-# TEST_MODEL_OBJS_CPP = $(MODEL_SRCS_CC:.cc=.test.o)
-# TEST_MODEL_OBJS_C = $(MODEL_SRCS_C:.c=.test.o)
+	TESTS :=    tests/snake_model_tests.cc
 
+	OBJS_CLI_C = $(CLI:.c=.o)
+	OBJS_CLI_CCX = $(CLI_CCX:.cc=.o)
+	OBJS_TETRIS_C = $(TETRIS:.c=.o)
+	OBJS_SNAKE_CCX = $(SNAKE_CCX:.cc=.o) 
+
+
+
+# APP_DESTINATION:=../build/brickgame_desktop.app/Contents/MacOS
+# ifeq ($(OS_NAME), GNU/Linux)
+#     OPEN_COMMAND := xdg-open
+# 	APP_DESTINATION:=../build
+# endif
+
+OPEN_COMMAND =open
 ifeq ($(OS), Linux)
 	OPEN_COMMAND=xdg-open
 else
 	OPEN_COMMAND=open
 endif
+# if Fedora, need to uncomment followed two lines
+#OPEN_COMMAND=xdg-open
+#APP_DESTINATION:=../build
 
-# Default target
-all: clean_all $(MODEL_LIB_CPP) $(MODEL_LIB_C) install
-	make clean
+all: install
+
+install: uninstall install_cli install_desktop
+
+uninstall:
+	@rm -rf ${TARGET_DIR}
+	@rm -rf ${DESKTOP_BUILD}
+	@echo "Uninstallation is finished"
 
 # Link object files to create executable
-$(CLI_TARGET): $(OBJS_CPP) $(OBJS_C) $(MODEL_LIB_CPP) $(MODEL_LIB_C)
-	$(CXX) $(CXXFLAGS) -o $(CLI_TARGET) $(OBJS_CPP) $(OBJS_C) -L. -lmodel_cpp -lmodel_c $(LDFLAGS)
+install_cli: $(OBJS_CLI_CCX) $(OBJS_CLI_C) $(LIB_SNAKE) $(LIB_TETRIS)
+	@echo "Building GUI version with CLI..."
+	mkdir -p ../brick_game
+	$(CXX) $(CXXFLAGS) -o $(CLI_TARGET) $(OBJS_CLI_CCX) $(OBJS_CLI_C) -L. $(LIB_SNAKE_FLAG) $(LIB_TETRIS_FLAG) $(LDFLAGS)
+	@echo "Installation complete."
+
+
+$(CLI_TARGET): $(OBJS_CLI_CCX) $(OBJS_CLI_C) $(LIB_SNAKE) $(LIB_TETRIS)
+	$(CXX) $(CXXFLAGS) -o $(CLI_TARGET) $(OBJS_CLI_CCX) $(OBJS_CLI_C) -L. $(LIB_SNAKE_FLAG) $(LIB_TETRIS_FLAG) $(LDFLAGS)
 
 # Create C++ model library
-$(MODEL_LIB_CPP): $(MODEL_OBJS_CPP)
-	ar rcs $(MODEL_LIB_CPP) $(MODEL_OBJS_CPP)
+$(LIB_SNAKE): $(OBJS_SNAKE_CCX)
+	ar rcs $(LIB_SNAKE) $(OBJS_SNAKE_CCX)
 
 # Create C model library
-$(MODEL_LIB_C): $(MODEL_OBJS_C)
-	ar rcs $(MODEL_LIB_C) $(MODEL_OBJS_C)
+$(LIB_TETRIS): $(OBJS_TETRIS_C)
+	ar rcs $(LIB_TETRIS) $(OBJS_TETRIS_C)
 
 # Compile C++ source files to object files
 %.o: %.cc
@@ -88,37 +99,8 @@ $(MODEL_LIB_C): $(MODEL_OBJS_C)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Clean up build files
-clean:
-	rm -f $(OBJS_CPP) $(OBJS_C) $(MODEL_OBJS_CPP) $(MODEL_OBJS_C) $(MODEL_LIB_CPP) $(MODEL_LIB_C)
+# DESKTOP_SOURCES := gui/desktop/View
 
-clean_all: clean clean_project clean_static_lib clean_obj clean_gcov clean_lcov clean_lcov_report
-	rm -rf ../brick_game
-
-clean_project:
-	@find .. -type f -name "*.db" -exec rm {} \;
-
-clean_dist:
-	@cd ../ && rm -rf archive
-	@cd ../ && rm -rf archive.tar.gz
-
-clean_static_lib:
-	@find .. -type f -name "*.a" -exec rm {} \;
-
-clean_obj:
-	@find .. -type f -name "*.o" -exec rm {} \;
-
-clean_gcov:
-	@find .. -type f -name "*.gcda" -exec rm {} \;
-	@find .. -type f -name "*.gcno" -exec rm {} \;
-
-clean_lcov:
-	@find .. -type f -name "*.info" -exec rm {} \;
-
-clean_lcov_report:
-	@rm -rf report
-
-# Install binaries
 install_desktop:
 	@echo "Building GUI version with Qt..."
 	cd gui/desktop && qmake CPP3_BrickGame_v2_0.pro && make
@@ -127,24 +109,10 @@ install_desktop:
 	find build/brick_game_desktop.app -name "brick_game_desktop" -exec cp {} ../brick_game/ \;
 	@echo "Installation complete."
 
-install_cli: $(OBJS_CPP) $(OBJS_C) $(MODEL_LIB_CPP) $(MODEL_LIB_C)
-	@echo "Building GUI version with CLI..."
-	mkdir -p ../brick_game
-	$(CXX) $(CXXFLAGS) -o $(CLI_TARGET) $(OBJS_CPP) $(OBJS_C) -L. -lmodel_cpp -lmodel_c $(LDFLAGS)
-	@echo "Installation complete."
-
-install: install_cli install_desktop
-
-run_desktop:
-	open ../brick_game/brick_game_desktop
-
 run_cli:
 	$(CLI_TARGET)
-
-uninstall:
-	@rm -rf ../brick_game
-	@rm -rf build
-	@echo "Uninstallation is finished"
+run_desktop:
+	../brick_game/brick_game_desktop
 
 dvi:
 	${OPEN_COMMAND} ../dvi/README.html
@@ -156,36 +124,31 @@ dist: clean_dist
 	cd ../ && cp -rf src/Makefile ${DIST_DIR}/
 	cd ../ && tar -czvf archive.tar.gz ${DIST_DIR}
 	cd ../ && rm -rf ${DIST_DIR}
-
 dist_unpack:
 	cd ../ && tar -xzvf archive.tar.gz
 
-# Link object files to create executable
-$(TARGET): $(OBJS_CPP) $(OBJS_C) $(MODEL_LIB_CPP) $(MODEL_LIB_C)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS_CPP) $(OBJS_C) -L. -lmodel_cpp -lmodel_c $(LDFLAGS) $(COVERAGE_FLAGS)
-
-# Build and run tests
-test: $(TEST_TARGET)
+test: clean $(TEST_TARGET)
 	./$(TEST_TARGET)
 
-# Generate coverage report
-coverage: test
-	@echo "Generating coverage report for SnakeModel..."
-	@[ -d $(COVERAGE_DIR) ] || mkdir -p $(COVERAGE_DIR)
-	@lcov --capture --directory ./ --output-file $(COVERAGE_DIR)/coverage.info --ignore-errors inconsistent,usage
-	@lcov --extract $(COVERAGE_DIR)/coverage.info '*/brick_game/snake/snake_model.cc' --output-file $(COVERAGE_DIR)/filtered_coverage.info
-	@genhtml $(COVERAGE_DIR)/filtered_coverage.info --output-directory $(COVERAGE_DIR)/html
-	@echo "Coverage report generated in $(COVERAGE_DIR)/html/index.html"
-	@$(OPEN_COMMAND) $(COVERAGE_DIR)/html/index.html
+$(TEST_TARGET): $(TESTS) $(SNAKE_CCX)
+	$(CXX) $(CXXFLAGS) $(GCOV_FLAGS) -o $(TEST_TARGET) $(SNAKE_CCX) $(TESTS) $(GTEST_LIBS)
+
+
+test_valgrind:
+	@${CC} ${CXXFLAGS} ${CXXCOV} $(SOURCES_FOR_TESTS) -lgtest -lstdc++ -lm  -o test.out
+	@valgrind ${VALGRIND_FLAGS} ./test.out
 
 gcov_report:
-	@${CXX} ${CXXFLAGS} ${CXXCOV} $(TEST_TARGET) -lgtest -lstdc++ -lm  -o gcov_report.out
-	./gcov_report.out
-	lcov -t "gcov_report" --ignore-errors mismatch --no-external -c -d . -o report.info
-	genhtml report.info -o report
-	-@$(OPEN_COMMAND) ./report/index.html
-	@make clean_gcov
-	@make clean_lcov
+	${CXX} ${CXXFLAGS} ${GCOV_FLAGS} -c $(SNAKE_CCX) $(TESTS)
+	${CXX} ${CXXFLAGS} ${GCOV_FLAGS} $(SNAKE_CCX) $(TESTS) $(GTEST_LIBS) -o gcov_report.out
+
+	# ${CXX} ${CXXFLAGS} ${GCOV_FLAGS} $(TESTS) $(SNAKE_CCX)  $(GTEST_LIBS) -o gcov_report.out
+	# ./gcov_report.out
+	# lcov -t "gcov_report" --ignore-errors mismatch --no-external -c -d . -o report.info
+	# genhtml report.info -o report
+	# -@$(OPEN_COMMAND) ./report/index.html
+	# @make clean_gcov
+	# @make clean_lcov
 
 cppcheck:
 	@find .. -type f -name "*.cc" -exec cppcheck --enable=all --suppress=missingIncludeSystem {} \;
@@ -208,4 +171,29 @@ style:
 	@rm .clang-format
 	@echo "Clang format style apply is finished"
 
-.PHONY: all clean clean_all install
+clean: clean_project clean_static_lib clean_log clean_exec clean_obj clean_gcov clean_lcov clean_lcov_report clean_dist
+	@echo "Clean finished"
+
+clean_project:
+	@find .. -type f -name "*.records" -exec rm {} \;
+
+clean_dist:
+	@cd ../ && rm -rf archive
+	@cd ../ && rm -rf archive.tar.gz
+clean_after_building:
+	@rm -rf ${OBJ_DIR}
+clean_static_lib:
+	@find .. -type f -name "*.a" -exec rm {} \;
+clean_log:
+	@find .. -type f -name "*.log" -exec rm {} \;
+clean_exec:
+	@find .. -type f -name "*.out" -exec rm {} \;
+clean_obj:
+	@find .. -type f -name "*.o" -exec rm {} \;
+clean_gcov:
+	@find .. -type f -name "*.gcda" -exec rm {} \;
+	@find .. -type f -name "*.gcno" -exec rm {} \;
+clean_lcov:
+	@find .. -type f -name "*.info" -exec rm {} \;
+clean_lcov_report:
+	@rm -rf report
